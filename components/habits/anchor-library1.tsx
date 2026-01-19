@@ -60,7 +60,7 @@ const categoryColors = {
 	evening: "from-violet-50 to-purple-50 border-violet-200",
 };
 
-export default function AnchorLibrary({ onSelectAnchor, selectedAnchor }) {
+export default function AnchorLibrary1({ onSelectAnchor, selectedAnchor }) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [expandedCategory, setExpandedCategory] = useState(null);
 
