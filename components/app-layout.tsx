@@ -28,7 +28,7 @@ export function AppLayout({ children, className }: AppLayoutProps) {
 			<main
 				className={cn(
 					className,
-					"min-h-svh bg-gray-50 pb-20 text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-white",
+					"min-h-svh bg-linear-to-br from-stone-50 via-white to-emerald-50 transition-colors duration-300",
 				)}
 			>
 				{children}
@@ -48,7 +48,7 @@ export function AppLayout({ children, className }: AppLayoutProps) {
 								aria-current={isActive ? "page" : undefined}
 								className={`flex flex-col items-center justify-center rounded-xl px-3 py-1.5 transition-all duration-200 ${
 									isActive
-										? "bg-orange-50 text-orange-500 dark:bg-orange-500/10"
+										? "bg-green-50 text-green-500 dark:bg-green-500/10"
 										: "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
 								}`}
 							>
