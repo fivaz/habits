@@ -93,7 +93,7 @@ export default function AnchorLibrary({ onSelectAnchor, selectedAnchor }) {
 						<motion.div
 							key={category}
 							layout
-							className={`rounded-2xl border bg-gradient-to-br ${categoryColors[category]} overflow-hidden`}
+							className={`rounded-2xl border bg-linear-to-br ${categoryColors[category]} overflow-hidden`}
 						>
 							<button
 								onClick={() => setExpandedCategory(isExpanded && !searchQuery ? null : category)}
