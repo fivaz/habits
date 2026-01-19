@@ -1,62 +1,62 @@
+"use client";
+
 import React, { useMemo, useState } from "react";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { format, isToday, parseISO } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Briefcase, Coffee, Leaf, Moon, Plus, Sparkles, Sun } from "lucide-react";
+import { BookOpen, Coffee, Leaf, LucideIcon, Moon, Plus, Sparkles, Sun } from "lucide-react";
 
 import CelebrationOverlay from "@/components/habits/celebration-overlay";
+import { base44, DailyLog, HabitRecipe } from "@/components/habits/data/habits";
 import HabitCard from "@/components/habits/habit-card";
 import RecipeCreator from "@/components/habits/recipe-creator";
 import RedesignFlow from "@/components/habits/redesign-flow";
 import { Button } from "@/components/ui/button";
 
-const HabitRecipe = base44.entities.HabitRecipe;
-const DailyLog = base44.entities.DailyLog;
+const HabitRecipeEntity = base44.entities.HabitRecipe;
+const DailyLogEntity = base44.entities.DailyLog;
+
+interface Greeting {
+	text: string;
+	icon: LucideIcon;
+}
 
 export default function Home() {
 	const queryClient = useQueryClient();
 	const [showCreator, setShowCreator] = useState(false);
-	const [editingHabit, setEditingHabit] = useState(null);
-	const [celebratingHabit, setCelebratingHabit] = useState(null);
-	const [redesigningHabit, setRedesigningHabit] = useState(null);
+	const [editingHabit, setEditingHabit] = useState<HabitRecipe | null>(null);
+	const [celebratingHabit, setCelebratingHabit] = useState<HabitRecipe | null>(null);
+	const [redesigningHabit, setRedesigningHabit] = useState<HabitRecipe | null>(null);
 
 	const today = format(new Date(), "yyyy-MM-dd");
 
 	// Fetch habits
-	const { data: habits = [], isLoading: habitsLoading } = useQuery({
+	const { data: habits = [], isLoading: habitsLoading } = useQuery<HabitRecipe[]>({
 		queryKey: ["habits"],
-		queryFn: () => HabitRecipe.filter({ is_active: true }),
+		queryFn: () => HabitRecipeEntity.filter({ is_active: true }),
 	});
 
 	// Fetch today's logs
-	const { data: todayLogs = [] } = useQuery({
+	const { data: todayLogs = [] } = useQuery<DailyLog[]>({
 		queryKey: ["logs", today],
-		queryFn: () => DailyLog.filter({ date: today }),
+		queryFn: () => DailyLogEntity.filter({ date: today }),
 	});
 
 	// Create habit mutation
 	const createHabitMutation = useMutation({
-		mutationFn: (data) => HabitRecipe.create(data),
+		mutationFn: (
+			data: Omit<HabitRecipe, "id" | "streak" | "total_completions" | "times_redesigned">,
+		) =>
+			HabitRecipeEntity.create({ ...data, streak: 0, total_completions: 0, times_redesigned: 0 }),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["habits"] }),
 	});
 
 	// Update habit mutation
 	const updateHabitMutation = useMutation({
-		mutationFn: ({ id, data }) => HabitRecipe.update(id, data),
+		mutationFn: ({ id, data }: { id: string; data: Partial<HabitRecipe> }) =>
+			HabitRecipeEntity.update(id, data),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["habits"] }),
-	});
-
-	// Delete habit mutation
-	const deleteHabitMutation = useMutation({
-		mutationFn: (id) => HabitRecipe.delete(id),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["habits"] }),
-	});
-
-	// Create log mutation
-	const createLogMutation = useMutation({
-		mutationFn: (data) => DailyLog.create(data),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["logs", today] }),
 	});
 
 	const completedHabitIds = useMemo(() => {
@@ -65,7 +65,7 @@ export default function Home() {
 		);
 	}, [todayLogs]);
 
-	const handleSaveHabit = async (data) => {
+	const handleSaveHabit = async (data: any) => {
 		if (editingHabit) {
 			await updateHabitMutation.mutateAsync({ id: editingHabit.id, data });
 			setEditingHabit(null);
@@ -73,23 +73,29 @@ export default function Home() {
 			await createHabitMutation.mutateAsync({
 				...data,
 				is_active: true,
-				streak: 0,
-				total_completions: 0,
 			});
 		}
 		setShowCreator(false);
 	};
 
-	const handleComplete = async (habit) => {
-		// Create completion log
-		await createLogMutation.mutateAsync({
+	const createLogMutation = useMutation({
+		mutationFn: (data: Omit<DailyLog, "id">) => DailyLogEntity.create(data),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["logs", today] }),
+	});
+
+	const deleteHabitMutation = useMutation({
+		mutationFn: (id: string) => HabitRecipeEntity.delete(id),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ["habits"] }),
+	});
+
+	const handleComplete = async (habit: HabitRecipe) => {
+		await DailyLogEntity.create({
 			habit_id: habit.id,
 			date: today,
 			status: "completed",
 			celebration_done: true,
 		});
 
-		// Update habit stats
 		const newStreak =
 			habit.last_completed_date && isToday(parseISO(habit.last_completed_date))
 				? habit.streak
@@ -104,11 +110,19 @@ export default function Home() {
 			},
 		});
 
-		// Show celebration
 		setCelebratingHabit(habit);
+		queryClient.invalidateQueries({ queryKey: ["logs", today] });
 	};
+	/**
+	 * Handle Redesigning a Habit (Tiny Habits concept: if it's not working, redesign it)
+	 * This expects an object that combines the existing habit data with the redesign reason.
+	 */
+	interface RedesignPayload extends HabitRecipe {
+		redesign_reason: DailyLog["redesign_reason"];
+	}
 
-	const handleRedesign = async (updatedHabit) => {
+	const handleRedesign = async (updatedHabit: RedesignPayload) => {
+		// Update the habit recipe itself
 		await updateHabitMutation.mutateAsync({
 			id: updatedHabit.id,
 			data: {
@@ -118,27 +132,29 @@ export default function Home() {
 			},
 		});
 
-		// Log the redesign
+		// Create a log entry for the redesign event
+		// We use createLogMutation which is typed to DailyLog
 		await createLogMutation.mutateAsync({
 			habit_id: updatedHabit.id,
 			date: today,
 			status: "redesigned",
 			redesign_reason: updatedHabit.redesign_reason,
-		});
+			celebration_done: false, // Explicitly false for redesigns
+		} as Omit<DailyLog, "id">);
 
 		setRedesigningHabit(null);
 	};
 
-	const handleEdit = (habit) => {
+	const handleEdit = (habit: HabitRecipe) => {
 		setEditingHabit(habit);
 		setShowCreator(true);
 	};
 
-	const handleDelete = async (habit) => {
+	const handleDelete = async (habit: HabitRecipe) => {
 		await deleteHabitMutation.mutateAsync(habit.id);
 	};
 
-	const getGreeting = () => {
+	const getGreeting = (): Greeting => {
 		const hour = new Date().getHours();
 		if (hour < 12) return { text: "Good morning", icon: Sun };
 		if (hour < 17) return { text: "Good afternoon", icon: Coffee };
@@ -148,7 +164,8 @@ export default function Home() {
 	const greeting = getGreeting();
 	const GreetingIcon = greeting.icon;
 
-	const completedCount = habits.filter((h) => completedHabitIds.has(h.id)).length;
+	// Progress calculations (TS infers these numbers automatically)
+	const completedCount = habits.filter((h: HabitRecipe) => completedHabitIds.has(h.id)).length;
 	const progress = habits.length > 0 ? (completedCount / habits.length) * 100 : 0;
 
 	return (
@@ -185,7 +202,7 @@ export default function Home() {
 					{habits.length > 0 && (
 						<div className="space-y-2">
 							<div className="flex items-center justify-between text-sm">
-								<span className="text-stone-500">Today's Progress</span>
+								<span className="text-stone-500">Today&#39;s Progress</span>
 								<span className="font-semibold text-stone-700">
 									{completedCount}/{habits.length}
 								</span>
@@ -222,7 +239,7 @@ export default function Home() {
 						</div>
 						<h2 className="mb-2 text-2xl font-bold text-stone-800">Start Your First Tiny Habit</h2>
 						<p className="mx-auto mb-6 max-w-xs text-stone-500">
-							Tiny habits are the foundation of big change. Let's create your first ABC recipe!
+							Tiny habits are the foundation of big change. Let&#39;s create your first ABC recipe!
 						</p>
 						<Button
 							onClick={() => setShowCreator(true)}
@@ -242,7 +259,7 @@ export default function Home() {
 								<h3 className="font-bold text-stone-800">What is B=MAP?</h3>
 							</div>
 							<p className="mb-4 text-sm text-stone-600">
-								BJ Fogg's Behavior Model: <strong>Behavior = Motivation + Ability + Prompt</strong>
+								BJ Fog's Behavior Model: <strong>Behavior = Motivation + Ability + Prompt</strong>
 							</p>
 							<div className="space-y-3">
 								<div className="flex items-start gap-3 rounded-xl bg-stone-50 p-3">
@@ -263,7 +280,7 @@ export default function Home() {
 									<div>
 										<p className="font-medium text-stone-700">Tiny Behavior</p>
 										<p className="text-xs text-stone-500">
-											A super small action (under 30 seconds) that's easy to do
+											A super small action (under 30 seconds) that&#39;s easy to do
 										</p>
 									</div>
 								</div>
