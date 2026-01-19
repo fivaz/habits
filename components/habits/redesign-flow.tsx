@@ -101,7 +101,7 @@ export default function RedesignFlow({ isOpen, onClose, habit, onRedesign }) {
 						className="w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl"
 					>
 						{/* Header */}
-						<div className="border-b border-stone-200 bg-gradient-to-br from-stone-50 to-stone-100 p-6">
+						<div className="border-b border-stone-200 bg-linear-to-br from-stone-50 to-stone-100 p-6">
 							<div className="mb-2 flex items-center gap-3">
 								<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-stone-100">
 									<Lightbulb className="h-5 w-5 text-stone-600" />
@@ -135,7 +135,7 @@ export default function RedesignFlow({ isOpen, onClose, habit, onRedesign }) {
 															setSelectedReason(reason.id);
 															setStep(2);
 														}}
-														className={`w-full rounded-2xl border bg-gradient-to-br p-4 ${reason.color} text-left transition-all hover:scale-[1.02] hover:shadow-md active:scale-[0.98]`}
+														className={`w-full rounded-2xl border bg-linear-to-br p-4 ${reason.color} text-left transition-all hover:scale-[1.02] hover:shadow-md active:scale-[0.98]`}
 													>
 														<div className="flex items-center gap-3">
 															<div
@@ -235,7 +235,7 @@ export default function RedesignFlow({ isOpen, onClose, habit, onRedesign }) {
 											</Button>
 											<Button
 												onClick={handleSubmit}
-												className="flex-1 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-white hover:from-emerald-600 hover:to-green-700"
+												className="flex-1 rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white hover:from-emerald-600 hover:to-green-700"
 											>
 												<RefreshCw className="mr-2 h-4 w-4" />
 												Redesign Habit

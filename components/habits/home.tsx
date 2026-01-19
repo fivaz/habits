@@ -169,13 +169,13 @@ export default function Home() {
 	const progress = habits.length > 0 ? (completedCount / habits.length) * 100 : 0;
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-emerald-50">
+		<div className="min-h-screen bg-linear-to-br from-stone-50 via-white to-emerald-50">
 			{/* Header */}
 			<div className="sticky top-0 z-40 border-b border-stone-200 bg-white/80 backdrop-blur-md">
 				<div className="mx-auto max-w-lg px-4 py-4">
 					<div className="mb-4 flex items-center justify-between">
 						<div className="flex items-center gap-3">
-							<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 shadow-lg shadow-emerald-200">
+							<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-green-600 shadow-lg shadow-emerald-200">
 								<Leaf className="h-5 w-5 text-white" />
 							</div>
 							<div>
@@ -191,7 +191,7 @@ export default function Home() {
 								setEditingHabit(null);
 								setShowCreator(true);
 							}}
-							className="rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-emerald-200 hover:from-emerald-600 hover:to-green-700"
+							className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-emerald-200 hover:from-emerald-600 hover:to-green-700"
 						>
 							<Plus className="mr-1 h-4 w-4" />
 							New Recipe
@@ -212,7 +212,7 @@ export default function Home() {
 									initial={{ width: 0 }}
 									animate={{ width: `${progress}%` }}
 									transition={{ duration: 0.5, ease: "easeOut" }}
-									className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-600"
+									className="h-full rounded-full bg-linear-to-r from-emerald-500 to-green-600"
 								/>
 							</div>
 						</div>
@@ -234,7 +234,7 @@ export default function Home() {
 						animate={{ opacity: 1, y: 0 }}
 						className="py-16 text-center"
 					>
-						<div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-emerald-100 to-green-100">
+						<div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-linear-to-br from-emerald-100 to-green-100">
 							<Sparkles className="h-10 w-10 text-emerald-500" />
 						</div>
 						<h2 className="mb-2 text-2xl font-bold text-stone-800">Start Your First Tiny Habit</h2>
@@ -244,7 +244,7 @@ export default function Home() {
 						<Button
 							onClick={() => setShowCreator(true)}
 							size="lg"
-							className="rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-emerald-200 hover:from-emerald-600 hover:to-green-700"
+							className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-emerald-200 hover:from-emerald-600 hover:to-green-700"
 						>
 							<Plus className="mr-2 h-5 w-5" />
 							Create Your First Recipe

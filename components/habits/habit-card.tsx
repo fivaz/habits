@@ -62,7 +62,7 @@ export default function HabitCard({
 		>
 			{/* Category Badge */}
 			<div
-				className={`absolute top-4 right-4 rounded-full bg-gradient-to-r px-2.5 py-1 ${categoryColors[habit.anchor_category || "other"]} flex items-center gap-1.5`}
+				className={`absolute top-4 right-4 rounded-full bg-linear-to-r px-2.5 py-1 ${categoryColors[habit.anchor_category || "other"]} flex items-center gap-1.5`}
 			>
 				<CategoryIcon className="h-3 w-3" />
 				<span className="text-xs font-medium capitalize">{habit.anchor_category || "other"}</span>
@@ -133,7 +133,7 @@ export default function HabitCard({
 								onMouseUp={() => setIsPressed(false)}
 								onMouseLeave={() => setIsPressed(false)}
 								onClick={onComplete}
-								className="relative flex-1 overflow-hidden rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 py-3 font-medium text-white shadow-md shadow-emerald-200 transition-all hover:shadow-lg hover:shadow-emerald-300"
+								className="relative flex-1 overflow-hidden rounded-xl bg-linear-to-r from-emerald-500 to-green-600 py-3 font-medium text-white shadow-md shadow-emerald-200 transition-all hover:shadow-lg hover:shadow-emerald-300"
 							>
 								<motion.div
 									animate={{ scale: isPressed ? 1.5 : 1, opacity: isPressed ? 0.3 : 0 }}

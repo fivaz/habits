@@ -18,7 +18,7 @@ const ShineParticle = ({ delay, x, y }) => (
 			y: y,
 		}}
 		transition={{ duration: 1.2, delay, ease: "easeOut" }}
-		className="absolute h-3 w-3 rounded-full bg-gradient-to-br from-amber-400 to-orange-500"
+		className="absolute h-3 w-3 rounded-full bg-linear-to-br from-amber-400 to-orange-500"
 		style={{ left: "50%", top: "50%" }}
 	/>
 );
@@ -83,7 +83,7 @@ export default function CelebrationOverlay({ isOpen, onClose, celebration, habit
 						exit={{ scale: 0.8, opacity: 0, y: 20 }}
 						transition={{ type: "spring", damping: 20, stiffness: 300 }}
 						onClick={(e) => e.stopPropagation()}
-						className="relative w-full max-w-sm overflow-hidden rounded-3xl bg-gradient-to-br from-amber-50 via-white to-orange-50 p-8 shadow-2xl"
+						className="relative w-full max-w-sm overflow-hidden rounded-3xl bg-linear-to-br from-amber-50 via-white to-orange-50 p-8 shadow-2xl"
 					>
 						{/* Shine Particles */}
 						<div className="pointer-events-none absolute inset-0">
@@ -104,7 +104,7 @@ export default function CelebrationOverlay({ isOpen, onClose, celebration, habit
 							initial={{ scale: 0.8, opacity: 0 }}
 							animate={{ scale: [0.8, 1.2, 1], opacity: [0, 0.5, 0.3] }}
 							transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
-							className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-amber-300/30 to-orange-300/30 blur-2xl"
+							className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-amber-300/30 to-orange-300/30 blur-2xl"
 						/>
 
 						<div className="relative z-10 text-center">
@@ -113,7 +113,7 @@ export default function CelebrationOverlay({ isOpen, onClose, celebration, habit
 								initial={{ scale: 0, rotate: -180 }}
 								animate={{ scale: 1, rotate: 0 }}
 								transition={{ type: "spring", damping: 10, stiffness: 200, delay: 0.2 }}
-								className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg shadow-amber-300/50"
+								className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br from-amber-400 to-orange-500 shadow-lg shadow-amber-300/50"
 							>
 								<motion.div
 									animate={{ rotate: [0, 10, -10, 0] }}
@@ -168,7 +168,7 @@ export default function CelebrationOverlay({ isOpen, onClose, celebration, habit
 							>
 								<Button
 									onClick={onClose}
-									className="w-full rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 py-6 text-lg font-medium text-white shadow-lg shadow-amber-300/30 hover:from-amber-600 hover:to-orange-600"
+									className="w-full rounded-xl bg-linear-to-r from-amber-500 to-orange-500 py-6 text-lg font-medium text-white shadow-lg shadow-amber-300/30 hover:from-amber-600 hover:to-orange-600"
 								>
 									<Star className="mr-2 h-5 w-5" />I celebrated!
 								</Button>
