@@ -1,7 +1,7 @@
 {
-	"name": "Boilerplate",
-	"short_name": "Boilerplate",
-	"description": "Boilerplate is a starter template for building web applications with Next.js, TypeScript, and Tailwind CSS.",
+	"name": "Habits",
+	"short_name": "Habits",
+	"description": "Habits is a starter template for building web applications with Next.js, TypeScript, and Tailwind CSS.",
 	"start_url": "/",
 	"display": "standalone",
 	"theme_color": "#fb923c",

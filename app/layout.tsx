@@ -10,8 +10,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { ConfirmProvider } from "@/hooks/confirm/confirm-provider";
 import {APP_NAME} from "@/lib/consts";
 
-const APP_DEFAULT_TITLE = "Boilerplate";
-const APP_TITLE_TEMPLATE = "%s - Boilerplate";
+const APP_DEFAULT_TITLE = "Habits";
+const APP_TITLE_TEMPLATE = "%s - Habits";
 const APP_DESCRIPTION = "Track your workouts and monitor your progress.";
 
 export const metadata: Metadata = {
