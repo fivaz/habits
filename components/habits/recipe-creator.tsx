@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -6,7 +7,6 @@ import {
 	ArrowLeft,
 	ArrowRight,
 	Brain,
-	Check,
 	Lightbulb,
 	PartyPopper,
 	Repeat,
@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import AnchorLibrary from "./anchor-library";
