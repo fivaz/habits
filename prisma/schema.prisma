@@ -14,18 +14,87 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String        @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean       @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   sessions      Session[]
   accounts      Account[]
+  habitRecipes  HabitRecipe[]
 
   @@unique([email])
   @@map("user")
+}
+
+model HabitRecipe {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Core ABC Recipe
+  anchor        String // "After I..."
+  tiny_behavior String // "I will..."
+  celebration   String // "Then I will..."
+
+  // Categorization & Status
+  anchor_category AnchorCategory @default(OTHER)
+  is_active       Boolean        @default(true)
+
+  // Stats
+  streak              Int     @default(0)
+  total_completions   Int     @default(0)
+  last_completed_date String? // Format: "yyyy-MM-dd"
+  times_redesigned    Int     @default(0)
+
+  // Relations
+  logs DailyLog[]
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("habit_recipe")
+}
+
+model DailyLog {
+  id               String          @id @default(cuid())
+  date             String // Format: "yyyy-MM-dd"
+  status           LogStatus
+  celebration_done Boolean         @default(false)
+  notes            String?         @db.Text
+  redesign_reason  RedesignReason?
+
+  // Foreign Key logic
+  habit_id String
+  habit    HabitRecipe @relation(fields: [habit_id], references: [id], onDelete: Cascade)
+
+  @@index([date])
+  @@index([habit_id])
+  @@map("daily_log")
+}
+
+enum AnchorCategory {
+  MORNING
+  MEALS
+  WORK
+  EVENING
+  OTHER
+}
+
+enum LogStatus {
+  COMPLETED
+  MISSED
+  REDESIGNED
+}
+
+enum RedesignReason {
+  TOO_HARD
+  FORGOT
+  ANCHOR_MISSING
+  OTHER
 }
 
 // --- AUTH MODELS ---
