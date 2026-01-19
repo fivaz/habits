@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Coffee, Leaf, Moon, Plus, Sun } from "lucide-react";
 
+import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form-button";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
-import RecipeCreator from "@/components/habits/recipe-creator";
-import { Button } from "@/components/ui/button";
+import { RecipeCreator } from "@/app/(dashboard)/_components/recipe-creator";
 
 interface HabitRecipe {
 	id: string;
@@ -17,7 +17,7 @@ interface HabitRecipe {
 	is_active: boolean;
 }
 
-const HabitCard = ({ habit }: { habit: HabitRecipe; [key: string]: any }) => (
+const HabitCard = ({ habit }: { habit: HabitRecipe; [key: string]: unknown }) => (
 	<div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
 		<h3 className="font-bold">{habit.tiny_behavior}</h3>
 	</div>
@@ -57,13 +57,10 @@ export function HabitTracker({ habits }: HabitTrackerProps) {
 								<h1 className="text-lg font-bold text-stone-800">Tiny Habits</h1>
 							</div>
 						</div>
-						<Button
-							className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white"
-							onClick={() => setOpenRecipeCreator(true)}
-						>
+						<HabitFormButton className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white">
 							<Plus className="mr-1 h-4 w-4" />
 							New Recipe
-						</Button>
+						</HabitFormButton>
 					</div>
 				</div>
 			</div>
@@ -83,9 +80,9 @@ export function HabitTracker({ habits }: HabitTrackerProps) {
 				)}
 			</div>
 			<RecipeCreator
+				onSave={() => console.log("x")}
 				isOpen={openRecipeCreator}
 				onClose={() => setOpenRecipeCreator(false)}
-				onSave={() => console.log("onSave")}
 			/>
 		</div>
 	);

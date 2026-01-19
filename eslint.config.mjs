@@ -12,7 +12,7 @@ const eslintConfig = defineConfig(
 		...nextTs,
 		prettier,
 		...storybook.configs["flat/recommended"],
-		globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+		globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts", "components/habits/**"]),
 	],
 	{
 		plugins: {

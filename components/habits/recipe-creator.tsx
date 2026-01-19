@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-import AnchorLibrary from "./anchor-library";
+import AnchorLibrary1 from "./anchor-library1";
 
 // --- Types ---
 
@@ -391,7 +391,7 @@ export default function RecipeCreator({
 											)}
 
 											{step.id === "anchor" && showAnchorLibrary ? (
-												<AnchorLibrary
+												<AnchorLibrary1
 													onSelectAnchor={handleSelectAnchor}
 													selectedAnchor={"After I " + formData.anchor}
 												/>
