@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { BookOpen, Plus, Sparkles } from "lucide-react";
 
 import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form-button";
-import { Button } from "@/components/ui/button";
 
 export function Onboarding() {
 	return (

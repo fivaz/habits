@@ -8,14 +8,14 @@ import { Button } from "@/components/ui/button";
 type AnchorSuggestionsProps = {
 	value: string;
 	currentStepIndex: number;
-	setValue: (value: string) => void;
+	setAnchorValue: (value: string) => void;
 };
 
-export function AnchorSuggestions({ value, setValue }: AnchorSuggestionsProps) {
+export function AnchorSuggestions({ value, setAnchorValue }: AnchorSuggestionsProps) {
 	const [showAnchorLibrary, setShowAnchorLibrary] = useState<boolean>(false);
 
 	const handleSelectSuggestion = (suggestion: string) => {
-		setValue(suggestion);
+		setAnchorValue(suggestion);
 		setShowAnchorLibrary(false);
 	};
 

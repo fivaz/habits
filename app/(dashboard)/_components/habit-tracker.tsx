@@ -79,11 +79,6 @@ export function HabitTracker({ habits }: HabitTrackerProps) {
 					</div>
 				)}
 			</div>
-			<RecipeCreator
-				onSave={() => console.log("x")}
-				isOpen={openRecipeCreator}
-				onClose={() => setOpenRecipeCreator(false)}
-			/>
 		</div>
 	);
 }

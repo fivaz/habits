@@ -12,6 +12,13 @@ export interface StepConfig {
 	tip: string;
 }
 
+export enum Step {
+	ANCHOR,
+	BEHAVIOR,
+	CELEBRATION,
+	REHEARSAL,
+}
+
 export const steps: StepConfig[] = [
 	{
 		id: "anchor",
@@ -63,3 +70,5 @@ export type HabitUI = {
 	celebration: string;
 	rehearsal: string;
 };
+
+export const REHEARSAL_TARGET = 5;
