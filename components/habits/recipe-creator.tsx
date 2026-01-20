@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -8,6 +7,7 @@ import {
 	ArrowRight,
 	Brain,
 	Lightbulb,
+	LucideIcon,
 	PartyPopper,
 	Repeat,
 	Sparkles,
@@ -18,9 +18,50 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-import AnchorLibrary from "./anchor-library";
+import AnchorLibrary1 from "./anchor-library1";
 
-const steps = [
+// --- Types ---
+
+// The internal state of the form fields
+interface HabitFormData {
+	anchor: string;
+	anchor_category: string; // You can restrict this to "morning" | "evening" etc. if you have a strict enum
+	tiny_behavior: string;
+	celebration: string;
+}
+
+// The structure of the editingHabit prop
+interface HabitData {
+	anchor?: string;
+	anchor_category?: string;
+	tiny_behavior?: string;
+	celebration?: string;
+}
+
+// The structure for each step in the wizard
+interface StepConfig {
+	id: "anchor" | "behavior" | "celebration" | "rehearsal";
+	title: string;
+	subtitle: string;
+	icon: LucideIcon;
+	color: string;
+	bgColor: string;
+	prefix?: string;
+	placeholder?: string;
+	tip: string;
+}
+
+// Component Props
+interface RecipeCreatorProps {
+	isOpen: boolean;
+	onClose: () => void;
+	onSave: (habit: HabitFormData) => void;
+	editingHabit?: HabitData | null;
+}
+
+// --- Constants ---
+
+const steps: StepConfig[] = [
 	{
 		id: "anchor",
 		title: "Choose Your Anchor",
@@ -65,7 +106,7 @@ const steps = [
 	},
 ];
 
-const celebrationSuggestions = [
+const celebrationSuggestions: string[] = [
 	"Say 'Victory!' out loud",
 	"Do a little fist pump",
 	"Smile and say 'I did it!'",
@@ -76,16 +117,25 @@ const celebrationSuggestions = [
 	"Snap my fingers proudly",
 ];
 
-export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit }) {
-	const [currentStep, setCurrentStep] = useState(0);
-	const [formData, setFormData] = useState({
+// --- Component ---
+
+export default function RecipeCreator({
+	isOpen,
+	onClose,
+	onSave,
+	editingHabit,
+}: RecipeCreatorProps) {
+	const [currentStep, setCurrentStep] = useState<number>(0);
+
+	const [formData, setFormData] = useState<HabitFormData>({
 		anchor: editingHabit?.anchor?.replace("After I ", "") || "",
 		anchor_category: editingHabit?.anchor_category || "other",
 		tiny_behavior: editingHabit?.tiny_behavior?.replace("I will ", "") || "",
 		celebration: editingHabit?.celebration?.replace("Then I will ", "") || "",
 	});
-	const [showAnchorLibrary, setShowAnchorLibrary] = useState(false);
-	const [rehearsalCount, setRehearsalCount] = useState(0);
+
+	const [showAnchorLibrary, setShowAnchorLibrary] = useState<boolean>(false);
+	const [rehearsalCount, setRehearsalCount] = useState<number>(0);
 	const rehearsalTarget = 5;
 
 	const step = steps[currentStep];
@@ -95,7 +145,6 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 		if (currentStep < steps.length - 1) {
 			setCurrentStep(currentStep + 1);
 		}
-		// Don't auto-save on rehearsal step - user clicks rehearsal button instead
 	};
 
 	const handleBack = () => {
@@ -127,28 +176,27 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 		if (rehearsalCount < rehearsalTarget - 1) {
 			setRehearsalCount(rehearsalCount + 1);
 		} else {
-			// Completed all rehearsals, save the habit
 			handleSave();
 		}
 	};
 
-	const getCurrentValue = () => {
+	const getCurrentValue = (): string => {
 		if (step.id === "anchor") return formData.anchor;
 		if (step.id === "behavior") return formData.tiny_behavior;
 		return formData.celebration;
 	};
 
-	const setCurrentValue = (value) => {
+	const setCurrentValue = (value: string) => {
 		if (step.id === "anchor") setFormData({ ...formData, anchor: value });
 		else if (step.id === "behavior") setFormData({ ...formData, tiny_behavior: value });
-		else setFormData({ ...formData, celebration: value });
+		else if (step.id === "celebration") setFormData({ ...formData, celebration: value });
 	};
 
-	const isStepValid = () => {
+	const isStepValid = (): boolean => {
 		return getCurrentValue().trim().length > 0;
 	};
 
-	const handleSelectAnchor = (anchor, category) => {
+	const handleSelectAnchor = (anchor: string, category: string) => {
 		setFormData({
 			...formData,
 			anchor: anchor.replace("After I ", "").replace("After ", ""),
@@ -176,7 +224,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 						className="flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl"
 					>
 						{/* Header */}
-						<div className={`bg-gradient-to-br ${step.bgColor} relative border-b p-6`}>
+						<div className={`bg-linear-to-br ${step.bgColor} relative border-b p-6`}>
 							<button
 								onClick={onClose}
 								className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/50 text-stone-500 transition-colors hover:bg-white hover:text-stone-700"
@@ -190,7 +238,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 									<div
 										key={s.id}
 										className={`h-1.5 flex-1 rounded-full transition-all ${
-											idx <= currentStep ? `bg-gradient-to-r ${step.color}` : "bg-stone-200"
+											idx <= currentStep ? `bg-linear-to-r ${step.color}` : "bg-stone-200"
 										}`}
 									/>
 								))}
@@ -208,7 +256,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 									<div className="h-2 overflow-hidden rounded-full bg-stone-200">
 										<motion.div
 											animate={{ width: `${(rehearsalCount / rehearsalTarget) * 100}%` }}
-											className="h-full rounded-full bg-gradient-to-r from-purple-500 to-violet-600"
+											className="h-full rounded-full bg-linear-to-r from-purple-500 to-violet-600"
 											transition={{ duration: 0.3 }}
 										/>
 									</div>
@@ -220,7 +268,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 									key={currentStep}
 									initial={{ scale: 0.8, opacity: 0 }}
 									animate={{ scale: 1, opacity: 1 }}
-									className={`h-14 w-14 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg`}
+									className={`h-14 w-14 rounded-2xl bg-linear-to-br ${step.color} flex items-center justify-center shadow-lg`}
 								>
 									<StepIcon className="h-7 w-7 text-white" />
 								</motion.div>
@@ -260,7 +308,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 														repeat: Infinity,
 														ease: "easeInOut",
 													}}
-													className="relative mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-purple-100 to-violet-100"
+													className="relative mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-linear-to-br from-purple-100 to-violet-100"
 												>
 													<Brain className="h-16 w-16 text-purple-600" />
 
@@ -316,7 +364,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 											<motion.div whileTap={{ scale: 0.95 }} className="pt-2">
 												<Button
 													onClick={handleRehearsal}
-													className="w-full rounded-2xl bg-gradient-to-r from-purple-500 to-violet-600 py-8 text-lg text-white shadow-lg hover:from-purple-600 hover:to-violet-700"
+													className="w-full rounded-2xl bg-linear-to-r from-purple-500 to-violet-600 py-8 text-lg text-white shadow-lg hover:from-purple-600 hover:to-violet-700"
 												>
 													<Repeat className="mr-2 h-6 w-6" />
 													{rehearsalCount === rehearsalTarget - 1
@@ -343,7 +391,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 											)}
 
 											{step.id === "anchor" && showAnchorLibrary ? (
-												<AnchorLibrary
+												<AnchorLibrary1
 													onSelectAnchor={handleSelectAnchor}
 													selectedAnchor={"After I " + formData.anchor}
 												/>
@@ -352,7 +400,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 													{/* Input Field */}
 													<div className="relative">
 														<div
-															className={`absolute top-4 left-4 bg-gradient-to-r text-sm font-semibold ${step.color} bg-clip-text text-transparent`}
+															className={`absolute top-4 left-4 bg-linear-to-r text-sm font-semibold ${step.color} bg-clip-text text-transparent`}
 														>
 															{step.prefix}
 														</div>
@@ -414,7 +462,7 @@ export default function RecipeCreator({ isOpen, onClose, onSave, editingHabit })
 								<Button
 									onClick={handleNext}
 									disabled={!isStepValid()}
-									className={`flex-1 rounded-xl bg-gradient-to-r py-6 ${step.color} text-white hover:opacity-90`}
+									className={`flex-1 rounded-xl bg-linear-to-r py-6 ${step.color} text-white hover:opacity-90`}
 								>
 									{currentStep === steps.length - 2 ? (
 										<>

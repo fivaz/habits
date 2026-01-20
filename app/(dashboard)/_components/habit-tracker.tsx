@@ -1,42 +1,36 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Coffee, Leaf, LucideIcon, Moon, Plus, Sparkles, Sun } from "lucide-react";
+import { AnimatePresence } from "framer-motion";
+import { Leaf, Plus } from "lucide-react";
 
+import { GreetingsPanel } from "@/app/(dashboard)/_components/GreetingsPanel";
+import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form-button";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
-import { Button } from "@/components/ui/button";
+import { HabitsProvider, useHabitsStore } from "@/hooks/habits-store";
+import { HabitUI } from "@/lib/habits/type";
 
-interface HabitRecipe {
-	id: string;
-	anchor: string;
-	tiny_behavior: string;
-	celebration: string;
-	is_active: boolean;
-}
-
-const HabitCard = ({ habit }: { habit: HabitRecipe; [key: string]: any }) => (
+const HabitCard = ({ habit }: { habit: HabitUI }) => (
 	<div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
-		<h3 className="font-bold">{habit.tiny_behavior}</h3>
+		<h3 className="font-bold">{habit.tinyBehavior}</h3>
 	</div>
 );
 
 type HabitTrackerProps = {
-	habits: HabitRecipe[];
+	habits: HabitUI[];
 };
 
 export function HabitTracker({ habits }: HabitTrackerProps) {
-	const getGreeting = () => {
-		const hour = new Date().getHours();
-		if (hour < 12) return { text: "Good morning", icon: Sun };
-		if (hour < 17) return { text: "Good afternoon", icon: Coffee };
-		return { text: "Good evening", icon: Moon };
-	};
+	return (
+		<HabitsProvider initialItems={habits}>
+			<InternalHabitTracker />
+		</HabitsProvider>
+	);
+}
 
-	const greeting = getGreeting();
-	const GreetingIcon = greeting.icon;
-
+export function InternalHabitTracker() {
+	const { items: habits } = useHabitsStore();
 	return (
 		<div className="min-h-screen bg-linear-to-br from-stone-50 via-white to-emerald-50">
 			{/* Header */}
@@ -48,17 +42,14 @@ export function HabitTracker({ habits }: HabitTrackerProps) {
 								<Leaf className="h-5 w-5 text-white" />
 							</div>
 							<div>
-								<p className="flex items-center gap-1 text-xs text-stone-500">
-									<GreetingIcon className="h-3 w-3" />
-									{greeting.text}
-								</p>
+								<GreetingsPanel />
 								<h1 className="text-lg font-bold text-stone-800">Tiny Habits</h1>
 							</div>
 						</div>
-						<Button className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white">
+						<HabitFormButton className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white">
 							<Plus className="mr-1 h-4 w-4" />
 							New Recipe
-						</Button>
+						</HabitFormButton>
 					</div>
 				</div>
 			</div>

@@ -14,65 +14,64 @@ datasource db {
 }
 
 model User {
-  id            String        @id
+  id            String   @id
   name          String
-  email         String
-  emailVerified Boolean       @default(false)
+  email         String   @unique
+  emailVerified Boolean  @default(false) @map("email_verified")
   image         String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  habitRecipes  HabitRecipe[]
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
-  @@unique([email])
+  sessions     Session[]
+  accounts     Account[]
+  habitRecipes HabitRecipe[]
+
   @@map("user")
 }
 
 model HabitRecipe {
   id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Core ABC Recipe
-  anchor        String // "After I..."
-  tiny_behavior String // "I will..."
-  celebration   String // "Then I will..."
+  anchor       String
+  tinyBehavior String @map("tiny_behavior")
+  celebration  String
 
   // Categorization & Status
-  anchor_category AnchorCategory @default(OTHER)
-  is_active       Boolean        @default(true)
+  anchorCategory AnchorCategory @default(OTHER) @map("anchor_category")
+  isActive       Boolean        @default(true) @map("is_active")
 
   // Stats
-  streak              Int     @default(0)
-  total_completions   Int     @default(0)
-  last_completed_date String? // Format: "yyyy-MM-dd"
-  times_redesigned    Int     @default(0)
+  streak            Int     @default(0)
+  totalCompletions  Int     @default(0) @map("total_completions")
+  lastCompletedDate String? @map("last_completed_date")
+  timesRedesigned   Int     @default(0) @map("times_redesigned")
 
   // Relations
-  logs DailyLog[]
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logs   DailyLog[]
+  userId String     @map("user_id")
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("habit_recipe")
 }
 
 model DailyLog {
-  id               String          @id @default(cuid())
-  date             String // Format: "yyyy-MM-dd"
-  status           LogStatus
-  celebration_done Boolean         @default(false)
-  notes            String?         @db.Text
-  redesign_reason  RedesignReason?
+  id              String          @id @default(cuid())
+  date            String // Format: "yyyy-MM-dd"
+  status          LogStatus
+  celebrationDone Boolean         @default(false) @map("celebration_done")
+  notes           String?         @db.Text
+  redesignReason  RedesignReason? @map("redesign_reason")
 
   // Foreign Key logic
-  habit_id String
-  habit    HabitRecipe @relation(fields: [habit_id], references: [id], onDelete: Cascade)
+  habitId String      @map("habit_id")
+  habit   HabitRecipe @relation(fields: [habitId], references: [id], onDelete: Cascade)
 
   @@index([date])
-  @@index([habit_id])
+  @@index([habitId])
   @@map("daily_log")
 }
 
@@ -101,35 +100,34 @@ enum RedesignReason {
 
 model Session {
   id        String   @id
-  expiresAt DateTime
-  token     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ipAddress String?
-  userAgent String?
-  userId    String
+  expiresAt DateTime @map("expires_at")
+  token     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  userId    String   @map("user_id")
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@index([userId])
   @@map("session")
 }
 
 model Account {
   id                    String    @id
-  accountId             String
-  providerId            String
-  userId                String
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  userId                String    @map("user_id")
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?
-  refreshToken          String?
-  idToken               String?
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at")
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at")
   scope                 String?
   password              String?
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
 
   @@index([userId])
   @@map("account")
@@ -139,9 +137,9 @@ model Verification {
   id         String   @id
   identifier String
   value      String
-  expiresAt  DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  expiresAt  DateTime @map("expires_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   @@index([identifier])
   @@map("verification")

@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 
 import { HomeIcon, Settings2Icon } from "lucide-react";
 
-import QueryProvider from "@/components/query-provider";
 import { ROUTES } from "@/lib/consts";
 import { cn } from "@/lib/utils";
 

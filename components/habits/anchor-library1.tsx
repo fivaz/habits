@@ -60,7 +60,7 @@ const categoryColors = {
 	evening: "from-violet-50 to-purple-50 border-violet-200",
 };
 
-export default function AnchorLibrary({ onSelectAnchor, selectedAnchor }) {
+export default function AnchorLibrary1({ onSelectAnchor, selectedAnchor }) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [expandedCategory, setExpandedCategory] = useState(null);
 
@@ -93,7 +93,7 @@ export default function AnchorLibrary({ onSelectAnchor, selectedAnchor }) {
 						<motion.div
 							key={category}
 							layout
-							className={`rounded-2xl border bg-gradient-to-br ${categoryColors[category]} overflow-hidden`}
+							className={`rounded-2xl border bg-linear-to-br ${categoryColors[category]} overflow-hidden`}
 						>
 							<button
 								onClick={() => setExpandedCategory(isExpanded && !searchQuery ? null : category)}
