@@ -76,11 +76,11 @@ export function RehearsalStepForm({ incrementRehearsal, onClose, habit }: Rehear
 			onError: () => toast.error("Could not log rehearsal. Please try again."),
 		});
 
-		// if (optimisticHabit.rehearsalCount === REHEARSAL_TARGET) {
-		// setTimeout(() => {
-		// 	onClose();
-		// }, 1000);
-		// }
+		if (optimisticHabit.rehearsalCount === REHEARSAL_TARGET) {
+			setTimeout(() => {
+				onClose();
+			}, 2000);
+		}
 	};
 
 	return (

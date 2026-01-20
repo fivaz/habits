@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { MissingRehearsalBadge } from "@/app/(dashboard)/_components/habit-card/missing-rehearsal-badge";
-import { REHEARSAL_TARGET } from "@/app/(dashboard)/_components/service";
+import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
+import { REHEARSAL_TARGET, Step } from "@/app/(dashboard)/_components/service";
 import { categoryColors, categoryIcons } from "@/lib/category/type";
 import { HabitPrefix, HabitUI, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
@@ -12,6 +13,7 @@ type HabitSummaryProps = {
 
 export function HabitSummary({ habit }: HabitSummaryProps) {
 	const CategoryIcon = categoryIcons[habit.anchorCategory];
+	const [openEditForm, setOpenEditForm] = useState(false);
 
 	return (
 		<>
@@ -21,7 +23,7 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 					"absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1"
 				}
 			>
-				<MissingRehearsalBadge habit={habit} />
+				<MissingRehearsalBadge onStartRehearsal={() => setOpenEditForm(true)} />
 				<div
 					className={cn(
 						categoryColors[habit.anchorCategory],
@@ -74,6 +76,12 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 					</div>
 				</div>
 			</div>
+			<HabitFormButton
+				habit={habit}
+				startStep={Step.REHEARSAL}
+				open={openEditForm}
+				onOpenChange={setOpenEditForm}
+			/>
 		</>
 	);
 }
