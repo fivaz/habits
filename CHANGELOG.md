@@ -1,3 +1,14 @@
+## [1.7.0](https://github.com/fivaz/habits/compare/v1.6.0...v1.7.0) (2026-01-20)
+
+### ✨ Features
+
+* make habit form be a drawer on mobile ([215ec10](https://github.com/fivaz/habits/commit/215ec10897fccc6db630529265e2a6daa73f0c64))
+* store user's timezone when he register and login ([6d84365](https://github.com/fivaz/habits/commit/6d843657ec1336d90223ee641d5df070f1f33b9a))
+
+### 🐛 Bug Fixes
+
+* show missing rehearsal badge only when it's actually missing ([f44694d](https://github.com/fivaz/habits/commit/f44694dd8ae2c05a934e7a3a8f7f2cd6b80479f0))
+
 ## [1.6.0](https://github.com/fivaz/habits/compare/v1.5.0...v1.6.0) (2026-01-20)
 
 ### ✨ Features
