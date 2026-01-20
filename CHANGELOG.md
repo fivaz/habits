@@ -1,3 +1,15 @@
+## [1.1.0](https://github.com/fivaz/habits/compare/v1.0.0...v1.1.0) (2026-01-20)
+
+### ✨ Features
+
+* add an original green/brown green color palette ([9970833](https://github.com/fivaz/habits/commit/99708330cacf560625b9f27404721fe994d65d83))
+* replace icons ([c93021b](https://github.com/fivaz/habits/commit/c93021b5524350965e087f4af0fda6d11070cedd))
+
+### 🧹 Chores
+
+* add a shadcn green color palette ([4a1f8f8](https://github.com/fivaz/habits/commit/4a1f8f88df18c65f747bf147e3d6479b69aee0e5))
+* rename app ([33262c5](https://github.com/fivaz/habits/commit/33262c57d6a16f777b6029bfa6226814353b05cf))
+
 ## 1.0.0 (2026-01-20)
 
 ### 🧹 Chores
