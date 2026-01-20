@@ -7,12 +7,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
-import { getEmptyHabit, HabitUI } from "@/lib/habits/type";
+import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
 
 type HabitFormButtonProps = ButtonProps & {
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
-	habit?: HabitUI;
+	habit?: TodayHabitUI;
 };
 
 export function HabitFormButton({

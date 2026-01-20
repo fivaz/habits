@@ -4,11 +4,12 @@ import { ChangeEvent, ComponentProps, FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Dumbbell, Loader2, X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { GithubIcon } from "@/components/icons/github-icon";
 import { GoogleIcon } from "@/components/icons/google-icon";
+import { Logo } from "@/components/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -99,7 +100,7 @@ export function RegisterForm({ className, ...props }: ComponentProps<"div">) {
 					<div className="flex flex-col items-center gap-2 text-center">
 						<Link href="/public" className="flex flex-col items-center gap-2 font-medium">
 							<div className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-md">
-								<Dumbbell className="size-8 text-white" />
+								<Logo className="size-8" />
 							</div>
 							<span className="sr-only">{APP_NAME}</span>
 						</Link>

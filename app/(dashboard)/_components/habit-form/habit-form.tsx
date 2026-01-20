@@ -10,11 +10,11 @@ import { StepFormHeader } from "@/app/(dashboard)/_components/habit-form/step-fo
 import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { createHabitAction, updateHabitAction } from "@/lib/habits/actions";
-import { getEmptyHabit, HabitUI } from "@/lib/habits/type";
+import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
 
 type HabitFormProps = {
 	onClose: () => void;
-	habit: HabitUI;
+	habit: TodayHabitUI;
 };
 
 export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
@@ -23,7 +23,7 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 	const onNext = () => setCurrentStepIndex((s) => Math.min(s + 1, steps.length - 1));
 	const onPrevious = () => setCurrentStepIndex((s) => Math.max(s - 1, 0));
 	const [rehearsalCount, setRehearsalCount] = useState<number>(0);
-	const [habit, setHabit] = useState<HabitUI>(initialHabit);
+	const [habit, setHabit] = useState<TodayHabitUI>(initialHabit);
 
 	const setAnchorValue = (value: string) => {
 		setHabit((prev) => ({ ...prev, anchor: value }));
@@ -44,7 +44,7 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 	};
 
 	const handleSave = () => {
-		const optimisticHabit: HabitUI = {
+		const optimisticHabit: TodayHabitUI = {
 			...habit,
 			id: habit.id || crypto.randomUUID(),
 		};

@@ -4,10 +4,10 @@ import { Sparkles } from "lucide-react";
 
 import { AnchorLibrary } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-library";
 import { Button } from "@/components/ui/button";
+import { HabitPrefix } from "@/lib/habits/type";
 
 type AnchorSuggestionsProps = {
 	value: string;
-	currentStepIndex: number;
 	setAnchorValue: (value: string) => void;
 };
 
@@ -29,9 +29,7 @@ export function AnchorSuggestions({ value, setAnchorValue }: AnchorSuggestionsPr
 				<Sparkles className="mr-2 h-4 w-4 text-amber-500" />
 				{showAnchorLibrary ? "Write my own" : "Browse anchor ideas"}
 			</Button>
-			{showAnchorLibrary && (
-				<AnchorLibrary setValue={handleSelectSuggestion} value={"After I " + value} />
-			)}
+			{showAnchorLibrary && <AnchorLibrary setValue={handleSelectSuggestion} value={value} />}
 		</>
 	);
 }

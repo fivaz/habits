@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Brain } from "lucide-react";
 
-import { HabitUI } from "@/lib/habits/type";
+import { HabitPrefix, HabitUI } from "@/lib/habits/type";
 
 type HabitSummaryProps = {
 	habit: HabitUI;
@@ -46,19 +46,22 @@ export function RehearsalPanel({ rehearsalCount, habit }: HabitSummaryProps) {
 					<li className="flex items-start gap-2">
 						<span className="font-bold">1.</span>
 						<span>
-							<strong>Anchor:</strong> {habit.anchor}
+							<strong>Anchor: </strong>
+							{HabitPrefix.anchor} {habit.anchor}
 						</span>
 					</li>
 					<li className="flex items-start gap-2">
 						<span className="font-bold">2.</span>
 						<span>
-							<strong>Behavior:</strong> {habit.tinyBehavior}
+							<strong>Behavior: </strong>
+							{HabitPrefix.tinyBehavior} {habit.tinyBehavior}
 						</span>
 					</li>
 					<li className="flex items-start gap-2">
 						<span className="font-bold">3.</span>
 						<span>
-							<strong>Celebrate:</strong> {habit.celebration}
+							<strong>Celebrate: </strong>
+							{HabitPrefix.celebration} {habit.celebration}
 						</span>
 					</li>
 				</ol>

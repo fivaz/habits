@@ -1,17 +1,18 @@
 "use client";
 
 import { AnimatePresence } from "framer-motion";
-import { Leaf, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 
 import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
 import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";
 import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
+import { Logo } from "@/components/logo";
 import { HabitsProvider, useHabitsStore } from "@/hooks/habits-store";
-import { HabitUI } from "@/lib/habits/type";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 type HabitTrackerProps = {
-	habits: HabitUI[];
+	habits: TodayHabitUI[];
 };
 
 export function HabitTracker({ habits }: HabitTrackerProps) {
@@ -32,7 +33,7 @@ export function InternalHabitTracker() {
 					<div className="mb-4 flex items-center justify-between">
 						<div className="flex items-center gap-3">
 							<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-green-600 shadow-lg shadow-emerald-200">
-								<Leaf className="h-5 w-5 text-white" />
+								<Logo className="size-6" />
 							</div>
 							<div>
 								<GreetingsPanel />

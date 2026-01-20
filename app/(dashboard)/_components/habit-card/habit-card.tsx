@@ -5,17 +5,14 @@ import { Flame } from "lucide-react";
 
 import { HabitActionButtons } from "@/app/(dashboard)/_components/habit-card/habit-action-buttons";
 import { HabitSummary } from "@/app/(dashboard)/_components/habit-card/habit-summary";
-import { HabitUI } from "@/lib/habits/type";
+import { HabitUI, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
 type HabitCardProps = {
-	habit: HabitUI;
+	habit: TodayHabitUI;
 };
 
 export function HabitCard({ habit }: HabitCardProps) {
-	// TODO implement it later with the logs table
-	const isCompletedToday = false;
-
 	return (
 		<motion.div
 			layout
@@ -25,7 +22,7 @@ export function HabitCard({ habit }: HabitCardProps) {
 			exit={{ opacity: 0, y: -20 }}
 			className={cn(
 				"relative overflow-hidden rounded-2xl border bg-white shadow-sm transition-all",
-				isCompletedToday ? "border-emerald-300 bg-emerald-50/50" : "border-stone-200",
+				habit.isCompletedToday ? "border-emerald-300 bg-emerald-50/50" : "border-stone-200",
 			)}
 		>
 			<div className="p-5">
@@ -33,7 +30,7 @@ export function HabitCard({ habit }: HabitCardProps) {
 
 				<StreakRow habit={habit} />
 
-				<HabitActionButtons habit={habit} isCompletedToday={isCompletedToday} />
+				<HabitActionButtons habit={habit} />
 			</div>
 		</motion.div>
 	);

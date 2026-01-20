@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Check, Edit, MoreVertical, RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
+import CelebrationOverlay from "@/app/(dashboard)/_components/habit-card/celebration-overlay";
 import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,26 +15,45 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useConfirm } from "@/hooks/confirm/use-confirm";
 import { useHabitMutations } from "@/hooks/habits-store";
-import { deleteHabitAction } from "@/lib/habits/actions";
-import { HabitUI } from "@/lib/habits/type";
+import { deleteHabitAction, toggleHabitCompletionAction } from "@/lib/habits/actions";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 type HabitActionButtonsProps = {
-	isCompletedToday: boolean;
-	habit: HabitUI;
+	habit: TodayHabitUI;
 };
 
-export function HabitActionButtons({ habit, isCompletedToday }: HabitActionButtonsProps) {
+export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 	const [isPressed, setIsPressed] = useState(false);
 	const [openEditForm, setOpenEditForm] = useState(false);
+	const [openCelebration, setOpenCelebration] = useState(false);
 	const confirm = useConfirm();
-	const { deleteItem } = useHabitMutations();
+	const { deleteItem, updateItem } = useHabitMutations();
 
 	const onComplete = () => {
-		console.log("onComplete");
+		const willBeCompleted = !habit.isCompletedToday;
+		const optimisticHabit = {
+			...habit,
+			isCompletedToday: willBeCompleted,
+			totalCompletions: habit.totalCompletions + (willBeCompleted ? 1 : -1),
+		};
+
+		if (willBeCompleted) {
+			setOpenCelebration(true);
+		}
+
+		updateItem(optimisticHabit, {
+			persist: () => toggleHabitCompletionAction(habit.id),
+			onError: () =>
+				toast.error("Failed to complete habit.", {
+					description: "Your changes have been reverted, please try again",
+				}),
+		});
 	};
+
 	const onRedesign = () => {
 		console.log("onRedesign");
 	};
+
 	const onEdit = () => setOpenEditForm(true);
 
 	const onDelete = async () => {
@@ -56,11 +76,14 @@ export function HabitActionButtons({ habit, isCompletedToday }: HabitActionButto
 
 	return (
 		<div className="flex items-center gap-2">
-			{isCompletedToday ? (
-				<div className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-100 py-3 font-medium text-emerald-700">
+			{habit.isCompletedToday ? (
+				<button
+					onClick={onComplete}
+					className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-100 py-3 font-medium text-emerald-700"
+				>
 					<Check className="h-5 w-5" />
 					Done for today!
-				</div>
+				</button>
 			) : (
 				<>
 					<motion.button
@@ -112,6 +135,11 @@ export function HabitActionButtons({ habit, isCompletedToday }: HabitActionButto
 				</DropdownMenuContent>
 			</DropdownMenu>
 			<HabitFormButton habit={habit} open={openEditForm} onOpenChange={setOpenEditForm} />
+			<CelebrationOverlay
+				celebration={habit.celebration}
+				isOpen={openCelebration}
+				onClose={() => setOpenCelebration(false)}
+			/>
 		</div>
 	);
 }

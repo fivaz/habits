@@ -2,31 +2,47 @@
 
 import { revalidatePath } from "next/cache";
 
-import { ROUTES } from "@/lib/consts";
-import { HabitUI, habitUIArgs } from "@/lib/habits/type";
-import { logError } from "@/lib/logger"; // Adjust this path to your prisma client location
+import { format } from "date-fns";
+
+import { DATE, ROUTES } from "@/lib/consts";
+import { HabitUI, habitUIArgs, TodayHabitUI } from "@/lib/habits/type";
+import { logError } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 import { getUserId } from "@/lib/utils-server";
 
 /**
  * Fetches all active habit recipes for a specific user.
  */
-export async function getHabitsAction(): Promise<HabitUI[]> {
+export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 	const userId = await getUserId();
+	const today = format(new Date(), DATE);
 
 	try {
-		return prisma.habitRecipe.findMany({
-			...habitUIArgs,
+		const habits = await prisma.habitRecipe.findMany({
 			where: {
 				userId,
+				isActive: true,
+			},
+			select: {
+				...habitUIArgs.select,
+				logs: {
+					where: { date: today, status: "completed" },
+					take: 1,
+				},
 			},
 			orderBy: {
 				createdAt: "desc",
 			},
 		});
+
+		return habits.map(({ logs, ...habit }) => ({
+			...habit,
+			// If the array has an item, it was completed today
+			isCompletedToday: logs.length > 0,
+		}));
 	} catch (error) {
-		logError(error, "getHabitsByUser");
-		throw new Error("Could not retrieve habits. Please try again later.");
+		logError(error, "getHabitsAction");
+		throw new Error("Could not retrieve habits.");
 	}
 }
 
@@ -108,5 +124,61 @@ export async function deleteHabitAction(id: string) {
 		logError(error, "deleteHabitAction", { extra: { id } });
 
 		throw new Error("Could not delete habit. It may have already been removed.");
+	}
+}
+
+export async function toggleHabitCompletionAction(habitId: string) {
+	try {
+		const userId = await getUserId();
+		const today = format(new Date(), DATE);
+
+		const habit = await prisma.habitRecipe.findFirst({
+			where: { id: habitId, userId },
+			select: { id: true },
+		});
+		if (!habit) {
+			throw new Error("Habit not found");
+		}
+
+		const existingLog = await prisma.dailyLog.findFirst({
+			where: {
+				habitId: habit.id,
+				date: today,
+				habit: { userId },
+			},
+		});
+
+		if (existingLog) {
+			// UNDO: Delete the log and decrement completions
+			await prisma.$transaction([
+				prisma.dailyLog.delete({
+					where: { id: existingLog.id },
+				}),
+				prisma.habitRecipe.update({
+					where: { id: habit.id },
+					data: { totalCompletions: { decrement: 1 } },
+				}),
+			]);
+		} else {
+			// DONE: Create the log and increment completions
+			await prisma.$transaction([
+				prisma.dailyLog.create({
+					data: {
+						habitId: habit.id,
+						date: today,
+						status: "completed",
+					},
+				}),
+				prisma.habitRecipe.update({
+					where: { id: habit.id },
+					data: { totalCompletions: { increment: 1 } },
+				}),
+			]);
+		}
+
+		revalidatePath(ROUTES.HOME);
+	} catch (error) {
+		logError(error, "toggleHabitCompletion");
+		throw new Error("Could not update habit status.");
 	}
 }

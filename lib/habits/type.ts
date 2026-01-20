@@ -14,7 +14,9 @@ export const habitUIArgs = {
 
 export type HabitUI = Prisma.HabitRecipeGetPayload<typeof habitUIArgs>;
 
-export function getEmptyHabit(): HabitUI {
+export type TodayHabitUI = HabitUI & { isCompletedToday: boolean };
+
+export function getEmptyHabit(): TodayHabitUI {
 	return {
 		id: "",
 		anchor: "",
@@ -23,5 +25,12 @@ export function getEmptyHabit(): HabitUI {
 		anchorCategory: "other",
 		streak: 0,
 		totalCompletions: 0,
+		isCompletedToday: false,
 	};
 }
+
+export const HabitPrefix = {
+	anchor: "After I",
+	tinyBehavior: "I will",
+	celebration: "Then I will",
+};

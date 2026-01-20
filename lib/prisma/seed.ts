@@ -57,21 +57,21 @@ async function main() {
 
 	const habits = [
 		{
-			anchor: "After I pour my first cup of coffee",
-			tinyBehavior: "I will write down my top 3 priorities for the day",
-			celebration: "Say 'Today is going to be great!'",
+			anchor: "pour my first cup of coffee",
+			tinyBehavior: "write down my top 3 priorities for the day",
+			celebration: "say 'Today is going to be great!'",
 			anchorCategory: AnchorCategory.morning,
 		},
 		{
-			anchor: "After I close my laptop to finish work",
-			tinyBehavior: "I will clear one item off my physical desk",
-			celebration: "A quick fist pump",
+			anchor: "close my laptop to finish work",
+			tinyBehavior: "clear one item off my physical desk",
+			celebration: "a quick fist pump",
 			anchorCategory: AnchorCategory.work,
 		},
 		{
-			anchor: "After I brush my teeth at night",
-			tinyBehavior: "I will do one pushup",
-			celebration: "Smile in the mirror",
+			anchor: "brush my teeth at night",
+			tinyBehavior: "do one push-up",
+			celebration: "smile in the mirror",
 			anchorCategory: AnchorCategory.evening,
 		},
 	];
