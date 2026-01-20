@@ -22,6 +22,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { HabitRecipe } from "@/components/habits/data/habits";
 
 const categoryIcons = {
 	morning: Sun,
@@ -49,6 +50,7 @@ export default function HabitCard({
 }) {
 	const [isPressed, setIsPressed] = useState(false);
 	const CategoryIcon = categoryIcons[habit.anchor_category || "other"];
+	const [celebratingHabit, setCelebratingHabit] = useState(null);
 
 	return (
 		<motion.div

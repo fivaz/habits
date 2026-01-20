@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Check, Edit, MoreVertical, RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
+import CelebrationOverlay from "@/app/(dashboard)/_components/habit-card/celebration-overlay";
 import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,15 +25,21 @@ type HabitActionButtonsProps = {
 export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 	const [isPressed, setIsPressed] = useState(false);
 	const [openEditForm, setOpenEditForm] = useState(false);
+	const [openCelebration, setOpenCelebration] = useState(false);
 	const confirm = useConfirm();
 	const { deleteItem, updateItem } = useHabitMutations();
 
 	const onComplete = () => {
 		const optimisticHabit = {
 			...habit,
-			isCompletedToday: true,
+			isCompletedToday: !habit.isCompletedToday,
 			totalCompletions: habit.totalCompletions + 1,
 		};
+
+		if (optimisticHabit.isCompletedToday) {
+			setOpenCelebration(true);
+		}
+
 		updateItem(optimisticHabit, {
 			persist: () => toggleHabitCompletionAction(habit.id),
 			onError: () =>
@@ -45,6 +52,7 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 	const onRedesign = () => {
 		console.log("onRedesign");
 	};
+
 	const onEdit = () => setOpenEditForm(true);
 
 	const onDelete = async () => {
@@ -68,10 +76,13 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 	return (
 		<div className="flex items-center gap-2">
 			{habit.isCompletedToday ? (
-				<div className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-100 py-3 font-medium text-emerald-700">
+				<button
+					onClick={onComplete}
+					className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-100 py-3 font-medium text-emerald-700"
+				>
 					<Check className="h-5 w-5" />
 					Done for today!
-				</div>
+				</button>
 			) : (
 				<>
 					<motion.button
@@ -123,6 +134,11 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 				</DropdownMenuContent>
 			</DropdownMenu>
 			<HabitFormButton habit={habit} open={openEditForm} onOpenChange={setOpenEditForm} />
+			<CelebrationOverlay
+				celebration={habit.celebration}
+				isOpen={openCelebration}
+				onClose={() => setOpenCelebration(false)}
+			/>
 		</div>
 	);
 }

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { PartyPopper, Sparkles, Star } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { HabitUI } from "@/lib/habits/type";
 
 const celebrationEmojis = ["🎉", "✨", "🌟", "💫", "🎊", "⭐", "💪", "🙌"];
 
@@ -18,13 +19,13 @@ interface EmojiInstance {
 	id: number;
 	emoji: string;
 	delay: number;
+	left: string; // Calculated once in useEffect to keep the component pure
 }
 
 interface CelebrationOverlayProps {
 	isOpen: boolean;
 	onClose: () => void;
-	celebration: string;
-	habitName?: string;
+	celebration: HabitUI["celebration"];
 }
 
 interface ShineParticleProps {
@@ -33,30 +34,30 @@ interface ShineParticleProps {
 	y: number;
 }
 
-const ShineParticle: React.FC<ShineParticleProps> = ({ delay, x, y }) => (
-	<motion.div
-		initial={{ scale: 0, opacity: 0, x: 0, y: 0 }}
-		animate={{
-			scale: [0, 1.5, 0],
-			opacity: [0, 1, 0],
-			x: x,
-			y: y,
-		}}
-		transition={{ duration: 1.2, delay, ease: "easeOut" }}
-		className="absolute h-3 w-3 rounded-full bg-linear-to-br from-amber-400 to-orange-500"
-		style={{ left: "50%", top: "50%" }}
-	/>
-);
+function ShineParticle({ delay, x, y }: ShineParticleProps) {
+	return (
+		<motion.div
+			initial={{ scale: 0, opacity: 0, x: 0, y: 0 }}
+			animate={{
+				scale: [0, 1.5, 0],
+				opacity: [0, 1, 0],
+				x: x,
+				y: y,
+			}}
+			transition={{ duration: 1.2, delay, ease: "easeOut" }}
+			className="absolute h-3 w-3 rounded-full bg-linear-to-br from-amber-400 to-orange-500"
+			style={{ left: "50%", top: "50%" }}
+		/>
+	);
+}
 
 interface FloatingEmojiProps {
 	emoji: string;
 	delay: number;
+	left: string;
 }
 
-const FloatingEmoji: React.FC<FloatingEmojiProps> = ({ emoji, delay }) => {
-	// We calculate the position once and memoize it
-	const randomLeft = React.useMemo(() => `${Math.random() * 60 + 20}%`, []);
-
+function FloatingEmoji({ emoji, delay, left }: FloatingEmojiProps) {
 	return (
 		<motion.span
 			initial={{ y: 0, opacity: 0, scale: 0 }}
@@ -68,44 +69,39 @@ const FloatingEmoji: React.FC<FloatingEmojiProps> = ({ emoji, delay }) => {
 			transition={{ duration: 2, delay, ease: "easeOut" }}
 			className="absolute text-4xl"
 			style={{
-				left: randomLeft, // Use the stable value here
+				left: left,
 				bottom: "30%",
 			}}
 		>
 			{emoji}
 		</motion.span>
 	);
-};
+}
 
 export default function CelebrationOverlay({
+	celebration,
 	isOpen,
 	onClose,
-	celebration,
-	habitName,
 }: CelebrationOverlayProps) {
-	const [particles, setParticles] = useState<Particle[]>([]);
-	const [emojis, setEmojis] = useState<EmojiInstance[]>([]);
+	const generateParticles = (): Particle[] =>
+		Array.from({ length: 20 }, (_, i) => ({
+			id: i,
+			delay: Math.random() * 0.5,
+			x: (Math.random() - 0.5) * 300,
+			y: (Math.random() - 0.5) * 300,
+		}));
 
-	useEffect(() => {
-		if (isOpen) {
-			// Generate particles
-			const newParticles = Array.from({ length: 20 }, (_, i) => ({
-				id: i,
-				delay: Math.random() * 0.5,
-				x: (Math.random() - 0.5) * 300,
-				y: (Math.random() - 0.5) * 300,
-			}));
-			setParticles(newParticles);
+	const generateEmojis = (): EmojiInstance[] =>
+		Array.from({ length: 8 }, (_, i) => ({
+			id: i,
+			emoji: celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)],
+			delay: i * 0.15,
+			left: `${Math.random() * 60 + 20}%`,
+		}));
 
-			// Generate emojis
-			const newEmojis = Array.from({ length: 8 }, (_, i) => ({
-				id: i,
-				emoji: celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)],
-				delay: i * 0.15,
-			}));
-			setEmojis(newEmojis);
-		}
-	}, [isOpen]);
+	const particles = useMemo<Particle[]>(() => (isOpen ? generateParticles() : []), [isOpen]);
+
+	const emojis = useMemo<EmojiInstance[]>(() => (isOpen ? generateEmojis() : []), [isOpen]);
 
 	return (
 		<AnimatePresence>
@@ -135,7 +131,7 @@ export default function CelebrationOverlay({
 						{/* Floating Emojis */}
 						<div className="pointer-events-none absolute inset-0 overflow-hidden">
 							{emojis.map((e) => (
-								<FloatingEmoji key={e.id} emoji={e.emoji} delay={e.delay} />
+								<FloatingEmoji key={e.id} emoji={e.emoji} delay={e.delay} left={e.left} />
 							))}
 						</div>
 
