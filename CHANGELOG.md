@@ -1,3 +1,9 @@
+## 1.0.0 (2026-01-20)
+
+### 🧹 Chores
+
+* add boilerplate from github.com/fivaz/boilerplate ([efbd815](https://github.com/fivaz/habits/commit/efbd815b2b6fe84264ca076e70d028413fdd1ecb))
+
 ## [1.0.1](https://github.com/fivaz/boilerplate/compare/v1.0.0...v1.0.1) (2026-01-19)
 
 ### 🧹 Chores
