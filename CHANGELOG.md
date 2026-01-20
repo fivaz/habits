@@ -1,3 +1,10 @@
+## [1.8.0](https://github.com/fivaz/habits/compare/v1.7.0...v1.8.0) (2026-01-20)
+
+### ✨ Features
+
+* add settings page ([a3e465d](https://github.com/fivaz/habits/commit/a3e465d07d2342a963bdfaa460e900a42072bd89))
+* change default colors ([c2ea65a](https://github.com/fivaz/habits/commit/c2ea65a49c5f8abaf8412d4c98d86f1a33719f2e))
+
 ## [1.7.0](https://github.com/fivaz/habits/compare/v1.6.0...v1.7.0) (2026-01-20)
 
 ### ✨ Features
