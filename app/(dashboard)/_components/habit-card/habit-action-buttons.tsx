@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useConfirm } from "@/hooks/confirm/use-confirm";
 import { useHabitMutations } from "@/hooks/habits-store";
-import { deleteHabitAction } from "@/lib/habits/actions";
+import { deleteHabitAction, toggleHabitCompletionAction } from "@/lib/habits/actions";
 import { TodayHabitUI } from "@/lib/habits/type";
 
 type HabitActionButtonsProps = {
@@ -25,11 +25,23 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 	const [isPressed, setIsPressed] = useState(false);
 	const [openEditForm, setOpenEditForm] = useState(false);
 	const confirm = useConfirm();
-	const { deleteItem } = useHabitMutations();
+	const { deleteItem, updateItem } = useHabitMutations();
 
 	const onComplete = () => {
-		console.log("onComplete");
+		const optimisticHabit = {
+			...habit,
+			isCompletedToday: true,
+			totalCompletions: habit.totalCompletions + 1,
+		};
+		updateItem(optimisticHabit, {
+			persist: () => toggleHabitCompletionAction(habit.id),
+			onError: () =>
+				toast.error("Failed to complete habit.", {
+					description: "Your changes have been reverted, please try again",
+				}),
+		});
 	};
+
 	const onRedesign = () => {
 		console.log("onRedesign");
 	};

@@ -26,10 +26,7 @@ export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 			select: {
 				...habitUIArgs.select,
 				logs: {
-					where: {
-						date: today,
-						status: "completed",
-					},
+					where: { date: today, status: "completed" },
 					take: 1,
 				},
 			},
@@ -127,5 +124,53 @@ export async function deleteHabitAction(id: string) {
 		logError(error, "deleteHabitAction", { extra: { id } });
 
 		throw new Error("Could not delete habit. It may have already been removed.");
+	}
+}
+
+export async function toggleHabitCompletionAction(habitId: string) {
+	try {
+		const userId = await getUserId();
+		const today = format(new Date(), DATE);
+
+		const existingLog = await prisma.dailyLog.findFirst({
+			where: {
+				habitId,
+				date: today,
+				habit: { userId },
+			},
+		});
+
+		if (existingLog) {
+			// UNDO: Delete the log and decrement completions
+			await prisma.$transaction([
+				prisma.dailyLog.delete({
+					where: { id: existingLog.id },
+				}),
+				prisma.habitRecipe.update({
+					where: { id: habitId },
+					data: { totalCompletions: { decrement: 1 } },
+				}),
+			]);
+		} else {
+			// DONE: Create the log and increment completions
+			await prisma.$transaction([
+				prisma.dailyLog.create({
+					data: {
+						habitId,
+						date: today,
+						status: "completed",
+					},
+				}),
+				prisma.habitRecipe.update({
+					where: { id: habitId },
+					data: { totalCompletions: { increment: 1 } },
+				}),
+			]);
+		}
+
+		revalidatePath(ROUTES.HOME);
+	} catch (error) {
+		logError(error, "toggleHabitCompletion");
+		throw new Error("Could not update habit status.");
 	}
 }
