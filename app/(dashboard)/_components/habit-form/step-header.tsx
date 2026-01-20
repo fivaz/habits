@@ -14,7 +14,7 @@ type HeaderProps = {
 	rehearsalCount: number;
 };
 
-export function StepFormHeader({ rehearsalCount, currentStepIndex, onClose }: HeaderProps) {
+export function StepHeader({ rehearsalCount, currentStepIndex, onClose }: HeaderProps) {
 	const step = steps[currentStepIndex];
 	const StepIcon = step.icon;
 	return (

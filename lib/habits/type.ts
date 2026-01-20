@@ -9,6 +9,7 @@ export const habitUIArgs = {
 		anchorCategory: true,
 		streak: true,
 		totalCompletions: true,
+		rehearsalCount: true,
 	},
 } satisfies Prisma.HabitRecipeDefaultArgs;
 
@@ -26,6 +27,7 @@ export function getEmptyHabit(): TodayHabitUI {
 		streak: 0,
 		totalCompletions: 0,
 		isCompletedToday: false,
+		rehearsalCount: 0,
 	};
 }
 

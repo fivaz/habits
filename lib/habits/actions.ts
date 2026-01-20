@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 
 import { DATE, ROUTES } from "@/lib/consts";
 import { HabitUI, habitUIArgs, TodayHabitUI } from "@/lib/habits/type";
@@ -64,6 +65,7 @@ export async function createHabitAction({
 				celebration,
 				userId,
 				anchorCategory,
+				rehearsalCount: 0,
 			},
 		});
 
@@ -127,58 +129,75 @@ export async function deleteHabitAction(id: string) {
 	}
 }
 
-export async function toggleHabitCompletionAction(habitId: string) {
+/**
+ * Increments the rehearsal count for a specific habit.
+ * This is used for the "wiring" phase to build initial muscle memory.
+ */
+export async function rehearsalHabitAction(habitId: string) {
 	try {
 		const userId = await getUserId();
-		const today = format(new Date(), DATE);
 
-		const habit = await prisma.habitRecipe.findFirst({
+		await prisma.habitRecipe.update({
 			where: { id: habitId, userId },
-			select: { id: true },
-		});
-		if (!habit) {
-			throw new Error("Habit not found");
-		}
-
-		const existingLog = await prisma.dailyLog.findFirst({
-			where: {
-				habitId: habit.id,
-				date: today,
-				habit: { userId },
+			data: {
+				rehearsalCount: {
+					increment: 1,
+				},
+			},
+			select: {
+				rehearsalCount: true,
 			},
 		});
 
-		if (existingLog) {
-			// UNDO: Delete the log and decrement completions
-			await prisma.$transaction([
-				prisma.dailyLog.delete({
-					where: { id: existingLog.id },
-				}),
-				prisma.habitRecipe.update({
-					where: { id: habit.id },
-					data: { totalCompletions: { decrement: 1 } },
-				}),
-			]);
-		} else {
-			// DONE: Create the log and increment completions
-			await prisma.$transaction([
-				prisma.dailyLog.create({
-					data: {
-						habitId: habit.id,
-						date: today,
-						status: "completed",
-					},
-				}),
-				prisma.habitRecipe.update({
-					where: { id: habit.id },
-					data: { totalCompletions: { increment: 1 } },
-				}),
-			]);
-		}
+		revalidatePath(ROUTES.HOME);
+	} catch (error) {
+		console.error("Error in rehearsalHabitAction:", error);
+		throw new Error("Failed to update rehearsal count.");
+	}
+}
+
+export async function logHabitCompletionAction(habitId: string) {
+	try {
+		const userId = await getUserId();
+
+		// 1. Get the user's timezone for the "Calendar Date"
+		const user = await prisma.user.findUnique({
+			where: { id: userId },
+			select: { timezone: true },
+		});
+
+		if (!user) throw new Error("User not found");
+
+		const today = formatInTimeZone(new Date(), user.timezone, DATE);
+
+		// 2. Atomic Transaction: Create log and increment counter
+		await prisma.$transaction(async (tx) => {
+			// Safety check: Ensure we don't duplicate if the UI guard fails
+			const existing = await tx.dailyLog.findUnique({
+				where: {
+					habitId_date: { habitId, date: today },
+				},
+			});
+
+			if (existing) return;
+
+			await tx.dailyLog.create({
+				data: {
+					habitId,
+					date: today,
+					status: "completed",
+				},
+			});
+
+			await tx.habitRecipe.update({
+				where: { id: habitId, userId }, // userId check for security
+				data: { totalCompletions: { increment: 1 } },
+			});
+		});
 
 		revalidatePath(ROUTES.HOME);
 	} catch (error) {
-		logError(error, "toggleHabitCompletion");
-		throw new Error("Could not update habit status.");
+		logError(error, "logHabitCompletion");
+		throw new Error("Failed to log completion.");
 	}
 }

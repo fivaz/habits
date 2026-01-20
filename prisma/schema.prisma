@@ -22,6 +22,7 @@ model User {
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
+  timezone     String        @default("UTC")
   sessions     Session[]
   accounts     Account[]
   habitRecipes HabitRecipe[]
@@ -35,9 +36,10 @@ model HabitRecipe {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   // Core ABC Recipe
-  anchor       String
-  tinyBehavior String @map("tiny_behavior")
-  celebration  String
+  anchor         String
+  tinyBehavior   String @map("tiny_behavior")
+  celebration    String
+  rehearsalCount Int
 
   // Categorization & Status
   anchorCategory AnchorCategory @default(other) @map("anchor_category")
@@ -60,16 +62,19 @@ model HabitRecipe {
 
 model DailyLog {
   id              String          @id @default(cuid())
-  date            String // Format: "yyyy-MM-dd"
+  date            String
   status          LogStatus
   celebrationDone Boolean         @default(false) @map("celebration_done")
   notes           String?         @db.Text
   redesignReason  RedesignReason? @map("redesign_reason")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
 
   // Foreign Key logic
   habitId String      @map("habit_id")
   habit   HabitRecipe @relation(fields: [habitId], references: [id], onDelete: Cascade)
 
+  @@unique([habitId, date])
   @@index([date])
   @@index([habitId])
   @@map("daily_log")
