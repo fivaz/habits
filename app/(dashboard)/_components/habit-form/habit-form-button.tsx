@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
 import { Step } from "@/app/(dashboard)/_components/service";
-import { Button, ButtonProps } from "@/components/ui/button";
+import { ButtonProps } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
 import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { motion } from "framer-motion";
-import { Brain, SparkleIcon, SparklesIcon, ZapIcon } from "lucide-react";
+import { ZapIcon } from "lucide-react";
 
 import { REHEARSAL_TARGET } from "@/app/(dashboard)/_components/service";
 import { Brain2Icon } from "@/components/file";

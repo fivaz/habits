@@ -1,8 +1,5 @@
 import { BrainIcon } from "lucide-react";
 
-import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
-import { Step } from "@/app/(dashboard)/_components/service";
-import { TodayHabitUI } from "@/lib/habits/type";
 
 type MissingRehearsalBadgeProps = {
 	onStartRehearsal: () => void;

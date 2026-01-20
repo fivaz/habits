@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 import { MissingRehearsalBadge } from "@/app/(dashboard)/_components/habit-card/missing-rehearsal-badge";
 import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
-import { REHEARSAL_TARGET, Step } from "@/app/(dashboard)/_components/service";
+import { Step } from "@/app/(dashboard)/_components/service";
 import { categoryColors, categoryIcons } from "@/lib/category/type";
-import { HabitPrefix, HabitUI, TodayHabitUI } from "@/lib/habits/type";
+import { HabitPrefix, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
 type HabitSummaryProps = {

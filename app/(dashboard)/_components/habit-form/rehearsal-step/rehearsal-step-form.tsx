@@ -2,13 +2,7 @@ import React from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
-	ActivityIcon,
-	CircleIcon,
-	CpuIcon,
 	Repeat,
-	Share2Icon,
-	SplineIcon,
-	ZapIcon,
 } from "lucide-react";
 import { Activity, Circle, Cpu, Share2, Spline, Zap } from "lucide-react";
 import { toast } from "sonner";
@@ -20,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { DialogDescription } from "@/components/ui/dialog";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { rehearsalHabitAction } from "@/lib/habits/actions";
-import { HabitUI, TodayHabitUI } from "@/lib/habits/type";
+import { TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
 const HABIT_LEVELS = {

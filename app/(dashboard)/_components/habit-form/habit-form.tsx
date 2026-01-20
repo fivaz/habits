@@ -7,10 +7,10 @@ import { BehaviorStepForm } from "@/app/(dashboard)/_components/habit-form/behav
 import { CelebrationStepForm } from "@/app/(dashboard)/_components/habit-form/celebration-step/celebration-step-form";
 import { RehearsalStepForm } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-step-form";
 import { StepHeader } from "@/app/(dashboard)/_components/habit-form/step-header";
-import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
+import { Step, steps } from "@/app/(dashboard)/_components/service";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { createHabitAction, updateHabitAction } from "@/lib/habits/actions";
-import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 type HabitFormProps = {
 	onClose: () => void;
