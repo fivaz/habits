@@ -20,7 +20,7 @@ import {
 	FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth-client";
+import { signIn } from "@/lib/auth-client";
 import { APP_NAME, ROUTES } from "@/lib/consts";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +36,7 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
 		e.preventDefault();
 		setLoading(true);
 		try {
-			await authClient.signIn.email({
+			await signIn.email({
 				email,
 				password,
 				rememberMe,
@@ -62,7 +62,7 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
 	const handleSocialLogin = async (provider: "google" | "github") => {
 		setSocialLoading(provider);
 		try {
-			await authClient.signIn.social({
+			await signIn.social({
 				provider,
 				callbackURL: ROUTES.HOME,
 			});

@@ -2,8 +2,8 @@
 
 import { ReactNode } from "react";
 
-// import { usePathname } from "next/navigation";
 import { AppLayout } from "@/components/app-layout";
+import { TimezoneProvider } from "@/components/timezone-sync";
 import { cn } from "@/lib/utils";
 
 type DashboardLayoutType = {
@@ -11,9 +11,12 @@ type DashboardLayoutType = {
 };
 
 export default function DashboardLayout({ children }: DashboardLayoutType) {
-	// const pathname = usePathname();
-
 	const withPadding = true;
 
-	return <AppLayout className={cn({ "pt-6 pb-20": withPadding })}>{children}</AppLayout>;
+	return (
+		<AppLayout className={cn({ "pt-6 pb-20": withPadding })}>
+			<TimezoneProvider />
+			{children}
+		</AppLayout>
+	);
 }
