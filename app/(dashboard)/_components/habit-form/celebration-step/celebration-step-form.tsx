@@ -13,6 +13,7 @@ type CelebrationStepFormProps = {
 	onPrevious: () => void;
 	setCelebrationValue: (value: string) => void;
 	value: string;
+	onSave: () => void;
 };
 
 export function CelebrationStepForm({
@@ -20,6 +21,7 @@ export function CelebrationStepForm({
 	value,
 	onNext,
 	onPrevious,
+	onSave,
 }: CelebrationStepFormProps) {
 	const step = steps[Step.CELEBRATION];
 	return (
@@ -46,7 +48,13 @@ export function CelebrationStepForm({
 
 			<DialogFooter className="flex gap-3 border-t bg-stone-50 p-4">
 				<PreviousButton onPrevious={onPrevious} />
-				<NextButton step={step} onNext={onNext} />
+				<NextButton
+					step={step}
+					onNext={() => {
+						onNext();
+						onSave();
+					}}
+				/>
 			</DialogFooter>
 		</>
 	);

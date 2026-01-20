@@ -51,12 +51,13 @@ export const steps: StepConfig[] = [
 		bgColor: "from-amber-50 to-orange-50",
 		prefix: "Then I will",
 		placeholder: 'say "Awesome!" and smile...',
-		tip: "This is the secret sauce! A genuine positive emotion wires the habit into your brain.",
+		tip: "This is the secret sauce! A genuine positive emotion wires the tiny habit into your brain.",
 	},
 	{
 		id: "rehearsal",
 		title: "Rehearsal Time!",
-		subtitle: "Wire your habit into your brain by rehearsing it now",
+		subtitle:
+			"Wire this tiny habit into your brain: Practice it 5 times right now to jumpstart your neural pathways.",
 		icon: BrainIcon,
 		color: "from-purple-500 to-violet-600",
 		bgColor: "from-purple-50 to-violet-100",

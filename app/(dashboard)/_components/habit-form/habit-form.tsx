@@ -22,7 +22,6 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 	const [currentStepIndex, setCurrentStepIndex] = useState(0);
 	const onNext = () => setCurrentStepIndex((s) => Math.min(s + 1, steps.length - 1));
 	const onPrevious = () => setCurrentStepIndex((s) => Math.max(s - 1, 0));
-	const [rehearsalCount, setRehearsalCount] = useState<number>(0);
 	const [habit, setHabit] = useState<TodayHabitUI>(initialHabit);
 
 	const setAnchorValue = (value: string) => {
@@ -35,12 +34,6 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 
 	const setCelebrationValue = (value: string) => {
 		setHabit((prev) => ({ ...prev, celebration: value }));
-	};
-
-	const resetForm = () => {
-		setCurrentStepIndex(0);
-		setRehearsalCount(0);
-		setHabit(getEmptyHabit());
 	};
 
 	const handleSave = () => {
@@ -68,18 +61,6 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 					}),
 			});
 		}
-
-		resetForm();
-		onClose();
-	};
-
-	const onRehearse = () => {
-		if (rehearsalCount < REHEARSAL_TARGET - 1) {
-			setRehearsalCount((prev) => prev + 1);
-		} else {
-			handleSave();
-			resetForm();
-		}
 	};
 
 	const renderStep = (step: number) => {
@@ -104,14 +85,15 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 						setCelebrationValue={setCelebrationValue}
 						onNext={onNext}
 						onPrevious={onPrevious}
+						onSave={handleSave}
 					/>
 				);
 			case Step.REHEARSAL:
 				return (
 					<RehearsalStepForm
+						incrementRehearsal={incrementRehearsal}
+						onClose={onClose}
 						habit={habit}
-						rehearsalCount={rehearsalCount}
-						onRehearse={onRehearse}
 					/>
 				);
 			default:

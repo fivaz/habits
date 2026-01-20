@@ -1,3 +1,4 @@
+import { REHEARSAL_TARGET } from "@/app/(dashboard)/_components/service";
 import { AnchorCategory, Prisma } from "@/lib/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 
@@ -61,18 +62,21 @@ async function main() {
 			tinyBehavior: "write down my top 3 priorities for the day",
 			celebration: "say 'Today is going to be great!'",
 			anchorCategory: AnchorCategory.morning,
+			rehearsalCount: REHEARSAL_TARGET - 1,
 		},
 		{
 			anchor: "close my laptop to finish work",
 			tinyBehavior: "clear one item off my physical desk",
 			celebration: "a quick fist pump",
 			anchorCategory: AnchorCategory.work,
+			rehearsalCount: REHEARSAL_TARGET - 2,
 		},
 		{
 			anchor: "brush my teeth at night",
 			tinyBehavior: "do one push-up",
 			celebration: "smile in the mirror",
 			anchorCategory: AnchorCategory.evening,
+			rehearsalCount: REHEARSAL_TARGET,
 		},
 	];
 

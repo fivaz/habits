@@ -2,22 +2,42 @@ import React from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Repeat } from "lucide-react";
+import { toast } from "sonner";
 
 import { RehearsalPanel } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-panel";
 import { StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
 import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
 import { Button } from "@/components/ui/button";
 import { DialogDescription } from "@/components/ui/dialog";
-import { HabitUI } from "@/lib/habits/type";
+import { useHabitMutations } from "@/hooks/habits-store";
+import { rehearsalHabitAction } from "@/lib/habits/actions";
+import { HabitUI, TodayHabitUI } from "@/lib/habits/type";
 
 type RehearsalStepFormProps = {
-	onRehearse: () => void;
-	rehearsalCount: number;
-	habit: HabitUI;
+	habit: TodayHabitUI;
+	onClose: () => void;
+	incrementRehearsal: () => void;
 };
 
-export function RehearsalStepForm({ habit, rehearsalCount, onRehearse }: RehearsalStepFormProps) {
-	const step = steps[0];
+export function RehearsalStepForm({ incrementRehearsal, onClose, habit }: RehearsalStepFormProps) {
+	const { updateItem } = useHabitMutations();
+	const step = steps[Step.REHEARSAL];
+
+	const onRehearse = () => {
+		const optimisticHabit = { ...habit, rehearsalCount: habit.rehearsalCount + 1 };
+
+		incrementRehearsal();
+
+		updateItem(optimisticHabit, {
+			persist: () => rehearsalHabitAction(optimisticHabit.id),
+			onError: () => toast.error("Could not log rehearsal. Please try again."),
+		});
+
+		if (optimisticHabit.rehearsalCount === REHEARSAL_TARGET) {
+			onClose();
+		}
+	};
+
 	return (
 		<div className="flex-1 overflow-y-auto p-6">
 			<AnimatePresence mode="wait">
@@ -30,7 +50,7 @@ export function RehearsalStepForm({ habit, rehearsalCount, onRehearse }: Rehears
 				>
 					<DialogDescription className="text-stone-600">{step.subtitle}</DialogDescription>
 
-					<RehearsalPanel rehearsalCount={rehearsalCount} habit={habit} />
+					<RehearsalPanel habit={habit} />
 
 					<StepTip step={step} />
 
@@ -40,9 +60,9 @@ export function RehearsalStepForm({ habit, rehearsalCount, onRehearse }: Rehears
 							className="w-full rounded-2xl bg-linear-to-r from-purple-500 to-violet-600 py-8 text-lg text-white shadow-lg hover:from-purple-600 hover:to-violet-700"
 						>
 							<Repeat className="mr-2 h-6 w-6" />
-							{rehearsalCount === REHEARSAL_TARGET - 1
+							{habit.rehearsalCount === REHEARSAL_TARGET - 1
 								? "Complete Final Rehearsal!"
-								: `I Rehearsed It! (${rehearsalCount + 1}/${REHEARSAL_TARGET})`}
+								: `I Rehearsed It! (${habit.rehearsalCount + 1}/${REHEARSAL_TARGET})`}
 						</Button>
 					</motion.div>
 				</motion.div>

@@ -3,14 +3,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Brain } from "lucide-react";
 
+import { REHEARSAL_TARGET } from "@/app/(dashboard)/_components/service";
 import { HabitPrefix, HabitUI } from "@/lib/habits/type";
 
 type HabitSummaryProps = {
 	habit: HabitUI;
-	rehearsalCount: number;
 };
 
-export function RehearsalPanel({ rehearsalCount, habit }: HabitSummaryProps) {
+export function RehearsalPanel({ habit }: HabitSummaryProps) {
 	return (
 		<>
 			<div className="relative py-8">
@@ -24,7 +24,7 @@ export function RehearsalPanel({ rehearsalCount, habit }: HabitSummaryProps) {
 				>
 					<Brain className="h-16 w-16 text-purple-600" />
 					{/* Neural connections dots */}
-					{[...Array(Math.min(rehearsalCount + 1, 5))].map((_, i) => (
+					{[...Array(Math.min(habit.rehearsalCount + 1, REHEARSAL_TARGET))].map((_, i) => (
 						<motion.div
 							key={i}
 							initial={{ scale: 0, opacity: 0 }}

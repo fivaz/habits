@@ -129,6 +129,33 @@ export async function deleteHabitAction(id: string) {
 	}
 }
 
+/**
+ * Increments the rehearsal count for a specific habit.
+ * This is used for the "wiring" phase to build initial muscle memory.
+ */
+export async function rehearsalHabitAction(habitId: string) {
+	try {
+		const userId = await getUserId();
+
+		await prisma.habitRecipe.update({
+			where: { id: habitId, userId },
+			data: {
+				rehearsalCount: {
+					increment: 1,
+				},
+			},
+			select: {
+				rehearsalCount: true,
+			},
+		});
+
+		revalidatePath(ROUTES.HOME);
+	} catch (error) {
+		console.error("Error in rehearsalHabitAction:", error);
+		throw new Error("Failed to update rehearsal count.");
+	}
+}
+
 export async function logHabitCompletionAction(habitId: string) {
 	try {
 		const userId = await getUserId();
