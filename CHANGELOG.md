@@ -1,3 +1,20 @@
+## [1.3.0](https://github.com/fivaz/habits/compare/v1.2.0...v1.3.0) (2026-01-20)
+
+### ✨ Features
+
+* implement add habit ([59db770](https://github.com/fivaz/habits/commit/59db7705b0363d7248c65fc7b5f9fe2d3f0e4504))
+
+### 🧹 Chores
+
+* add 4 steps of create habit form ([634b29d](https://github.com/fivaz/habits/commit/634b29de2fbffc1987294017432b10e4b4eaea42))
+* add rehearsal form ([43715b1](https://github.com/fivaz/habits/commit/43715b10b540c6434223d52bfcd46cb758d37be7))
+* update field names ([d0ce871](https://github.com/fivaz/habits/commit/d0ce871697681622970326b821c5ff6bef1231f8))
+
+### 🔨 Code Refactoring
+
+* add types and lint files ([8056c86](https://github.com/fivaz/habits/commit/8056c86e3eb731303700c5f6fd51ee47b6d3c4e6))
+* refactor habit form ([900b898](https://github.com/fivaz/habits/commit/900b898345f9cf450104f82219a4a3a054705243))
+
 ## [1.2.0](https://github.com/fivaz/habits/compare/v1.1.0...v1.2.0) (2026-01-20)
 
 ### ✨ Features
