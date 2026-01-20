@@ -132,9 +132,17 @@ export async function toggleHabitCompletionAction(habitId: string) {
 		const userId = await getUserId();
 		const today = format(new Date(), DATE);
 
+		const habit = await prisma.habitRecipe.findFirst({
+			where: { id: habitId, userId },
+			select: { id: true },
+		});
+		if (!habit) {
+			throw new Error("Habit not found");
+		}
+
 		const existingLog = await prisma.dailyLog.findFirst({
 			where: {
-				habitId,
+				habitId: habit.id,
 				date: today,
 				habit: { userId },
 			},
@@ -147,7 +155,7 @@ export async function toggleHabitCompletionAction(habitId: string) {
 					where: { id: existingLog.id },
 				}),
 				prisma.habitRecipe.update({
-					where: { id: habitId },
+					where: { id: habit.id },
 					data: { totalCompletions: { decrement: 1 } },
 				}),
 			]);
@@ -156,13 +164,13 @@ export async function toggleHabitCompletionAction(habitId: string) {
 			await prisma.$transaction([
 				prisma.dailyLog.create({
 					data: {
-						habitId,
+						habitId: habit.id,
 						date: today,
 						status: "completed",
 					},
 				}),
 				prisma.habitRecipe.update({
-					where: { id: habitId },
+					where: { id: habit.id },
 					data: { totalCompletions: { increment: 1 } },
 				}),
 			]);

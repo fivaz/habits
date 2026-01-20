@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence } from "framer-motion";
-import { Leaf, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 
 import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
 import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";

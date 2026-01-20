@@ -29,9 +29,7 @@ export function AnchorSuggestions({ value, setAnchorValue }: AnchorSuggestionsPr
 				<Sparkles className="mr-2 h-4 w-4 text-amber-500" />
 				{showAnchorLibrary ? "Write my own" : "Browse anchor ideas"}
 			</Button>
-			{showAnchorLibrary && (
-				<AnchorLibrary setValue={handleSelectSuggestion} value={`${HabitPrefix.anchor} ${value}`} />
-			)}
+			{showAnchorLibrary && <AnchorLibrary setValue={handleSelectSuggestion} value={value} />}
 		</>
 	);
 }
