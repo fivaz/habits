@@ -1,34 +1,35 @@
 import React, { useState } from "react";
 
+import { toast } from "sonner";
+
 import { AnchorStepForm } from "@/app/(dashboard)/_components/anchor-step-form";
 import { BehaviorStepForm } from "@/app/(dashboard)/_components/behavior-step-form";
 import { CelebrationStepForm } from "@/app/(dashboard)/_components/celebration-step-form";
 import { RehearsalStepForm } from "@/app/(dashboard)/_components/rehearsal-step-form";
-import { HabitUI, REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
+import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
 import { StepFormHeader } from "@/app/(dashboard)/_components/step-form-header";
+import { useHabitMutations } from "@/hooks/habits-store";
+import { createHabitAction } from "@/lib/habits/actions";
+import { getEmptyHabit, HabitUI } from "@/lib/habits/type";
 
 type HabitFormProps = {
 	onClose: () => void;
 };
 
 export function HabitForm({ onClose }: HabitFormProps) {
+	const { addItem } = useHabitMutations();
 	const [currentStepIndex, setCurrentStepIndex] = useState(0);
 	const onNext = () => setCurrentStepIndex((s) => Math.min(s + 1, steps.length - 1));
 	const onPrevious = () => setCurrentStepIndex((s) => Math.max(s - 1, 0));
 	const [rehearsalCount, setRehearsalCount] = useState<number>(0);
-	const [habit, setHabit] = useState<HabitUI>({
-		anchor: "",
-		behavior: "",
-		celebration: "",
-		rehearsal: "",
-	});
+	const [habit, setHabit] = useState<HabitUI>(getEmptyHabit());
 
 	const setAnchorValue = (value: string) => {
 		setHabit((prev) => ({ ...prev, anchor: value }));
 	};
 
 	const setBehaviorValue = (value: string) => {
-		setHabit((prev) => ({ ...prev, behavior: value }));
+		setHabit((prev) => ({ ...prev, tinyBehavior: value }));
 	};
 
 	const setCelebrationValue = (value: string) => {
@@ -38,10 +39,18 @@ export function HabitForm({ onClose }: HabitFormProps) {
 	const resetForm = () => {
 		setCurrentStepIndex(0);
 		setRehearsalCount(0);
+		setHabit(getEmptyHabit());
 	};
 
 	const handleSave = () => {
 		console.log(habit);
+		addItem(habit, {
+			persist: () => createHabitAction(habit),
+			onSuccess: () => toast.success("Habit Saved"),
+			onError: () => toast.error("Connection lost. Reverting changes..."),
+		});
+		resetForm();
+		onClose();
 	};
 
 	const onRehearse = () => {
@@ -62,7 +71,7 @@ export function HabitForm({ onClose }: HabitFormProps) {
 			case Step.BEHAVIOR:
 				return (
 					<BehaviorStepForm
-						value={habit.behavior}
+						value={habit.tinyBehavior}
 						setBehaviorValue={setBehaviorValue}
 						onNext={onNext}
 						onPrevious={onPrevious}

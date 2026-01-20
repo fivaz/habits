@@ -1,7 +1,7 @@
 import { HabitTracker } from "@/app/(dashboard)/_components/habit-tracker";
-import { getHabits } from "@/lib/habits/actions";
+import { getHabitsAction } from "@/lib/habits/actions";
 
 export default async function HomePage() {
-	const habits = await getHabits();
+	const habits = await getHabitsAction();
 	return <HabitTracker habits={habits} />;
 }

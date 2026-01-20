@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Brain } from "lucide-react";
 
-import { type HabitUI } from "@/app/(dashboard)/_components/service";
+import { HabitUI } from "@/lib/habits/type";
 
 type HabitSummaryProps = {
 	habit: HabitUI;
@@ -52,7 +52,7 @@ export function RehearsalPanel({ rehearsalCount, habit }: HabitSummaryProps) {
 					<li className="flex items-start gap-2">
 						<span className="font-bold">2.</span>
 						<span>
-							<strong>Behavior:</strong> {habit.behavior}
+							<strong>Behavior:</strong> {habit.tinyBehavior}
 						</span>
 					</li>
 					<li className="flex items-start gap-2">
