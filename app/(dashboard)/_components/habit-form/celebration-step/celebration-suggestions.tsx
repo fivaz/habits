@@ -31,6 +31,7 @@ export function CelebrationSuggestions({ value, setValue }: CelebrationSuggestio
 				{celebrationSuggestions.map((suggestion, index) => (
 					<button
 						key={index}
+						type="button"
 						onClick={() => setValue(suggestion.toLowerCase())}
 						className={cn(
 							"rounded-full px-3 py-1.5 text-sm transition-all",

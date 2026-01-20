@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 
 type AnchorSuggestionsProps = {
 	value: string;
-	currentStepIndex: number;
 	setAnchorValue: (value: string) => void;
 };
 

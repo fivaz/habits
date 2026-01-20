@@ -29,11 +29,7 @@ export function AnchorStepForm({ setAnchorValue, value, onNext }: AnchorStepForm
 					>
 						<DialogDescription className="text-stone-600">{step.subtitle}</DialogDescription>
 
-						<AnchorSuggestions
-							currentStepIndex={Step.ANCHOR}
-							value={value}
-							setAnchorValue={setAnchorValue}
-						/>
+						<AnchorSuggestions value={value} setAnchorValue={setAnchorValue} />
 
 						<StepTextArea step={step} value={value} setValue={setAnchorValue} />
 
