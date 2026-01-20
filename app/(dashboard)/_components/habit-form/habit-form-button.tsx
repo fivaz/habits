@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
+import { Step } from "@/app/(dashboard)/_components/service";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
 import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
@@ -13,12 +14,14 @@ type HabitFormButtonProps = ButtonProps & {
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
 	habit?: TodayHabitUI;
+	startStep?: number;
 };
 
 export function HabitFormButton({
 	open: externalOpen,
 	onOpenChange: setExternalOpen,
 	habit = getEmptyHabit(),
+	startStep = Step.ANCHOR,
 	children,
 	...props
 }: HabitFormButtonProps) {
@@ -31,7 +34,7 @@ export function HabitFormButton({
 		<Dialog open={open} onOpenChange={setOpen}>
 			{!setExternalOpen && (
 				<DialogTrigger asChild>
-					<Button {...props}>{children}</Button>
+					<button {...props}>{children}</button>
 				</DialogTrigger>
 			)}
 
@@ -55,7 +58,7 @@ export function HabitFormButton({
 							}}
 							className="relative mx-auto flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
 						>
-							<HabitForm habit={habit} onClose={() => setOpen(false)} />
+							<HabitForm startStep={startStep} habit={habit} onClose={() => setOpen(false)} />
 						</motion.div>
 					)}
 				</AnimatePresence>

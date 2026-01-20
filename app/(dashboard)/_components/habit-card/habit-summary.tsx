@@ -1,11 +1,13 @@
 import React from "react";
 
+import { MissingRehearsalBadge } from "@/app/(dashboard)/_components/habit-card/missing-rehearsal-badge";
+import { REHEARSAL_TARGET } from "@/app/(dashboard)/_components/service";
 import { categoryColors, categoryIcons } from "@/lib/category/type";
-import { HabitPrefix, HabitUI } from "@/lib/habits/type";
+import { HabitPrefix, HabitUI, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
 type HabitSummaryProps = {
-	habit: HabitUI;
+	habit: TodayHabitUI;
 };
 
 export function HabitSummary({ habit }: HabitSummaryProps) {
@@ -15,13 +17,20 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 		<>
 			{/* Category Badge */}
 			<div
-				className={cn(
-					categoryColors[habit.anchorCategory],
-					"absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1",
-				)}
+				className={
+					"absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1"
+				}
 			>
-				<CategoryIcon className="h-3 w-3" />
-				<span className="text-xs font-medium capitalize">{habit.anchorCategory}</span>
+				{habit.rehearsalCount < REHEARSAL_TARGET && <MissingRehearsalBadge habit={habit} />}
+				<div
+					className={cn(
+						categoryColors[habit.anchorCategory],
+						"flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1",
+					)}
+				>
+					<CategoryIcon className="h-3 w-3" />
+					<span className="text-xs font-medium capitalize">{habit.anchorCategory}</span>
+				</div>
 			</div>
 
 			{/* ABC Recipe */}

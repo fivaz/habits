@@ -6,7 +6,7 @@ import { AnchorStepForm } from "@/app/(dashboard)/_components/habit-form/anchor-
 import { BehaviorStepForm } from "@/app/(dashboard)/_components/habit-form/behavior-step/behavior-step-form";
 import { CelebrationStepForm } from "@/app/(dashboard)/_components/habit-form/celebration-step/celebration-step-form";
 import { RehearsalStepForm } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-step-form";
-import { StepFormHeader } from "@/app/(dashboard)/_components/habit-form/step-form-header";
+import { StepHeader } from "@/app/(dashboard)/_components/habit-form/step-header";
 import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { createHabitAction, updateHabitAction } from "@/lib/habits/actions";
@@ -15,11 +15,12 @@ import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
 type HabitFormProps = {
 	onClose: () => void;
 	habit: TodayHabitUI;
+	startStep: number;
 };
 
-export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
+export function HabitForm({ startStep, habit: initialHabit, onClose }: HabitFormProps) {
 	const { addItem, updateItem } = useHabitMutations();
-	const [currentStepIndex, setCurrentStepIndex] = useState(0);
+	const [currentStepIndex, setCurrentStepIndex] = useState(startStep);
 	const onNext = () => setCurrentStepIndex((s) => Math.min(s + 1, steps.length - 1));
 	const onPrevious = () => setCurrentStepIndex((s) => Math.max(s - 1, 0));
 	const [habit, setHabit] = useState<TodayHabitUI>(initialHabit);
@@ -34,6 +35,10 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 
 	const setCelebrationValue = (value: string) => {
 		setHabit((prev) => ({ ...prev, celebration: value }));
+	};
+
+	const incrementRehearsal = () => {
+		setHabit((prev) => ({ ...prev, rehearsalCount: prev.rehearsalCount + 1 }));
 	};
 
 	const handleSave = () => {
@@ -103,8 +108,8 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 
 	return (
 		<>
-			<StepFormHeader
-				rehearsalCount={rehearsalCount}
+			<StepHeader
+				rehearsalCount={habit.rehearsalCount}
 				currentStepIndex={currentStepIndex}
 				onClose={onClose}
 			/>
