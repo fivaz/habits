@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { XIcon } from "lucide-react";
 
-import { RehearsalProgressBar } from "@/app/(dashboard)/_components/rehearsal-progress-bar";
+import { RehearsalProgressBar } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-progress-bar";
 import { steps } from "@/app/(dashboard)/_components/service";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Sparkles } from "lucide-react";
 
-import { AnchorLibrary } from "@/app/(dashboard)/_components/anchor-library";
+import { AnchorLibrary } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-library";
 import { Button } from "@/components/ui/button";
 
 type AnchorSuggestionsProps = {

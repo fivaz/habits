@@ -1,28 +1,29 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { toast } from "sonner";
 
-import { AnchorStepForm } from "@/app/(dashboard)/_components/anchor-step-form";
-import { BehaviorStepForm } from "@/app/(dashboard)/_components/behavior-step-form";
-import { CelebrationStepForm } from "@/app/(dashboard)/_components/celebration-step-form";
-import { RehearsalStepForm } from "@/app/(dashboard)/_components/rehearsal-step-form";
+import { AnchorStepForm } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-step-form";
+import { BehaviorStepForm } from "@/app/(dashboard)/_components/habit-form/behavior-step/behavior-step-form";
+import { CelebrationStepForm } from "@/app/(dashboard)/_components/habit-form/celebration-step/celebration-step-form";
+import { RehearsalStepForm } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-step-form";
+import { StepFormHeader } from "@/app/(dashboard)/_components/habit-form/step-form-header";
 import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
-import { StepFormHeader } from "@/app/(dashboard)/_components/step-form-header";
 import { useHabitMutations } from "@/hooks/habits-store";
-import { createHabitAction } from "@/lib/habits/actions";
+import { createHabitAction, updateHabitAction } from "@/lib/habits/actions";
 import { getEmptyHabit, HabitUI } from "@/lib/habits/type";
 
 type HabitFormProps = {
 	onClose: () => void;
+	habit: HabitUI;
 };
 
-export function HabitForm({ onClose }: HabitFormProps) {
-	const { addItem } = useHabitMutations();
+export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
+	const { addItem, updateItem } = useHabitMutations();
 	const [currentStepIndex, setCurrentStepIndex] = useState(0);
 	const onNext = () => setCurrentStepIndex((s) => Math.min(s + 1, steps.length - 1));
 	const onPrevious = () => setCurrentStepIndex((s) => Math.max(s - 1, 0));
 	const [rehearsalCount, setRehearsalCount] = useState<number>(0);
-	const [habit, setHabit] = useState<HabitUI>(getEmptyHabit());
+	const [habit, setHabit] = useState<HabitUI>(initialHabit);
 
 	const setAnchorValue = (value: string) => {
 		setHabit((prev) => ({ ...prev, anchor: value }));
@@ -43,12 +44,31 @@ export function HabitForm({ onClose }: HabitFormProps) {
 	};
 
 	const handleSave = () => {
-		console.log(habit);
-		addItem(habit, {
-			persist: () => createHabitAction(habit),
-			onSuccess: () => toast.success("Habit Saved"),
-			onError: () => toast.error("Connection lost. Reverting changes..."),
-		});
+		const optimisticHabit: HabitUI = {
+			...habit,
+			id: habit.id || crypto.randomUUID(),
+		};
+
+		if (habit.id) {
+			updateItem(optimisticHabit, {
+				persist: () => updateHabitAction(optimisticHabit),
+				onSuccess: () => toast.success("Habit updated successfully."),
+				onError: () =>
+					toast.error("Failed to update habit.", {
+						description: "Your changes have been reverted, please try again",
+					}),
+			});
+		} else {
+			addItem(optimisticHabit, {
+				persist: () => createHabitAction(optimisticHabit),
+				onSuccess: () => toast.success("Habit created successfully."),
+				onError: () =>
+					toast.error("Failed to create habit.", {
+						description: "Your changes have been reverted, please try again",
+					}),
+			});
+		}
+
 		resetForm();
 		onClose();
 	};

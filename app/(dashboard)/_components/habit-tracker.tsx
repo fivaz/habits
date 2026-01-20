@@ -1,21 +1,14 @@
 "use client";
 
-import React from "react";
-
 import { AnimatePresence } from "framer-motion";
 import { Leaf, Plus } from "lucide-react";
 
-import { GreetingsPanel } from "@/app/(dashboard)/_components/GreetingsPanel";
-import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form-button";
+import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
+import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";
+import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
 import { HabitsProvider, useHabitsStore } from "@/hooks/habits-store";
 import { HabitUI } from "@/lib/habits/type";
-
-const HabitCard = ({ habit }: { habit: HabitUI }) => (
-	<div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
-		<h3 className="font-bold">{habit.tinyBehavior}</h3>
-	</div>
-);
 
 type HabitTrackerProps = {
 	habits: HabitUI[];
