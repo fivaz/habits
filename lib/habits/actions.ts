@@ -35,10 +35,10 @@ export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 			},
 		});
 
-		return habits.map((habit) => ({
+		return habits.map(({ logs, ...habit }) => ({
 			...habit,
 			// If the array has an item, it was completed today
-			isCompletedToday: habit.logs.length > 0,
+			isCompletedToday: logs.length > 0,
 		}));
 	} catch (error) {
 		logError(error, "getHabitsAction");
