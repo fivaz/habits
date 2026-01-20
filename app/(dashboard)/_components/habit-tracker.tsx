@@ -8,10 +8,10 @@ import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";
 import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
 import { HabitsProvider, useHabitsStore } from "@/hooks/habits-store";
-import { HabitUI } from "@/lib/habits/type";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 type HabitTrackerProps = {
-	habits: HabitUI[];
+	habits: TodayHabitUI[];
 };
 
 export function HabitTracker({ habits }: HabitTrackerProps) {

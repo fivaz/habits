@@ -15,14 +15,13 @@ import {
 import { useConfirm } from "@/hooks/confirm/use-confirm";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { deleteHabitAction } from "@/lib/habits/actions";
-import { HabitUI } from "@/lib/habits/type";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 type HabitActionButtonsProps = {
-	isCompletedToday: boolean;
-	habit: HabitUI;
+	habit: TodayHabitUI;
 };
 
-export function HabitActionButtons({ habit, isCompletedToday }: HabitActionButtonsProps) {
+export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 	const [isPressed, setIsPressed] = useState(false);
 	const [openEditForm, setOpenEditForm] = useState(false);
 	const confirm = useConfirm();
@@ -56,7 +55,7 @@ export function HabitActionButtons({ habit, isCompletedToday }: HabitActionButto
 
 	return (
 		<div className="flex items-center gap-2">
-			{isCompletedToday ? (
+			{habit.isCompletedToday ? (
 				<div className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-100 py-3 font-medium text-emerald-700">
 					<Check className="h-5 w-5" />
 					Done for today!

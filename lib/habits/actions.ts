@@ -2,31 +2,50 @@
 
 import { revalidatePath } from "next/cache";
 
-import { ROUTES } from "@/lib/consts";
-import { HabitUI, habitUIArgs } from "@/lib/habits/type";
-import { logError } from "@/lib/logger"; // Adjust this path to your prisma client location
+import { format } from "date-fns";
+
+import { DATE, ROUTES } from "@/lib/consts";
+import { HabitUI, habitUIArgs, TodayHabitUI } from "@/lib/habits/type";
+import { logError } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 import { getUserId } from "@/lib/utils-server";
 
 /**
  * Fetches all active habit recipes for a specific user.
  */
-export async function getHabitsAction(): Promise<HabitUI[]> {
+export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 	const userId = await getUserId();
+	const today = format(new Date(), DATE);
 
 	try {
-		return prisma.habitRecipe.findMany({
-			...habitUIArgs,
+		const habits = await prisma.habitRecipe.findMany({
 			where: {
 				userId,
+				isActive: true,
+			},
+			select: {
+				...habitUIArgs.select,
+				logs: {
+					where: {
+						date: today,
+						status: "completed",
+					},
+					take: 1,
+				},
 			},
 			orderBy: {
 				createdAt: "desc",
 			},
 		});
+
+		return habits.map((habit) => ({
+			...habit,
+			// If the array has an item, it was completed today
+			isCompletedToday: habit.logs.length > 0,
+		}));
 	} catch (error) {
-		logError(error, "getHabitsByUser");
-		throw new Error("Could not retrieve habits. Please try again later.");
+		logError(error, "getHabitsAction");
+		throw new Error("Could not retrieve habits.");
 	}
 }
 
