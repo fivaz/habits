@@ -3,7 +3,7 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Briefcase, Coffee, LucideIcon, Moon, Sun } from "lucide-react";
 
-import { Category } from "@/app/(dashboard)/_components/anchor-library";
+import { Category } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-library";
 import { cn } from "@/lib/utils";
 
 const CATEGORY_CONFIG: Record<Category, { icon: LucideIcon; colors: string }> = {
@@ -22,7 +22,7 @@ type CategorySectionProps = {
 	onSelect: (val: string, cat: string) => void;
 };
 
-export function CategorySection({
+export function AnchorCategorySection({
 	category,
 	items,
 	selectedValue,

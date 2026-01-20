@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { BookOpen, Plus, Sparkles } from "lucide-react";
 
-import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form-button";
+import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
 
 export function Onboarding() {
 	return (

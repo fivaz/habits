@@ -3,9 +3,9 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Repeat } from "lucide-react";
 
-import { RehearsalPanel } from "@/app/(dashboard)/_components/rehearsal-panel";
+import { RehearsalPanel } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-panel";
+import { StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
 import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
-import { StepTip } from "@/app/(dashboard)/_components/step-body";
 import { Button } from "@/components/ui/button";
 import { DialogDescription } from "@/components/ui/dialog";
 import { HabitUI } from "@/lib/habits/type";

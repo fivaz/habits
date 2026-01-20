@@ -5,8 +5,8 @@ import React from "react";
 import { AnimatePresence } from "framer-motion";
 import { Leaf, Plus } from "lucide-react";
 
-import { GreetingsPanel } from "@/app/(dashboard)/_components/GreetingsPanel";
-import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form-button";
+import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
+import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
 import { HabitsProvider, useHabitsStore } from "@/hooks/habits-store";
 import { HabitUI } from "@/lib/habits/type";

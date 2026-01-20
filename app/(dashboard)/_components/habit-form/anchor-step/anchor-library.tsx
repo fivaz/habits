@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Search, Sparkles } from "lucide-react";
 
-import { CategorySection } from "@/app/(dashboard)/_components/anchor-category-section"; // Adjusted import path
+import { AnchorCategorySection } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-category-section"; // Adjusted import path
 import { Input } from "@/components/ui/input";
 
 export type Category = "morning" | "meals" | "work" | "evening";
@@ -80,7 +80,7 @@ export function AnchorLibrary({ setValue, value }: AnchorLibraryProps) {
 					if (filteredItems.length === 0) return null;
 
 					return (
-						<CategorySection
+						<AnchorCategorySection
 							key={cat}
 							category={cat}
 							items={filteredItems}

@@ -2,10 +2,10 @@ import React from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import { AnchorSuggestions } from "@/app/(dashboard)/_components/anchor-suggestions";
+import { AnchorSuggestions } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-suggestions";
+import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
+import { NextButton } from "@/app/(dashboard)/_components/habit-form/step-footer";
 import { Step, steps } from "@/app/(dashboard)/_components/service";
-import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/step-body";
-import { NextButton } from "@/app/(dashboard)/_components/step-footer";
 import { DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
 type AnchorStepFormProps = {

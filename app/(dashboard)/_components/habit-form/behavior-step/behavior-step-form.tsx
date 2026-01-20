@@ -2,26 +2,25 @@ import React from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import { CelebrationSuggestions } from "@/app/(dashboard)/_components/celebration-suggestions";
+import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
+import { NextButton, PreviousButton } from "@/app/(dashboard)/_components/habit-form/step-footer";
 import { Step, steps } from "@/app/(dashboard)/_components/service";
-import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/step-body";
-import { NextButton, PreviousButton } from "@/app/(dashboard)/_components/step-footer";
 import { DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
-type CelebrationStepFormProps = {
+type BehaviorStepFormProps = {
 	onNext: () => void;
 	onPrevious: () => void;
-	setCelebrationValue: (value: string) => void;
+	setBehaviorValue: (value: string) => void;
 	value: string;
 };
 
-export function CelebrationStepForm({
-	setCelebrationValue,
+export function BehaviorStepForm({
+	setBehaviorValue,
 	value,
 	onNext,
 	onPrevious,
-}: CelebrationStepFormProps) {
-	const step = steps[Step.CELEBRATION];
+}: BehaviorStepFormProps) {
+	const step = steps[Step.BEHAVIOR];
 	return (
 		<>
 			<div className="flex-1 overflow-y-auto p-6">
@@ -35,9 +34,7 @@ export function CelebrationStepForm({
 					>
 						<DialogDescription className="text-stone-600">{step.subtitle}</DialogDescription>
 
-						<StepTextArea step={step} value={value} setValue={setCelebrationValue} />
-
-						<CelebrationSuggestions value={value} setValue={setCelebrationValue} />
+						<StepTextArea step={step} value={value} setValue={setBehaviorValue} />
 
 						<StepTip step={step} />
 					</motion.div>

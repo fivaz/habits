@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import { HabitForm } from "@/app/(dashboard)/_components/habit-form";
+import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
 

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 import { toast } from "sonner";
 
-import { AnchorStepForm } from "@/app/(dashboard)/_components/anchor-step-form";
-import { BehaviorStepForm } from "@/app/(dashboard)/_components/behavior-step-form";
-import { CelebrationStepForm } from "@/app/(dashboard)/_components/celebration-step-form";
-import { RehearsalStepForm } from "@/app/(dashboard)/_components/rehearsal-step-form";
+import { AnchorStepForm } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-step-form";
+import { BehaviorStepForm } from "@/app/(dashboard)/_components/habit-form/behavior-step/behavior-step-form";
+import { CelebrationStepForm } from "@/app/(dashboard)/_components/habit-form/celebration-step/celebration-step-form";
+import { RehearsalStepForm } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-step-form";
+import { StepFormHeader } from "@/app/(dashboard)/_components/habit-form/step-form-header";
 import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
-import { StepFormHeader } from "@/app/(dashboard)/_components/step-form-header";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { createHabitAction } from "@/lib/habits/actions";
 import { getEmptyHabit, HabitUI } from "@/lib/habits/type";
