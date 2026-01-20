@@ -64,11 +64,4 @@ export const steps: StepConfig[] = [
 	},
 ];
 
-export type HabitUI = {
-	anchor: string;
-	behavior: string;
-	celebration: string;
-	rehearsal: string;
-};
-
 export const REHEARSAL_TARGET = 5;
