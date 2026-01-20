@@ -1,3 +1,20 @@
+## [1.4.0](https://github.com/fivaz/habits/compare/v1.3.0...v1.4.0) (2026-01-20)
+
+### ✨ Features
+
+* add the 3 steps in the habit-card ([be6c0ed](https://github.com/fivaz/habits/commit/be6c0edc0f42e7b603d0d34f842bd5b1de9e5a04))
+* implement delete habit ([e3a915b](https://github.com/fivaz/habits/commit/e3a915b95a55ec386901aa22e28848e771c03311))
+* implement update habit ([c2973d1](https://github.com/fivaz/habits/commit/c2973d1148c76f50539f6f66233f49d39c1834bb))
+
+### 🧹 Chores
+
+* add habits to seed ([61ee3fe](https://github.com/fivaz/habits/commit/61ee3fe50eef29d4c7ab224fa8c68897dda49e07))
+* make enums in db lowercase ([b10a3ce](https://github.com/fivaz/habits/commit/b10a3ced680e45783494738b7ca592a73be30592))
+
+### 💄 Styles
+
+* move files' structure ([b9301c4](https://github.com/fivaz/habits/commit/b9301c4d23c3c36f777829a6e37d64cbc6f2ceb5))
+
 ## [1.3.0](https://github.com/fivaz/habits/compare/v1.2.0...v1.3.0) (2026-01-20)
 
 ### ✨ Features
