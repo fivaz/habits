@@ -1,3 +1,23 @@
+## [1.6.0](https://github.com/fivaz/habits/compare/v1.5.0...v1.6.0) (2026-01-20)
+
+### ✨ Features
+
+* add habit log being timezone aware ([c4deb31](https://github.com/fivaz/habits/commit/c4deb31ba8178f4fd218f35c99d6ab84b7b6ac9f))
+* add version page ([8b405da](https://github.com/fivaz/habits/commit/8b405da3e4251faf5876fa2584f5e28b752f27cd))
+* change name of button at every rehearsal ([b627c99](https://github.com/fivaz/habits/commit/b627c99a621a4649a5759be7cfcb58e8d22948f9))
+* implement add rehearsal on existing habits ([ca7e42c](https://github.com/fivaz/habits/commit/ca7e42c172c80dfe66f0c9dd47d793e157028132))
+* improve animation of brain when rehearsing ([1bd0356](https://github.com/fivaz/habits/commit/1bd03566e48a83951aacba54242b6c1735fc070a))
+
+### 🧹 Chores
+
+* add rehearsalCount to habit in db ([7447817](https://github.com/fivaz/habits/commit/74478173eaf3877041ba1281bd002047f3f6d272))
+* add timezone to user, and unique constraint to daily_log ([1e8f115](https://github.com/fivaz/habits/commit/1e8f11519258332b9395e83519e5a0a4ba95fcd6))
+* separate habit creation from habit rehearsal ([9561570](https://github.com/fivaz/habits/commit/95615702b79d0bedcef1912998787b242601db94))
+
+### 🔨 Code Refactoring
+
+* remove unnecessary imports ([257644a](https://github.com/fivaz/habits/commit/257644aa45c2f7340a08f686552d8f2dca809191))
+
 ## [1.5.0](https://github.com/fivaz/habits/compare/v1.4.0...v1.5.0) (2026-01-20)
 
 ### ✨ Features
