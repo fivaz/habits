@@ -3,7 +3,7 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { LucideIcon, X } from "lucide-react";
 
-import { steps } from "@/app/(dashboard)/_components/data";
+import { steps } from "@/app/(dashboard)/example/data";
 
 // --- Types ---
 

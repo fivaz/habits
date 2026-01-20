@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { XIcon } from "lucide-react";
 
+import { ReHearsalProgressBar } from "@/app/(dashboard)/_components/re-hearsal-progress-bar";
 import { steps } from "@/app/(dashboard)/_components/service";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
@@ -10,9 +11,16 @@ import { cn } from "@/lib/utils";
 type HeaderProps = {
 	currentStepIndex: number;
 	onClose: () => void;
+	rehearsalCount: number;
+	rehearsalTarget: number;
 };
 
-export function StepFormHeader({ currentStepIndex, onClose }: HeaderProps) {
+export function StepFormHeader({
+	rehearsalTarget,
+	rehearsalCount,
+	currentStepIndex,
+	onClose,
+}: HeaderProps) {
 	const step = steps[currentStepIndex];
 	const StepIcon = step.icon;
 	return (
@@ -37,6 +45,10 @@ export function StepFormHeader({ currentStepIndex, onClose }: HeaderProps) {
 					/>
 				))}
 			</div>
+
+			{step.id === "rehearsal" && (
+				<ReHearsalProgressBar rehearsalCount={rehearsalCount} rehearsalTarget={rehearsalTarget} />
+			)}
 
 			{/* Step Title & Icon */}
 			<div className="flex items-center gap-4">

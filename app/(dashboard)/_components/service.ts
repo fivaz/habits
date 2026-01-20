@@ -1,10 +1,4 @@
-import {
-	AnchorIcon,
-	BrainIcon,
-	LucideIcon,
-	PartyPopperIcon,
-	ZapIcon,
-} from "lucide-react";
+import { AnchorIcon, BrainIcon, LucideIcon, PartyPopperIcon, ZapIcon } from "lucide-react";
 
 export interface StepConfig {
 	id: "anchor" | "behavior" | "celebration" | "rehearsal";
@@ -62,3 +56,10 @@ export const steps: StepConfig[] = [
 		tip: "Rehearsing creates neural pathways. The more you practice the sequence, the more automatic it becomes!",
 	},
 ];
+
+export type HabitUI = {
+	anchor: string;
+	behavior: string;
+	celebration: string;
+	rehearsal: string;
+};
