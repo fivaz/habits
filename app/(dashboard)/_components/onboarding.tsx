@@ -1,6 +1,9 @@
+import React from "react";
+
 import { motion } from "framer-motion";
 import { BookOpen, Plus, Sparkles } from "lucide-react";
 
+import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form-button";
 import { Button } from "@/components/ui/button";
 
 export function Onboarding() {
@@ -17,14 +20,10 @@ export function Onboarding() {
 			<p className="mx-auto mb-6 max-w-xs text-stone-500">
 				Tiny habits are the foundation of big change. Let's create your first ABC recipe!
 			</p>
-			<Button
-				onClick={() => console.log("create")}
-				size="lg"
-				className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-emerald-200"
-			>
+			<HabitFormButton className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-emerald-200">
 				<Plus className="mr-2 h-5 w-5" />
 				Create Your First Recipe
-			</Button>
+			</HabitFormButton>
 
 			{/* Restored Learn More Section */}
 			<div className="mt-12 rounded-2xl border border-stone-200 bg-white p-6 text-left">

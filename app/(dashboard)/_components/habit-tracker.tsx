@@ -7,7 +7,7 @@ import { Coffee, Leaf, Moon, Plus, Sun } from "lucide-react";
 
 import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form-button";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
-import { RecipeCreator } from "@/app/(dashboard)/_components/recipe-creator";
+import { RecipeCreator } from "@/app/(dashboard)/example/recipe-creator";
 
 interface HabitRecipe {
 	id: string;

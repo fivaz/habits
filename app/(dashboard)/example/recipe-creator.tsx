@@ -2,14 +2,10 @@ import React, { useState } from "react";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import { steps } from "@/app/(dashboard)/_components/data";
-import {
-	HabitData,
-	HabitFormData,
-	RecipeDialog,
-} from "@/app/(dashboard)/_components/recipe-dialog";
-import { RehearsalView } from "@/app/(dashboard)/_components/rehearsal-view";
-import { StandardStepView } from "@/app/(dashboard)/_components/stand-step-view";
+import { steps } from "@/app/(dashboard)/example/data";
+import { HabitData, HabitFormData, RecipeDialog } from "@/app/(dashboard)/example/recipe-dialog";
+import { RehearsalView } from "@/app/(dashboard)/example/rehearsal-view";
+import { StandardStepView } from "@/app/(dashboard)/example/stand-step-view";
 import { Button } from "@/components/ui/button";
 
 interface RecipeCreatorProps {

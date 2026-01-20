@@ -1,33 +1,18 @@
 import React from "react";
 
 import { motion } from "framer-motion";
-import { Brain, Lightbulb, Repeat } from "lucide-react";
+import { Brain } from "lucide-react";
 
-import { HabitFormData, StepConfig } from "@/app/(dashboard)/_components/recipe-dialog";
-import { Button } from "@/components/ui/button";
+import { type HabitUI } from "@/app/(dashboard)/_components/service";
 
-/**
- * 2. RehearsalView
- * Handles the complex brain animation and logic specific to the rehearsal step.
- */
-export const RehearsalView = ({
-	step,
-	formData,
-	rehearsalCount,
-	rehearsalTarget,
-	onRehearse,
-}: {
-	step: StepConfig;
-	formData: HabitFormData;
+type HabitSummaryProps = {
+	habit: HabitUI;
 	rehearsalCount: number;
-	rehearsalTarget: number;
-	onRehearse: () => void;
-}) => {
+};
+
+export function ReHearsalPanel({ rehearsalCount, habit }: HabitSummaryProps) {
 	return (
 		<>
-			<p className="text-stone-600">{step.subtitle}</p>
-
-			{/* Brain Connection Visualization */}
 			<div className="relative py-8">
 				<motion.div
 					animate={{
@@ -55,47 +40,29 @@ export const RehearsalView = ({
 				</motion.div>
 			</div>
 
-			{/* Sequence Summary */}
 			<div className="space-y-3 rounded-xl border border-purple-200 bg-purple-50 p-4">
 				<p className="font-semibold text-purple-900">Rehearse the full sequence:</p>
 				<ol className="space-y-2 text-sm text-purple-800">
 					<li className="flex items-start gap-2">
 						<span className="font-bold">1.</span>
 						<span>
-							<strong>Anchor:</strong> {formData.anchor}
+							<strong>Anchor:</strong> {habit.anchor}
 						</span>
 					</li>
 					<li className="flex items-start gap-2">
 						<span className="font-bold">2.</span>
 						<span>
-							<strong>Behavior:</strong> {formData.tiny_behavior}
+							<strong>Behavior:</strong> {habit.behavior}
 						</span>
 					</li>
 					<li className="flex items-start gap-2">
 						<span className="font-bold">3.</span>
 						<span>
-							<strong>Celebrate:</strong> {formData.celebration}
+							<strong>Celebrate:</strong> {habit.celebration}
 						</span>
 					</li>
 				</ol>
 			</div>
-
-			<div className="flex items-start gap-2 rounded-xl border border-stone-200 bg-stone-50 p-3">
-				<Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-				<p className="text-sm text-stone-600">{step.tip}</p>
-			</div>
-
-			<motion.div whileTap={{ scale: 0.95 }} className="pt-2">
-				<Button
-					onClick={onRehearse}
-					className="w-full rounded-2xl bg-linear-to-r from-purple-500 to-violet-600 py-8 text-lg text-white shadow-lg hover:from-purple-600 hover:to-violet-700"
-				>
-					<Repeat className="mr-2 h-6 w-6" />
-					{rehearsalCount === rehearsalTarget - 1
-						? "Complete Final Rehearsal!"
-						: `I Rehearsed It! (${rehearsalCount + 1}/${rehearsalTarget})`}
-				</Button>
-			</motion.div>
 		</>
 	);
-};
+}

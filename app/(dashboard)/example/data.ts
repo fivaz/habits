@@ -1,6 +1,6 @@
 import { Anchor, Brain, PartyPopper, Zap } from "lucide-react";
 
-import { StepConfig } from "@/app/(dashboard)/_components/recipe-dialog";
+import { StepConfig } from "@/app/(dashboard)/example/recipe-dialog";
 
 export const steps: StepConfig[] = [
 	{

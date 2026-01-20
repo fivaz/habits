@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Sparkles } from "lucide-react";
+import { Lightbulb, Sparkles } from "lucide-react";
 
-import { steps } from "@/app/(dashboard)/_components/service";
+import { StepConfig } from "@/app/(dashboard)/example/recipe-dialog";
+import AnchorLibrary1 from "@/components/habits/anchor-library1";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -17,29 +18,44 @@ const celebrationSuggestions: string[] = [
 	"Snap my fingers proudly",
 ];
 
-type AnchorLibraryProps = {
+/**
+ * 3. StandardStepView
+ * Handles the reusable form inputs (Textarea, Anchor toggle, Chips).
+ */
+export const StandardStepView = ({
+	step,
+	value,
+	onChange,
+	showAnchorLibrary,
+	toggleAnchorLibrary,
+	onSelectAnchor,
+}: {
+	step: StepConfig;
 	value: string;
-	currentStepIndex: number;
-	setValue: (value: string) => void;
-};
-
-export function SuggestionsLibrary({ currentStepIndex, value, setValue }: AnchorLibraryProps) {
-	const [showAnchorLibrary, setShowAnchorLibrary] = useState<boolean>(false);
-	const step = steps[currentStepIndex];
-
+	onChange: (val: string) => void;
+	showAnchorLibrary: boolean;
+	toggleAnchorLibrary: () => void;
+	onSelectAnchor: (anchor: string, category: string) => void;
+}) => {
 	return (
 		<>
-			<Button
-				variant="outline"
-				onClick={() => setShowAnchorLibrary(!showAnchorLibrary)}
-				className="w-full rounded-xl border-2 border-dashed py-3"
-			>
-				<Sparkles className="mr-2 h-4 w-4 text-amber-500" />
-				{showAnchorLibrary ? "Write my own" : "Browse anchor ideas"}
-			</Button>
+			<p className="text-stone-600">{step.subtitle}</p>
 
-			{currentStepIndex === 0 && showAnchorLibrary ? (
-				<div>Suggestion Library</div>
+			{/* Anchor Library Toggle */}
+			{step.id === "anchor" && (
+				<Button
+					variant="outline"
+					onClick={toggleAnchorLibrary}
+					className="w-full rounded-xl border-2 border-dashed py-3"
+				>
+					<Sparkles className="mr-2 h-4 w-4 text-amber-500" />
+					{showAnchorLibrary ? "Write my own" : "Browse anchor ideas"}
+				</Button>
+			)}
+
+			{/* Conditional Rendering: Anchor Library OR Input Field */}
+			{step.id === "anchor" && showAnchorLibrary ? (
+				<AnchorLibrary1 onSelectAnchor={onSelectAnchor} selectedAnchor={"After I " + value} />
 			) : (
 				<>
 					<div className="relative">
@@ -50,7 +66,7 @@ export function SuggestionsLibrary({ currentStepIndex, value, setValue }: Anchor
 						</div>
 						<Textarea
 							value={value}
-							onChange={(e) => setValue(e.target.value)}
+							onChange={(e) => onChange(e.target.value)}
 							placeholder={step.placeholder}
 							className="min-h-30 rounded-2xl border-stone-200 pt-10 text-lg focus:border-emerald-400 focus:ring-emerald-400"
 						/>
@@ -67,7 +83,7 @@ export function SuggestionsLibrary({ currentStepIndex, value, setValue }: Anchor
 								{celebrationSuggestions.map((suggestion, idx) => (
 									<button
 										key={idx}
-										onClick={() => setValue(suggestion.toLowerCase())}
+										onClick={() => onChange(suggestion.toLowerCase())}
 										className={`rounded-full px-3 py-1.5 text-sm transition-all ${
 											value === suggestion.toLowerCase()
 												? "bg-amber-500 text-white"
@@ -82,6 +98,11 @@ export function SuggestionsLibrary({ currentStepIndex, value, setValue }: Anchor
 					)}
 				</>
 			)}
+
+			<div className="flex items-start gap-2 rounded-xl border border-stone-200 bg-stone-50 p-3">
+				<Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+				<p className="text-sm text-stone-600">{step.tip}</p>
+			</div>
 		</>
 	);
-}
+};

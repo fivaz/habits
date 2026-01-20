@@ -1,40 +1,35 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Lightbulb } from "lucide-react";
 
 import { AnchorSuggestions } from "@/app/(dashboard)/_components/anchor-suggestions";
 import { CelebrationSuggestions } from "@/app/(dashboard)/_components/celebration-suggestions";
-import { steps } from "@/app/(dashboard)/_components/service";
+import { ReHearsalPanel } from "@/app/(dashboard)/_components/re-hearsal-panel";
+import { HabitUI, steps } from "@/app/(dashboard)/_components/service";
 import { DialogDescription } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-
-type HabitFormData = {
-	anchor: string;
-	behavior: string;
-	celebration: string;
-	rehearsal: string;
-};
-
 type StepFormBodyProps = {
 	currentStepIndex: number;
+	habit: HabitUI;
+	setHabit: Dispatch<SetStateAction<HabitUI>>;
+	rehearsalCount: number;
 };
 
-export function StepFormBody({ currentStepIndex }: StepFormBodyProps) {
+export function StepFormBody({
+	rehearsalCount,
+	currentStepIndex,
+	setHabit,
+	habit,
+}: StepFormBodyProps) {
 	const step = steps[currentStepIndex];
-	const [data, setData] = useState<HabitFormData>({
-		anchor: "",
-		behavior: "",
-		celebration: "",
-		rehearsal: "",
-	});
 
-	const value = data[step.id];
+	const value = habit[step.id];
 
 	const setValue = (value: string) => {
-		setData((prev) => ({ ...prev, [step.id]: value }));
+		setHabit((prev) => ({ ...prev, [step.id]: value }));
 	};
 
 	return (
@@ -49,7 +44,7 @@ export function StepFormBody({ currentStepIndex }: StepFormBodyProps) {
 				>
 					<DialogDescription className="text-stone-600">{step.subtitle}</DialogDescription>
 
-					{currentStepIndex === 0 && (
+					{step.id === "anchor" && (
 						<AnchorSuggestions
 							currentStepIndex={currentStepIndex}
 							value={value}
@@ -66,15 +61,24 @@ export function StepFormBody({ currentStepIndex }: StepFormBodyProps) {
 						>
 							{step.prefix}
 						</div>
-						<Textarea
-							value={value}
-							onChange={(e) => setValue(e.target.value)}
-							placeholder={step.placeholder}
-							className="min-h-30 rounded-2xl border-stone-200 pt-10 text-lg focus:border-emerald-400 focus:ring-emerald-400"
-						/>
+
+						{step.id !== "rehearsal" && (
+							<Textarea
+								value={value}
+								onChange={(e) => setValue(e.target.value)}
+								placeholder={step.placeholder}
+								className="min-h-30 rounded-2xl border-stone-200 pt-10 text-lg focus:border-emerald-400 focus:ring-emerald-400"
+							/>
+						)}
+
+						{step.id === "rehearsal" && (
+							<ReHearsalPanel rehearsalCount={rehearsalCount} habit={habit} />
+						)}
 					</div>
 
-					{currentStepIndex === 2 && <CelebrationSuggestions value={value} setValue={setValue} />}
+					{step.id === "celebration" && (
+						<CelebrationSuggestions value={value} setValue={setValue} />
+					)}
 
 					<div className="flex items-start gap-2 rounded-xl border border-stone-200 bg-stone-50 p-3">
 						<Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
