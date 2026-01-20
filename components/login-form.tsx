@@ -9,6 +9,7 @@ import { toast } from "sonner";
 
 import { GithubIcon } from "@/components/icons/github-icon";
 import { GoogleIcon } from "@/components/icons/google-icon";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -79,7 +80,7 @@ export function LoginForm({ className, ...props }: ComponentProps<"div">) {
 					<div className="flex flex-col items-center gap-2 text-center">
 						<div className="flex flex-col items-center gap-2 font-medium">
 							<div className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-md">
-								<Dumbbell className="size-8 text-white" />
+								<Logo className="size-8 text-white" />
 							</div>
 							<span className="sr-only">{APP_NAME}</span>
 						</div>
