@@ -10,7 +10,7 @@ type HabitSummaryProps = {
 	rehearsalCount: number;
 };
 
-export function ReHearsalPanel({ rehearsalCount, habit }: HabitSummaryProps) {
+export function RehearsalPanel({ rehearsalCount, habit }: HabitSummaryProps) {
 	return (
 		<>
 			<div className="relative py-8">
