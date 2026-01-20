@@ -73,10 +73,7 @@ export async function updateHabitAction({
 		}
 
 		await prisma.habitRecipe.update({
-			where: {
-				id,
-				userId,
-			},
+			where: { id, userId },
 			data: {
 				anchor,
 				tinyBehavior,
@@ -91,5 +88,25 @@ export async function updateHabitAction({
 			extra: { anchor, tinyBehavior, celebration, anchorCategory, id },
 		});
 		throw new Error("Could not update habit. Please try again later.");
+	}
+}
+
+export async function deleteHabitAction(id: string) {
+	try {
+		const userId = await getUserId();
+
+		if (!id) {
+			throw new Error("Habit ID is required for deletion.");
+		}
+
+		await prisma.habitRecipe.delete({
+			where: { id, userId },
+		});
+
+		revalidatePath(ROUTES.HOME);
+	} catch (error) {
+		logError(error, "deleteHabitAction", { extra: { id } });
+
+		throw new Error("Could not delete habit. It may have already been removed.");
 	}
 }
