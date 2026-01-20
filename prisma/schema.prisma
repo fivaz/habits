@@ -36,9 +36,10 @@ model HabitRecipe {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   // Core ABC Recipe
-  anchor       String
-  tinyBehavior String @map("tiny_behavior")
-  celebration  String
+  anchor         String
+  tinyBehavior   String @map("tiny_behavior")
+  celebration    String
+  rehearsalCount Int
 
   // Categorization & Status
   anchorCategory AnchorCategory @default(other) @map("anchor_category")
