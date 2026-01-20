@@ -21,7 +21,7 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 					"absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1"
 				}
 			>
-				{habit.rehearsalCount < REHEARSAL_TARGET && <MissingRehearsalBadge habit={habit} />}
+				<MissingRehearsalBadge habit={habit} />
 				<div
 					className={cn(
 						categoryColors[habit.anchorCategory],
