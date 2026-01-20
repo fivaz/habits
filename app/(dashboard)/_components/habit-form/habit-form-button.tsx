@@ -7,15 +7,33 @@ import { AnimatePresence, motion } from "framer-motion";
 import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
+import { getEmptyHabit, HabitUI } from "@/lib/habits/type";
 
-export function HabitFormButton({ children, ...props }: ButtonProps) {
-	const [open, setOpen] = useState(false);
+type HabitFormButtonProps = ButtonProps & {
+	open?: boolean;
+	onOpenChange?: (open: boolean) => void;
+	habit?: HabitUI;
+};
+
+export function HabitFormButton({
+	open: externalOpen,
+	onOpenChange: setExternalOpen,
+	habit = getEmptyHabit(),
+	children,
+	...props
+}: HabitFormButtonProps) {
+	const [internalOpen, setInternalOpen] = useState(false);
+
+	const open = externalOpen ?? internalOpen;
+	const setOpen = setExternalOpen ?? setInternalOpen;
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>
-				<Button {...props}>{children}</Button>
-			</DialogTrigger>
+			{!setExternalOpen && (
+				<DialogTrigger asChild>
+					<Button {...props}>{children}</Button>
+				</DialogTrigger>
+			)}
 
 			<DialogOverlay className="bg-black/40 backdrop-blur-sm" />
 
@@ -37,7 +55,7 @@ export function HabitFormButton({ children, ...props }: ButtonProps) {
 							}}
 							className="relative mx-auto flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
 						>
-							<HabitForm onClose={() => setOpen(false)} />
+							<HabitForm habit={habit} onClose={() => setOpen(false)} />
 						</motion.div>
 					)}
 				</AnimatePresence>

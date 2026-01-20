@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { Leaf, Plus } from "lucide-react";
 
 import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
-import { HabitCard } from "@/app/(dashboard)/_components/habit-card";
+import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";
 import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
 import { HabitsProvider, useHabitsStore } from "@/hooks/habits-store";

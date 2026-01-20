@@ -7,6 +7,8 @@ export const habitUIArgs = {
 		tinyBehavior: true,
 		anchor: true,
 		anchorCategory: true,
+		streak: true,
+		totalCompletions: true,
 	},
 } satisfies Prisma.HabitRecipeDefaultArgs;
 
@@ -19,5 +21,7 @@ export function getEmptyHabit(): HabitUI {
 		tinyBehavior: "",
 		celebration: "",
 		anchorCategory: "other",
+		streak: 0,
+		totalCompletions: 0,
 	};
 }

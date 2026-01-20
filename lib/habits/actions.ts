@@ -30,22 +30,66 @@ export async function getHabitsAction(): Promise<HabitUI[]> {
 	}
 }
 
-export async function createHabitAction({ anchor, tinyBehavior, celebration }: HabitUI) {
+export async function createHabitAction({
+	id,
+	anchor,
+	anchorCategory,
+	tinyBehavior,
+	celebration,
+}: HabitUI) {
 	try {
 		const userId = await getUserId();
 
 		await prisma.habitRecipe.create({
 			data: {
+				id,
 				anchor,
 				tinyBehavior,
 				celebration,
 				userId,
+				anchorCategory,
 			},
 		});
 
 		revalidatePath(ROUTES.HOME);
 	} catch (error) {
-		logError(error, "createHabit");
+		logError(error, "createHabit", { extra: { id, anchor, tinyBehavior, celebration } });
 		throw new Error("Could not create habit. Please try again later.");
+	}
+}
+
+export async function updateHabitAction({
+	id,
+	anchor,
+	tinyBehavior,
+	celebration,
+	anchorCategory,
+}: HabitUI) {
+	try {
+		const userId = await getUserId();
+
+		if (!id) {
+			throw new Error("Missing habit ID");
+		}
+
+		await prisma.habitRecipe.update({
+			where: {
+				id,
+				userId,
+			},
+			data: {
+				anchor,
+				tinyBehavior,
+				celebration,
+				anchorCategory,
+			},
+		});
+
+		revalidatePath(ROUTES.HOME);
+	} catch (error) {
+		logError(error, "updateHabit", {
+			extra: { anchor, tinyBehavior, celebration, anchorCategory, id },
+		});
+		throw new Error("Could not update habit. Please try again later.");
 	}
 }
