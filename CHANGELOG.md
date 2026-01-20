@@ -1,3 +1,15 @@
+## [1.2.0](https://github.com/fivaz/habits/compare/v1.1.0...v1.2.0) (2026-01-20)
+
+### ✨ Features
+
+* add home page ([6d02e79](https://github.com/fivaz/habits/commit/6d02e796207e31ac143969c008fa9524f14248c9))
+
+### 🧹 Chores
+
+* add habit_recipe and daily_log tables ([cb061b7](https://github.com/fivaz/habits/commit/cb061b76744b88356932b07fd3a52b167b69cfa5))
+* add template designs ([a50b372](https://github.com/fivaz/habits/commit/a50b372ea750b2bd6167d98a3b82b947cf512428))
+* implement components ([384ce4d](https://github.com/fivaz/habits/commit/384ce4d0ab68dd8760d129abf66806aeaf355250))
+
 ## [1.1.0](https://github.com/fivaz/habits/compare/v1.0.0...v1.1.0) (2026-01-20)
 
 ### ✨ Features
