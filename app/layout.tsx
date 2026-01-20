@@ -8,7 +8,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ConfirmProvider } from "@/hooks/confirm/confirm-provider";
-import {APP_NAME} from "@/lib/consts";
+import { APP_NAME } from "@/lib/consts";
 
 const APP_DEFAULT_TITLE = "Habits";
 const APP_TITLE_TEMPLATE = "%s - Habits";

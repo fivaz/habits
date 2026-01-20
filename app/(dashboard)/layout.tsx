@@ -13,7 +13,7 @@ type DashboardLayoutType = {
 export default function DashboardLayout({ children }: DashboardLayoutType) {
 	const pathname = usePathname();
 
-	const withPadding = true;
+	const withPadding = false;
 
-	return <AppLayout className={cn({ "px-5 pt-12": withPadding })}>{children}</AppLayout>;
+	return <AppLayout className={cn({ "px-5 pt-12 pb-20": withPadding })}>{children}</AppLayout>;
 }
