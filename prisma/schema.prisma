@@ -40,7 +40,7 @@ model HabitRecipe {
   celebration  String
 
   // Categorization & Status
-  anchorCategory AnchorCategory @default(OTHER) @map("anchor_category")
+  anchorCategory AnchorCategory @default(other) @map("anchor_category")
   isActive       Boolean        @default(true) @map("is_active")
 
   // Stats
@@ -76,24 +76,24 @@ model DailyLog {
 }
 
 enum AnchorCategory {
-  MORNING
-  MEALS
-  WORK
-  EVENING
-  OTHER
+  morning
+  meals
+  work
+  evening
+  other
 }
 
 enum LogStatus {
-  COMPLETED
-  MISSED
-  REDESIGNED
+  completed
+  missed
+  redesigned
 }
 
 enum RedesignReason {
-  TOO_HARD
-  FORGOT
-  ANCHOR_MISSING
-  OTHER
+  too_hard
+  forgot
+  anchor_missing
+  other
 }
 
 // --- AUTH MODELS ---

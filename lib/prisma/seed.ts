@@ -60,19 +60,19 @@ async function main() {
 			anchor: "After I pour my first cup of coffee",
 			tinyBehavior: "I will write down my top 3 priorities for the day",
 			celebration: "Say 'Today is going to be great!'",
-			anchorCategory: AnchorCategory.MORNING,
+			anchorCategory: AnchorCategory.morning,
 		},
 		{
 			anchor: "After I close my laptop to finish work",
 			tinyBehavior: "I will clear one item off my physical desk",
 			celebration: "A quick fist pump",
-			anchorCategory: AnchorCategory.WORK,
+			anchorCategory: AnchorCategory.work,
 		},
 		{
 			anchor: "After I brush my teeth at night",
 			tinyBehavior: "I will do one pushup",
 			celebration: "Smile in the mirror",
-			anchorCategory: AnchorCategory.EVENING,
+			anchorCategory: AnchorCategory.evening,
 		},
 	];
 
