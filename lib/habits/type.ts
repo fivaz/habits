@@ -28,3 +28,9 @@ export function getEmptyHabit(): TodayHabitUI {
 		isCompletedToday: false,
 	};
 }
+
+export const HabitPrefix = {
+	anchor: "After I",
+	tinyBehavior: "I will",
+	celebration: "Then I will",
+};

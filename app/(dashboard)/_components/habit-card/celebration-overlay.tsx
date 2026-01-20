@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { PartyPopper, Sparkles, Star } from "lucide-react";

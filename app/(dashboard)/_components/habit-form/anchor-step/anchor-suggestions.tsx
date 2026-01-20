@@ -4,6 +4,7 @@ import { Sparkles } from "lucide-react";
 
 import { AnchorLibrary } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-library";
 import { Button } from "@/components/ui/button";
+import { HabitPrefix } from "@/lib/habits/type";
 
 type AnchorSuggestionsProps = {
 	value: string;
@@ -29,7 +30,7 @@ export function AnchorSuggestions({ value, setAnchorValue }: AnchorSuggestionsPr
 				{showAnchorLibrary ? "Write my own" : "Browse anchor ideas"}
 			</Button>
 			{showAnchorLibrary && (
-				<AnchorLibrary setValue={handleSelectSuggestion} value={"After I " + value} />
+				<AnchorLibrary setValue={handleSelectSuggestion} value={`${HabitPrefix.anchor} ${value}`} />
 			)}
 		</>
 	);

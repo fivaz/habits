@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Briefcase, Coffee, LucideIcon, Moon, Sun } from "lucide-react";
 
 import { Category } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-library";
+import { HabitPrefix } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
 const CATEGORY_CONFIG: Record<Category, { icon: LucideIcon; colors: string }> = {
@@ -85,8 +86,8 @@ export function AnchorCategorySection({
 											: "bg-white/50 text-stone-700 hover:bg-white hover:shadow-sm",
 									)}
 								>
-									<span className="font-medium text-emerald-600">After</span>{" "}
-									{anchor.replace("After ", "")}
+									<span className="font-medium text-emerald-600">{HabitPrefix.anchor} </span>
+									{anchor}
 								</motion.button>
 							))}
 						</div>

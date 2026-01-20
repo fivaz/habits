@@ -25,7 +25,6 @@ export function HabitForm({ habit: initialHabit, onClose }: HabitFormProps) {
 	const [rehearsalCount, setRehearsalCount] = useState<number>(0);
 	const [habit, setHabit] = useState<TodayHabitUI>(initialHabit);
 
-	// TODO fix the bug of prefix not being saved
 	const setAnchorValue = (value: string) => {
 		setHabit((prev) => ({ ...prev, anchor: value }));
 	};

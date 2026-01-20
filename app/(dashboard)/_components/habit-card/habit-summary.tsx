@@ -1,7 +1,7 @@
 import React from "react";
 
 import { categoryColors, categoryIcons } from "@/lib/category/type";
-import { HabitUI } from "@/lib/habits/type";
+import { HabitPrefix, HabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
 type HabitSummaryProps = {
@@ -33,7 +33,9 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 					</span>
 					<div>
 						<p className="text-xs tracking-wide text-stone-400 uppercase">Anchor</p>
-						<p className="font-medium text-stone-700">{habit.anchor}</p>
+						<p className="font-medium text-stone-700">
+							{HabitPrefix.anchor} {habit.anchor}
+						</p>
 					</div>
 				</div>
 
@@ -44,7 +46,9 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 					</span>
 					<div>
 						<p className="text-xs tracking-wide text-stone-400 uppercase">Tiny Behavior</p>
-						<p className="font-semibold text-stone-800">{habit.tinyBehavior}</p>
+						<p className="font-semibold text-stone-800">
+							{HabitPrefix.tinyBehavior} {habit.tinyBehavior}
+						</p>
 					</div>
 				</div>
 
@@ -55,7 +59,9 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 					</span>
 					<div>
 						<p className="text-xs tracking-wide text-stone-400 uppercase">Celebration</p>
-						<p className="text-amber-700">{habit.celebration}</p>
+						<p className="text-amber-700">
+							{HabitPrefix.celebration} {habit.celebration}
+						</p>
 					</div>
 				</div>
 			</div>
