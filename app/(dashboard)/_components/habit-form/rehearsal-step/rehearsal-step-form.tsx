@@ -1,9 +1,7 @@
 import React from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
-import {
-	Repeat,
-} from "lucide-react";
+import { Repeat } from "lucide-react";
 import { Activity, Circle, Cpu, Share2, Spline, Zap } from "lucide-react";
 import { toast } from "sonner";
 

@@ -1,6 +1,5 @@
 import { BrainIcon } from "lucide-react";
 
-
 type MissingRehearsalBadgeProps = {
 	onStartRehearsal: () => void;
 };
