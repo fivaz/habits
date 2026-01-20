@@ -30,13 +30,14 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 	const { deleteItem, updateItem } = useHabitMutations();
 
 	const onComplete = () => {
+		const willBeCompleted = !habit.isCompletedToday;
 		const optimisticHabit = {
 			...habit,
-			isCompletedToday: !habit.isCompletedToday,
-			totalCompletions: habit.totalCompletions + 1,
+			isCompletedToday: willBeCompleted,
+			totalCompletions: habit.totalCompletions + (willBeCompleted ? 1 : -1),
 		};
 
-		if (optimisticHabit.isCompletedToday) {
+		if (willBeCompleted) {
 			setOpenCelebration(true);
 		}
 

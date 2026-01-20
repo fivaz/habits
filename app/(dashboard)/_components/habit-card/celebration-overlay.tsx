@@ -19,7 +19,7 @@ interface EmojiInstance {
 	id: number;
 	emoji: string;
 	delay: number;
-	left: string; // Calculated once in useEffect to keep the component pure
+	left: string;
 }
 
 interface CelebrationOverlayProps {
