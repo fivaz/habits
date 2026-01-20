@@ -1,3 +1,31 @@
+## [1.5.0](https://github.com/fivaz/habits/compare/v1.4.0...v1.5.0) (2026-01-20)
+
+### ✨ Features
+
+* add logo ([aa16caf](https://github.com/fivaz/habits/commit/aa16cafad98db7cf6877379cff4742f1d1c94e9e))
+* add the celebration message upon completing a habit ([87dfa21](https://github.com/fivaz/habits/commit/87dfa219453086b266424e783317b8cb6a0ca5f5))
+* implement mark habit as done ([e009818](https://github.com/fivaz/habits/commit/e0098180ea10d00a231846e1abbb65cc5d85727f))
+
+### 🐛 Bug Fixes
+
+* fix bug with totalCompletion increasing when undoing a habit ([361a0cd](https://github.com/fivaz/habits/commit/361a0cd3979f378ec083cb12502b414b83826ca0))
+* normalize storing the values without their prefix in the db ([63b8546](https://github.com/fivaz/habits/commit/63b8546578834418d3943c31dc533ad4f37a3bb2))
+* selected anchor wasn't being highlighted because of prefix ([5a1d0c3](https://github.com/fivaz/habits/commit/5a1d0c3d1de29540744f44b1be7ab45bd4b41639))
+
+### 🚀 Performance Improvements
+
+* remove unnecessary data being sent to the client ([2b69956](https://github.com/fivaz/habits/commit/2b69956b422204cd2197aa2ac346e3a356e1ca9f))
+
+### 🧹 Chores
+
+* add celebration upon completion ([5e54495](https://github.com/fivaz/habits/commit/5e544959668ec0bef322dcc5a1607595fc200aeb))
+* add today's log to fetched habits ([46d3eb9](https://github.com/fivaz/habits/commit/46d3eb9abee5de4ce4034fc5286902822bb4f731))
+
+### 🔨 Code Refactoring
+
+* remove old files ([046b410](https://github.com/fivaz/habits/commit/046b410b32e8ead298f40a8ca3d785d48841a9cb))
+* remove unnecessary props ([9922a1f](https://github.com/fivaz/habits/commit/9922a1f7d878225f59cc7ec5c02f4b74577af9ee))
+
 ## [1.4.0](https://github.com/fivaz/habits/compare/v1.3.0...v1.4.0) (2026-01-20)
 
 ### ✨ Features
