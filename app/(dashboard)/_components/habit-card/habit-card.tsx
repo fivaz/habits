@@ -5,6 +5,7 @@ import { Flame } from "lucide-react";
 
 import { HabitActionButtons } from "@/app/(dashboard)/_components/habit-card/habit-action-buttons";
 import { HabitSummary } from "@/app/(dashboard)/_components/habit-card/habit-summary";
+import { Card } from "@/components/ui/card";
 import { HabitUI, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
@@ -20,10 +21,7 @@ export function HabitCard({ habit }: HabitCardProps) {
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: -20 }}
-			className={cn(
-				"relative overflow-hidden rounded-2xl border bg-white shadow-sm transition-all",
-				habit.isCompletedToday ? "border-emerald-300 bg-emerald-50/50" : "border-stone-200",
-			)}
+			className={cn("bg-background relative overflow-hidden rounded-2xl shadow-sm")}
 		>
 			<div className="p-5">
 				<HabitSummary habit={habit} />
@@ -43,7 +41,7 @@ type StreakRowProps = {
 function StreakRow({ habit }: StreakRowProps) {
 	return (
 		habit.streak > 0 && (
-			<div className="mb-4 flex items-center gap-4 rounded-xl border border-stone-100 bg-stone-50 p-3">
+			<div className="mb-4 flex items-center gap-4 rounded-xl border border-stone-100 p-3">
 				<div className="flex items-center gap-1.5">
 					<Flame className="h-4 w-4 text-orange-500" />
 					<span className="text-sm font-semibold text-stone-700">{habit.streak}</span>

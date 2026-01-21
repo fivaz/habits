@@ -11,10 +11,8 @@ type DashboardLayoutType = {
 };
 
 export default function DashboardLayout({ children }: DashboardLayoutType) {
-	const withPadding = true;
-
 	return (
-		<AppLayout className={cn({ "pt-6 pb-20": withPadding })}>
+		<AppLayout>
 			<TimezoneProvider />
 			{children}
 		</AppLayout>
