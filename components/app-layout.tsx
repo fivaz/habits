@@ -4,15 +4,11 @@ import React, { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { AnimatePresence } from "framer-motion";
 import { HomeIcon, Settings2Icon, TrendingUpIcon } from "lucide-react";
 
 import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
-import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";
-import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
 import { Logo } from "@/components/logo";
 import { ROUTES } from "@/lib/consts";
-import { cn } from "@/lib/utils";
 
 type AppLayoutProps = {
 	children: ReactNode;
@@ -49,7 +45,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 			<main className="relative flex flex-1 flex-col overflow-auto">{children}</main>
 
 			{/* Persistent Bottom Navigation */}
-			<nav className="bg-background border-border sticky right-0 bottom-0 left-0 z-50 border-t px-2 py-2 pb-5">
+			<nav className="bg-background border-border sticky right-0 bottom-0 left-0 z-20 border-t px-2 py-2 pb-5">
 				<div className="mx-auto flex max-w-md items-center justify-around">
 					{navItems.map((item) => {
 						const isActive = pathname === item.href;

@@ -1,25 +1,33 @@
 "use client";
 
+import { useState } from "react";
+
 import { AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 
 import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";
-import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
+import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
 import { HeaderPortal } from "@/components/header-portal";
+import { Button } from "@/components/ui/button";
 import { useHabitsStore } from "@/hooks/habits-store";
 
 export function HabitTracker() {
 	const { items: habits } = useHabitsStore();
+	const [openForm, setOpenForm] = useState(false);
 	return (
 		<>
 			<HeaderPortal>
-				<HabitFormButton className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white">
+				<Button
+					onClick={() => setOpenForm(true)}
+					className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white"
+				>
 					<Plus className="mr-1 h-4 w-4" />
 					New Recipe
-				</HabitFormButton>
+				</Button>
 			</HeaderPortal>
-			<div className="mx-auto max-w-lg px-4 py-4">
+
+			<div className="p-4">
 				{habits.length === 0 ? (
 					<Onboarding />
 				) : (
@@ -32,6 +40,8 @@ export function HabitTracker() {
 					</div>
 				)}
 			</div>
+
+			<HabitForm open={openForm} setOpen={setOpenForm} />
 		</>
 	);
 }

@@ -8,46 +8,50 @@ import { CelebrationStepForm } from "@/app/(dashboard)/_components/habit-form/ce
 import { RehearsalStepForm } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-step-form";
 import { StepHeader } from "@/app/(dashboard)/_components/habit-form/step-header";
 import { Step, steps } from "@/app/(dashboard)/_components/service";
+import { DrawerDialog } from "@/components/drawer-dialog";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { createHabitAction, updateHabitAction } from "@/lib/habits/actions";
-import { TodayHabitUI } from "@/lib/habits/type";
+import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
 
 type HabitFormProps = {
-	onClose: () => void;
-	habit: TodayHabitUI;
-	startStep: number;
+	habit?: TodayHabitUI;
+	startStep?: number;
+	setOpen: (open: boolean) => void;
+	open: boolean;
 };
 
-export function HabitForm({ startStep, habit: initialHabit, onClose }: HabitFormProps) {
+export function HabitForm({
+	setOpen,
+	open,
+	startStep = Step.ANCHOR,
+	habit = getEmptyHabit(),
+}: HabitFormProps) {
 	const { addItem, updateItem } = useHabitMutations();
 	const [currentStepIndex, setCurrentStepIndex] = useState(startStep);
 	const onNext = () => setCurrentStepIndex((s) => Math.min(s + 1, steps.length - 1));
 	const onPrevious = () => setCurrentStepIndex((s) => Math.max(s - 1, 0));
-	const [habit, setHabit] = useState<TodayHabitUI>(initialHabit);
+	const [habitIn, setHabitIn] = useState<TodayHabitUI>(habit);
 
-	const setAnchorValue = (value: string) => {
-		setHabit((prev) => ({ ...prev, anchor: value }));
-	};
+	const onClose = () => setOpen(false);
 
-	const setBehaviorValue = (value: string) => {
-		setHabit((prev) => ({ ...prev, tinyBehavior: value }));
-	};
+	const setAnchorValue = (value: string) => setHabitIn((prev) => ({ ...prev, anchor: value }));
 
-	const setCelebrationValue = (value: string) => {
-		setHabit((prev) => ({ ...prev, celebration: value }));
-	};
+	const setBehaviorValue = (value: string) =>
+		setHabitIn((prev) => ({ ...prev, tinyBehavior: value }));
 
-	const incrementRehearsal = () => {
-		setHabit((prev) => ({ ...prev, rehearsalCount: prev.rehearsalCount + 1 }));
-	};
+	const setCelebrationValue = (value: string) =>
+		setHabitIn((prev) => ({ ...prev, celebration: value }));
+
+	const incrementRehearsal = () =>
+		setHabitIn((prev) => ({ ...prev, rehearsalCount: prev.rehearsalCount + 1 }));
 
 	const handleSave = () => {
 		const optimisticHabit: TodayHabitUI = {
-			...habit,
-			id: habit.id || crypto.randomUUID(),
+			...habitIn,
+			id: habitIn.id || crypto.randomUUID(),
 		};
 
-		if (habit.id) {
+		if (habitIn.id) {
 			updateItem(optimisticHabit, {
 				persist: () => updateHabitAction(optimisticHabit),
 				onSuccess: () => toast.success("Habit updated successfully."),
@@ -72,12 +76,12 @@ export function HabitForm({ startStep, habit: initialHabit, onClose }: HabitForm
 		switch (step) {
 			case Step.ANCHOR:
 				return (
-					<AnchorStepForm value={habit.anchor} setAnchorValue={setAnchorValue} onNext={onNext} />
+					<AnchorStepForm value={habitIn.anchor} setAnchorValue={setAnchorValue} onNext={onNext} />
 				);
 			case Step.BEHAVIOR:
 				return (
 					<BehaviorStepForm
-						value={habit.tinyBehavior}
+						value={habitIn.tinyBehavior}
 						setBehaviorValue={setBehaviorValue}
 						onNext={onNext}
 						onPrevious={onPrevious}
@@ -86,7 +90,7 @@ export function HabitForm({ startStep, habit: initialHabit, onClose }: HabitForm
 			case Step.CELEBRATION:
 				return (
 					<CelebrationStepForm
-						value={habit.celebration}
+						value={habitIn.celebration}
 						setCelebrationValue={setCelebrationValue}
 						onNext={onNext}
 						onPrevious={onPrevious}
@@ -98,7 +102,7 @@ export function HabitForm({ startStep, habit: initialHabit, onClose }: HabitForm
 					<RehearsalStepForm
 						incrementRehearsal={incrementRehearsal}
 						onClose={onClose}
-						habit={habit}
+						habit={habitIn}
 					/>
 				);
 			default:
@@ -107,14 +111,16 @@ export function HabitForm({ startStep, habit: initialHabit, onClose }: HabitForm
 	};
 
 	return (
-		<>
-			<StepHeader
-				rehearsalCount={habit.rehearsalCount}
-				currentStepIndex={currentStepIndex}
-				onClose={onClose}
-			/>
+		<DrawerDialog open={open} setOpen={setOpen}>
+			<div className="divide-y divide-gray-300">
+				<StepHeader
+					rehearsalCount={habitIn.rehearsalCount}
+					currentStepIndex={currentStepIndex}
+					onClose={onClose}
+				/>
 
-			{renderStep(currentStepIndex)}
-		</>
+				{renderStep(currentStepIndex)}
+			</div>
+		</DrawerDialog>
 	);
 }

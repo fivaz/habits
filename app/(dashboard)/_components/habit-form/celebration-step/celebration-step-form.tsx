@@ -45,7 +45,7 @@ export function CelebrationStepForm({
 				</AnimatePresence>
 			</div>
 
-			<div className="flex gap-3 border-t bg-stone-50 p-4">
+			<div className="flex gap-3 p-4">
 				<PreviousButton onPrevious={onPrevious} />
 				<NextButton
 					step={step}

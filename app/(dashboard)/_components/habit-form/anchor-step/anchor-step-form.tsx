@@ -36,7 +36,8 @@ export function AnchorStepForm({ setAnchorValue, value, onNext }: AnchorStepForm
 					</motion.div>
 				</AnimatePresence>
 			</div>
-			<div className="flex gap-3 border-t bg-stone-50 p-4">
+
+			<div className="flex gap-3 p-4">
 				<NextButton step={step} onNext={onNext} />
 			</div>
 		</>

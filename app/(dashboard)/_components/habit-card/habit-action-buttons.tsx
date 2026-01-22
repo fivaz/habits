@@ -5,7 +5,7 @@ import { Check, Edit, MoreVertical, RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import CelebrationOverlay from "@/app/(dashboard)/_components/habit-card/celebration-overlay";
-import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
+import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -131,7 +131,7 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
-			<HabitFormButton habit={habit} open={openEditForm} onOpenChange={setOpenEditForm} />
+			<HabitForm habit={habit} open={openEditForm} setOpen={setOpenEditForm} />
 			<CelebrationOverlay
 				celebration={habit.celebration}
 				isOpen={openCelebration}
