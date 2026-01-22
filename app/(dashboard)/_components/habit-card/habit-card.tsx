@@ -48,7 +48,7 @@ function StreakRow({ habit }: StreakRowProps) {
 					<span className="text-xs text-stone-500">day streak</span>
 				</div>
 				<div className="h-4 w-px bg-stone-200" />
-				<div className="text-xs text-stone-500">{habit.totalCompletions || 0} total</div>
+				<div className="text-xs text-stone-500">{habit.totalCompletions} total</div>
 			</div>
 		)
 	);

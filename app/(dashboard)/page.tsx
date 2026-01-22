@@ -1,7 +1,12 @@
 import { HabitTracker } from "@/app/(dashboard)/_components/habit-tracker";
+import { HabitsProvider } from "@/hooks/habits-store";
 import { getHabitsAction } from "@/lib/habits/actions";
 
 export default async function HomePage() {
 	const habits = await getHabitsAction();
-	return <HabitTracker habits={habits} />;
+	return (
+		<HabitsProvider initialItems={habits}>
+			<HabitTracker />
+		</HabitsProvider>
+	);
 }

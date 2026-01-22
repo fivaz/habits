@@ -1,3 +1,5 @@
+"use client";
+
 import { startTransition, useEffect, useRef } from "react";
 
 import { EntityStoreReturn, Identifiable } from "./create-entity-store";

@@ -15,19 +15,7 @@ import { Logo } from "@/components/logo";
 import { HabitsProvider, useHabitsStore } from "@/hooks/habits-store";
 import { TodayHabitUI } from "@/lib/habits/type";
 
-type HabitTrackerProps = {
-	habits: TodayHabitUI[];
-};
-
-export function HabitTracker({ habits }: HabitTrackerProps) {
-	return (
-		<HabitsProvider initialItems={habits}>
-			<InternalHabitTracker />
-		</HabitsProvider>
-	);
-}
-
-export function InternalHabitTracker() {
+export function HabitTracker() {
 	const { items: habits } = useHabitsStore();
 	return (
 		<>
