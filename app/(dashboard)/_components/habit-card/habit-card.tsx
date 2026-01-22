@@ -5,7 +5,6 @@ import { Flame } from "lucide-react";
 
 import { HabitActionButtons } from "@/app/(dashboard)/_components/habit-card/habit-action-buttons";
 import { HabitSummary } from "@/app/(dashboard)/_components/habit-card/habit-summary";
-import { Card } from "@/components/ui/card";
 import { HabitUI, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 

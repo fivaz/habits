@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 
 import { AppLayout } from "@/components/app-layout";
 import { TimezoneProvider } from "@/components/timezone-sync";
-import { cn } from "@/lib/utils";
 
 type DashboardLayoutType = {
 	children: ReactNode;

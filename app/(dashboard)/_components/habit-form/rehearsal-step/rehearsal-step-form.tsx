@@ -9,7 +9,6 @@ import { RehearsalPanel } from "@/app/(dashboard)/_components/habit-form/rehears
 import { StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
 import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
 import { Button } from "@/components/ui/button";
-import { DialogDescription } from "@/components/ui/dialog";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { rehearsalHabitAction } from "@/lib/habits/actions";
 import { TodayHabitUI } from "@/lib/habits/type";
@@ -85,7 +84,7 @@ export function RehearsalStepForm({ incrementRehearsal, onClose, habit }: Rehear
 					exit={{ opacity: 0, x: -20 }}
 					className="space-y-4"
 				>
-					<DialogDescription className="text-stone-600">{step.subtitle}</DialogDescription>
+					<div className="text-stone-600">{step.subtitle}</div>
 
 					<RehearsalPanel habit={habit} />
 

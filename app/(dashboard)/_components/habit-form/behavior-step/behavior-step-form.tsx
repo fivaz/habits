@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
 import { NextButton, PreviousButton } from "@/app/(dashboard)/_components/habit-form/step-footer";
 import { Step, steps } from "@/app/(dashboard)/_components/service";
-import { DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
 type BehaviorStepFormProps = {
 	onNext: () => void;
@@ -32,7 +31,7 @@ export function BehaviorStepForm({
 						exit={{ opacity: 0, x: -20 }}
 						className="space-y-4"
 					>
-						<DialogDescription className="text-stone-600">{step.subtitle}</DialogDescription>
+						<div className="text-stone-600">{step.subtitle}</div>
 
 						<StepTextArea step={step} value={value} setValue={setBehaviorValue} />
 
@@ -41,10 +40,10 @@ export function BehaviorStepForm({
 				</AnimatePresence>
 			</div>
 
-			<DialogFooter className="flex gap-3 border-t bg-stone-50 p-4">
+			<div className="flex gap-3 border-t bg-stone-50 p-4">
 				<PreviousButton onPrevious={onPrevious} />
 				<NextButton step={step} onNext={onNext} />
-			</DialogFooter>
+			</div>
 		</>
 	);
 }
