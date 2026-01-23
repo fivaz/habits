@@ -112,7 +112,7 @@ export function HabitForm({
 
 	return (
 		<DrawerDialog open={open} setOpen={setOpen}>
-			<div className="divide-y divide-gray-300">
+			<div className="divide-border divide-y">
 				<StepHeader
 					rehearsalCount={habitIn.rehearsalCount}
 					currentStepIndex={currentStepIndex}

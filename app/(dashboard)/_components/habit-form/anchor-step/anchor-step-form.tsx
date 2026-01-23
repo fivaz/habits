@@ -26,7 +26,7 @@ export function AnchorStepForm({ setAnchorValue, value, onNext }: AnchorStepForm
 						exit={{ opacity: 0, x: -20 }}
 						className="space-y-4"
 					>
-						<div className="text-stone-600">{step.subtitle}</div>
+						<div className="text-foreground">{step.subtitle}</div>
 
 						<AnchorSuggestions value={value} setAnchorValue={setAnchorValue} />
 
