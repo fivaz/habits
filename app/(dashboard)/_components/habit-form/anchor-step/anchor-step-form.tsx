@@ -17,7 +17,8 @@ export function AnchorStepForm({ setAnchorValue, value, onNext }: AnchorStepForm
 	const step = steps[Step.ANCHOR];
 	return (
 		<>
-			<div className="flex-1 overflow-y-auto p-6">
+			{/* Scrollable content */}
+			<div className="overflow-y-auto p-6">
 				<AnimatePresence mode="wait">
 					<motion.div
 						key={Step.ANCHOR}
@@ -27,17 +28,15 @@ export function AnchorStepForm({ setAnchorValue, value, onNext }: AnchorStepForm
 						className="space-y-4"
 					>
 						<div className="text-foreground">{step.subtitle}</div>
-
 						<AnchorSuggestions value={value} setAnchorValue={setAnchorValue} />
-
 						<StepTextArea step={step} value={value} setValue={setAnchorValue} />
-
 						<StepTip step={step} />
 					</motion.div>
 				</AnimatePresence>
 			</div>
 
-			<div className="flex gap-3 p-4">
+			{/* Footer */}
+			<div className="flex gap-3 border-t border-gray-300 bg-gray-100 bg-linear-to-br p-6 dark:border-gray-500 dark:bg-gray-800">
 				<NextButton step={step} onNext={onNext} />
 			</div>
 		</>

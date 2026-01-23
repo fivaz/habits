@@ -19,7 +19,7 @@ export function DrawerDialog({ children, open, setOpen }: DrawerDialogProps) {
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm lg:items-center"
+						className="fixed inset-0 z-50 flex items-end justify-center bg-black/30 backdrop-blur-sm lg:items-center"
 						onClick={() => setOpen(false)}
 					>
 						<motion.div

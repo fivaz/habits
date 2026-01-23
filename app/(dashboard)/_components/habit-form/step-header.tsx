@@ -17,7 +17,12 @@ export function StepHeader({ rehearsalCount, currentStepIndex, onClose }: Header
 	const step = steps[currentStepIndex];
 	const StepIcon = step.icon;
 	return (
-		<div className={cn(step.bgColor, "relative border-b bg-linear-to-br p-6")}>
+		<div
+			className={cn(
+				step.bgColor,
+				"relative border-b border-gray-300 bg-linear-to-br p-6 dark:border-gray-400",
+			)}
+		>
 			<button
 				onClick={onClose}
 				className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/50 text-stone-500 transition-colors hover:bg-white hover:text-stone-700"
