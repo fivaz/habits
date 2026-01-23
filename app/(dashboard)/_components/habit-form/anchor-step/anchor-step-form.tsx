@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -6,15 +6,19 @@ import { AnchorSuggestions } from "@/app/(dashboard)/_components/habit-form/anch
 import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
 import { NextButton } from "@/app/(dashboard)/_components/habit-form/step-footer";
 import { Step, steps } from "@/app/(dashboard)/_components/service";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 type AnchorStepFormProps = {
 	onNext: () => void;
-	setAnchorValue: (value: string) => void;
+	setHabitIn: Dispatch<SetStateAction<TodayHabitUI>>;
 	value: string;
 };
 
-export function AnchorStepForm({ setAnchorValue, value, onNext }: AnchorStepFormProps) {
+export function AnchorStepForm({ setHabitIn, value, onNext }: AnchorStepFormProps) {
 	const step = steps[Step.ANCHOR];
+
+	const setAnchorValue = (value: string) => setHabitIn((prev) => ({ ...prev, anchor: value }));
+
 	return (
 		<>
 			{/* Scrollable content */}

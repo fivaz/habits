@@ -13,23 +13,27 @@ const CATEGORY_CONFIG: Record<
 > = {
 	morning: {
 		icon: Sun,
-		iconColor: "bg-amber-200 text-amber-500",
-		containerColor: "from-amber-50 to-orange-50 border-amber-200",
+		iconColor: "bg-amber-200 text-amber-500 dark:bg-amber-300 dark:text-amber-600",
+		containerColor:
+			"from-amber-50 to-orange-50 border-amber-200 dark:from-amber-100 dark:to-orange-100 dark:border-amber-300",
 	},
 	meals: {
 		icon: Coffee,
-		iconColor: "bg-emerald-200 text-emerald-500",
-		containerColor: "from-emerald-50 to-teal-50 border-emerald-200",
+		iconColor: "bg-emerald-200 text-emerald-500 dark:bg-emerald-300 dark:text-emerald-600",
+		containerColor:
+			"from-emerald-50 to-teal-50 border-emerald-200 dark:from-emerald-100 dark:to-teal-100 dark:border-emerald-300",
 	},
 	work: {
 		icon: Briefcase,
-		iconColor: "bg-indigo-200 text-indigo-500",
-		containerColor: "from-blue-50 to-indigo-50 border-blue-200",
+		iconColor: "bg-indigo-200 text-indigo-500 dark:bg-indigo-300 dark:text-indigo-600",
+		containerColor:
+			"from-blue-50 to-indigo-50 border-blue-200 dark:from-blue-100 dark:to-indigo-100 dark:border-blue-300",
 	},
 	evening: {
 		icon: Moon,
-		iconColor: "bg-violet-200 text-violet-500",
-		containerColor: "from-violet-50 to-purple-50 border-violet-200",
+		iconColor: "bg-violet-200 text-violet-500 dark:bg-violet-300 dark:text-violet-600",
+		containerColor:
+			"from-violet-50 to-purple-50 border-violet-200 dark:from-violet-100 dark:to-purple-100 dark:border-violet-300",
 	},
 };
 

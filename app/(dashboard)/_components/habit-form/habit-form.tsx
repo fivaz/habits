@@ -42,17 +42,6 @@ export function HabitForm({
 
 	const onClose = () => setOpen(false);
 
-	const setAnchorValue = (value: string) => setHabitIn((prev) => ({ ...prev, anchor: value }));
-
-	const setBehaviorValue = (value: string) =>
-		setHabitIn((prev) => ({ ...prev, tinyBehavior: value }));
-
-	const setCelebrationValue = (value: string) =>
-		setHabitIn((prev) => ({ ...prev, celebration: value }));
-
-	const incrementRehearsal = () =>
-		setHabitIn((prev) => ({ ...prev, rehearsalCount: prev.rehearsalCount + 1 }));
-
 	const handleSave = () => {
 		const optimisticHabit: TodayHabitUI = {
 			...habitIn,
@@ -78,19 +67,19 @@ export function HabitForm({
 					}),
 			});
 		}
+
+		setHabitIn((prev) => ({ ...prev, id: optimisticHabit.id }));
 	};
 
 	const renderStep = (step: number) => {
 		switch (step) {
 			case Step.ANCHOR:
-				return (
-					<AnchorStepForm value={habitIn.anchor} setAnchorValue={setAnchorValue} onNext={onNext} />
-				);
+				return <AnchorStepForm value={habitIn.anchor} setHabitIn={setHabitIn} onNext={onNext} />;
 			case Step.BEHAVIOR:
 				return (
 					<BehaviorStepForm
 						value={habitIn.tinyBehavior}
-						setBehaviorValue={setBehaviorValue}
+						setHabitIn={setHabitIn}
 						onNext={onNext}
 						onPrevious={onPrevious}
 					/>
@@ -99,20 +88,14 @@ export function HabitForm({
 				return (
 					<CelebrationStepForm
 						value={habitIn.celebration}
-						setCelebrationValue={setCelebrationValue}
+						setHabitIn={setHabitIn}
 						onNext={onNext}
 						onPrevious={onPrevious}
 						onSave={handleSave}
 					/>
 				);
 			case Step.REHEARSAL:
-				return (
-					<RehearsalStepForm
-						incrementRehearsal={incrementRehearsal}
-						onClose={onClose}
-						habit={habitIn}
-					/>
-				);
+				return <RehearsalStepForm setHabitIn={setHabitIn} onClose={onClose} habitIn={habitIn} />;
 			default:
 				return null;
 		}

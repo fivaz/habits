@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Repeat } from "lucide-react";
@@ -9,9 +9,9 @@ import { RehearsalPanel } from "@/app/(dashboard)/_components/habit-form/rehears
 import { StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
 import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
 import { Button } from "@/components/ui/button";
-import { useHabitMutations } from "@/hooks/habits-store";
 import { rehearsalHabitAction } from "@/lib/habits/actions";
 import { TodayHabitUI } from "@/lib/habits/type";
+import { logError } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 
 const HABIT_LEVELS = {
@@ -48,29 +48,35 @@ export const renderHabitButtonContent = (count: number) => {
 };
 
 type RehearsalStepFormProps = {
-	habit: TodayHabitUI;
+	habitIn: TodayHabitUI;
 	onClose: () => void;
-	incrementRehearsal: () => void;
+	setHabitIn: Dispatch<SetStateAction<TodayHabitUI>>;
 };
 
-export function RehearsalStepForm({ incrementRehearsal, onClose, habit }: RehearsalStepFormProps) {
-	const { updateItem } = useHabitMutations();
+export function RehearsalStepForm({ setHabitIn, onClose, habitIn }: RehearsalStepFormProps) {
 	const step = steps[Step.REHEARSAL];
 
-	const onRehearse = () => {
-		const optimisticHabit = { ...habit, rehearsalCount: habit.rehearsalCount + 1 };
+	const incrementRehearsal = (habit: TodayHabitUI) => ({
+		...habit,
+		rehearsalCount: habit.rehearsalCount + 1,
+	});
 
-		incrementRehearsal();
+	const onRehearse = async () => {
+		setHabitIn((prev) => {
+			const optimisticHabit = incrementRehearsal(prev);
 
-		updateItem(optimisticHabit, {
-			persist: () => rehearsalHabitAction(optimisticHabit.id),
-			onError: () => toast.error("Could not log rehearsal. Please try again."),
+			if (optimisticHabit.rehearsalCount === REHEARSAL_TARGET) {
+				setTimeout(() => onClose(), 2000);
+			}
+
+			return optimisticHabit;
 		});
 
-		if (optimisticHabit.rehearsalCount === REHEARSAL_TARGET) {
-			setTimeout(() => {
-				onClose();
-			}, 2000);
+		try {
+			await rehearsalHabitAction(habitIn.id);
+		} catch (error) {
+			logError(error, "RehearsalStepForm/onRehearse", { extra: { habitIn } });
+			toast.error("Could not log rehearsal. Please try again.");
 		}
 	};
 
@@ -86,18 +92,18 @@ export function RehearsalStepForm({ incrementRehearsal, onClose, habit }: Rehear
 				>
 					<div className="text-foreground">{step.subtitle}</div>
 
-					<RehearsalPanel habit={habit} />
+					<RehearsalPanel habit={habitIn} />
 
 					<StepTip step={step} />
 
 					<motion.div whileTap={{ scale: 0.95 }} className="pt-2">
 						<Button
-							disabled={habit.rehearsalCount === REHEARSAL_TARGET}
+							disabled={habitIn.rehearsalCount === REHEARSAL_TARGET}
 							onClick={onRehearse}
 							className="w-full rounded-2xl bg-linear-to-r from-purple-500 to-violet-600 py-8 text-lg text-white shadow-lg hover:from-purple-600 hover:to-violet-700"
 						>
 							<Repeat className="mr-2 h-6 w-6" />
-							{renderHabitButtonContent(habit.rehearsalCount)}
+							{renderHabitButtonContent(habitIn.rehearsalCount)}
 						</Button>
 					</motion.div>
 				</motion.div>

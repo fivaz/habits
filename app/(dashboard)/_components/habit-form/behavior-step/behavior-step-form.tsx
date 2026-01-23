@@ -1,25 +1,25 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
 import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
 import { NextButton, PreviousButton } from "@/app/(dashboard)/_components/habit-form/step-footer";
 import { Step, steps } from "@/app/(dashboard)/_components/service";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 type BehaviorStepFormProps = {
 	onNext: () => void;
 	onPrevious: () => void;
-	setBehaviorValue: (value: string) => void;
+	setHabitIn: Dispatch<SetStateAction<TodayHabitUI>>;
 	value: string;
 };
 
-export function BehaviorStepForm({
-	setBehaviorValue,
-	value,
-	onNext,
-	onPrevious,
-}: BehaviorStepFormProps) {
+export function BehaviorStepForm({ setHabitIn, value, onNext, onPrevious }: BehaviorStepFormProps) {
 	const step = steps[Step.BEHAVIOR];
+
+	const setBehaviorValue = (value: string) =>
+		setHabitIn((prev) => ({ ...prev, tinyBehavior: value }));
+
 	return (
 		<>
 			<div className="flex-1 overflow-y-auto p-6">

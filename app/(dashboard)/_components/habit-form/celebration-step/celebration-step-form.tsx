@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -6,23 +6,28 @@ import { CelebrationSuggestions } from "@/app/(dashboard)/_components/habit-form
 import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
 import { NextButton, PreviousButton } from "@/app/(dashboard)/_components/habit-form/step-footer";
 import { Step, steps } from "@/app/(dashboard)/_components/service";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 type CelebrationStepFormProps = {
 	onNext: () => void;
 	onPrevious: () => void;
-	setCelebrationValue: (value: string) => void;
+	setHabitIn: Dispatch<SetStateAction<TodayHabitUI>>;
 	value: string;
 	onSave: () => void;
 };
 
 export function CelebrationStepForm({
-	setCelebrationValue,
+	setHabitIn,
 	value,
 	onNext,
 	onPrevious,
 	onSave,
 }: CelebrationStepFormProps) {
 	const step = steps[Step.CELEBRATION];
+
+	const setCelebrationValue = (value: string) =>
+		setHabitIn((prev) => ({ ...prev, celebration: value }));
+
 	return (
 		<>
 			<div className="flex-1 overflow-y-auto p-6">
