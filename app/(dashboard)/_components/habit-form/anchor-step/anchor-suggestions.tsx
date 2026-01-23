@@ -21,9 +21,9 @@ export function AnchorSuggestions({ value, setAnchorValue }: AnchorSuggestionsPr
 	return (
 		<>
 			<Button
-				variant="outline"
+				variant="ghost"
 				onClick={() => setShowAnchorLibrary(!showAnchorLibrary)}
-				className="w-full rounded-xl border-2 border-dashed py-3"
+				className="w-full rounded-xl border-2 border-dashed border-gray-300 py-3 dark:border-gray-500"
 			>
 				<Sparkles className="mr-2 h-4 w-4 text-amber-500" />
 				{showAnchorLibrary ? "Write my own" : "Browse anchor ideas"}

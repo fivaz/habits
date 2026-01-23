@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
@@ -31,6 +31,14 @@ export function HabitForm({
 	const onNext = () => setCurrentStepIndex((s) => Math.min(s + 1, steps.length - 1));
 	const onPrevious = () => setCurrentStepIndex((s) => Math.max(s - 1, 0));
 	const [habitIn, setHabitIn] = useState<TodayHabitUI>(habit);
+
+	useEffect(() => {
+		if (open) {
+			setCurrentStepIndex(startStep);
+			setHabitIn(habit);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [open]);
 
 	const onClose = () => setOpen(false);
 

@@ -56,8 +56,7 @@ export const steps: StepConfig[] = [
 	{
 		id: "rehearsal",
 		title: "Rehearsal Time!",
-		subtitle:
-			"Wire this tiny habit into your brain: Practice it 5 times right now to jumpstart your neural pathways.",
+		subtitle: "Practice it 5 times right now to jumpstart your neural pathways.",
 		icon: BrainIcon,
 		color: "from-purple-500 to-violet-600",
 		bgColor: "from-purple-50 to-violet-100 dark:from-purple-200 dark:to-violet-200",

@@ -66,7 +66,7 @@ export function AnchorLibrary({ setValue, value }: AnchorLibraryProps) {
 					placeholder="Search anchors..."
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
-					className="border-stone-200 bg-stone-50 pl-10 focus:ring-emerald-400"
+					className="border-border bg-stone-50 pl-10 focus:ring-emerald-400"
 				/>
 			</div>
 

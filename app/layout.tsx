@@ -91,7 +91,7 @@ export default function RootLayout({
 					<div className="border-border mx-auto flex min-h-svh max-w-md flex-col border">
 						<ConfirmProvider>
 							{/* Main Content Area */}
-							<div className="absolute right-0 p-5">
+							<div className="fixed right-0 p-5">
 								<ModeToggle />
 							</div>
 							{children}
