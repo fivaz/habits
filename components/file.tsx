@@ -7,7 +7,7 @@ type LogoProps = ComponentProps<"svg"> & {
 	dotsClass: string;
 };
 
-export function Brain2Icon({
+export function RehearsalBrainIcon({
 	linesClass,
 	leftSideClass,
 	rightSideClass,
