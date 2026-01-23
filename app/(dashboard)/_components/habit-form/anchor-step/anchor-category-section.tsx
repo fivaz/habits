@@ -102,7 +102,7 @@ export function AnchorCategorySection({
 										"w-full rounded-xl p-3 text-left text-sm transition-all",
 										selectedValue === anchor
 											? "bg-white text-stone-900 shadow-md ring-2 ring-emerald-400"
-											: "bg-white/80 text-stone-700 hover:bg-white hover:shadow-sm",
+											: "bg-white/70 text-stone-700 hover:bg-white hover:shadow-sm",
 									)}
 								>
 									<span className="font-medium text-emerald-600">{HabitPrefix.anchor} </span>

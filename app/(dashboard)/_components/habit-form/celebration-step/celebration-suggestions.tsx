@@ -23,7 +23,7 @@ type CelebrationSuggestionsProps = {
 export function CelebrationSuggestions({ value, setValue }: CelebrationSuggestionsProps) {
 	return (
 		<div className="space-y-2">
-			<p className="flex items-center gap-2 text-sm text-stone-500">
+			<p className="flex items-center gap-2 text-sm text-stone-500 dark:text-stone-300">
 				<Sparkles className="h-4 w-4 text-amber-500" />
 				Quick picks:
 			</p>
@@ -37,7 +37,7 @@ export function CelebrationSuggestions({ value, setValue }: CelebrationSuggestio
 							"rounded-full px-3 py-1.5 text-sm transition-all",
 							value === suggestion.toLowerCase()
 								? "bg-amber-500 text-white"
-								: "bg-amber-50 text-amber-700 hover:bg-amber-100",
+								: "bg-amber-50 text-amber-700 hover:bg-amber-100 dark:bg-amber-100 dark:hover:bg-amber-200",
 						)}
 					>
 						{suggestion}
