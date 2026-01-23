@@ -3,9 +3,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ZapIcon } from "lucide-react";
 
-import { REHEARSAL_TARGET } from "@/app/(dashboard)/_components/service";
 import { RehearsalBrainIcon } from "@/components/file";
-import { HabitPrefix, HabitUI } from "@/lib/habits/type";
+import { HabitPrefix, HabitUI, REHEARSAL_TARGET } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
 type HabitSummaryProps = {

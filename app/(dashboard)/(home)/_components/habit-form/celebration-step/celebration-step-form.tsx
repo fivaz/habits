@@ -2,10 +2,13 @@ import React, { Dispatch, SetStateAction } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import { CelebrationSuggestions } from "@/app/(dashboard)/_components/habit-form/celebration-step/celebration-suggestions";
-import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
-import { NextButton, PreviousButton } from "@/app/(dashboard)/_components/habit-form/step-footer";
-import { Step, steps } from "@/app/(dashboard)/_components/service";
+import { CelebrationSuggestions } from "@/app/(dashboard)/(home)/_components/habit-form/celebration-step/celebration-suggestions";
+import { StepTextArea, StepTip } from "@/app/(dashboard)/(home)/_components/habit-form/step-body";
+import {
+	NextButton,
+	PreviousButton,
+} from "@/app/(dashboard)/(home)/_components/habit-form/step-footer";
+import { Step, steps } from "@/app/(dashboard)/(home)/_components/service";
 import { TodayHabitUI } from "@/lib/habits/type";
 
 type CelebrationStepFormProps = {

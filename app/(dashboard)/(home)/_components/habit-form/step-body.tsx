@@ -2,7 +2,7 @@ import React from "react";
 
 import { Lightbulb } from "lucide-react";
 
-import { StepConfig } from "@/app/(dashboard)/_components/service";
+import { StepConfig } from "@/app/(dashboard)/(home)/_components/service";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 

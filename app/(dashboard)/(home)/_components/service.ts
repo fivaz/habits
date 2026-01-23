@@ -63,5 +63,3 @@ export const steps: StepConfig[] = [
 		tip: "Rehearsing creates neural pathways. The more you practice the sequence, the more automatic it becomes!",
 	},
 ];
-
-export const REHEARSAL_TARGET = 5;

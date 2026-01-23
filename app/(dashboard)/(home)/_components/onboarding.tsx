@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, Plus, Sparkles } from "lucide-react";
 
-import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
+import { HabitForm } from "@/app/(dashboard)/(home)/_components/habit-form/habit-form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

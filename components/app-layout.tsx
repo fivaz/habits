@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 import { HomeIcon, Settings2Icon, TrendingUpIcon } from "lucide-react";
 
-import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
+import { GreetingsPanel } from "@/app/(dashboard)/greetings-panel";
 import { Logo } from "@/components/logo";
 import { ROUTES } from "@/lib/consts";
 

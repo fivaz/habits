@@ -2,7 +2,7 @@ import React from "react";
 
 import { motion } from "framer-motion";
 
-import { REHEARSAL_TARGET } from "@/app/(dashboard)/_components/service";
+import { REHEARSAL_TARGET } from "@/lib/habits/type";
 
 type ReHearsalProgressBarProps = {
 	rehearsalCount: number;

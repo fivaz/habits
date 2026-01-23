@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Search, Sparkles } from "lucide-react";
 
-import { AnchorCategorySection } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-category-section"; // Adjusted import path
+import { AnchorCategorySection } from "@/app/(dashboard)/(home)/_components/habit-form/anchor-step/anchor-category-section"; // Adjusted import path
 import { Input } from "@/components/ui/input";
 
 export type Category = "morning" | "meals" | "work" | "evening";

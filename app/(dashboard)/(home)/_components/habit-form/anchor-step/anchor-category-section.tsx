@@ -3,7 +3,7 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Briefcase, ChevronDownIcon, Coffee, LucideIcon, Moon, Sun } from "lucide-react";
 
-import { Category } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-library";
+import { Category } from "@/app/(dashboard)/(home)/_components/habit-form/anchor-step/anchor-library";
 import { HabitPrefix } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 

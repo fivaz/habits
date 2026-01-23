@@ -1,4 +1,4 @@
-import { HabitTracker } from "@/app/(dashboard)/_components/habit-tracker";
+import { HabitTracker } from "@/app/(dashboard)/(home)/_components/habit-tracker";
 import { HabitsProvider } from "@/hooks/habits-store";
 import { getHabitsAction } from "@/lib/habits/actions";
 

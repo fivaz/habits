@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { Check, Edit, MoreVertical, RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
-import CelebrationOverlay from "@/app/(dashboard)/_components/habit-card/celebration-overlay";
-import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
+import CelebrationOverlay from "@/app/(dashboard)/(home)/_components/habit-card/celebration-overlay";
+import { HabitForm } from "@/app/(dashboard)/(home)/_components/habit-form/habit-form";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,

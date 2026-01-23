@@ -3,8 +3,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { XIcon } from "lucide-react";
 
-import { RehearsalProgressBar } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-progress-bar";
-import { steps } from "@/app/(dashboard)/_components/service";
+import { RehearsalProgressBar } from "@/app/(dashboard)/(home)/_components/habit-form/rehearsal-step/rehearsal-progress-bar";
+import { steps } from "@/app/(dashboard)/(home)/_components/service";
 import { cn } from "@/lib/utils";
 
 type HeaderProps = {

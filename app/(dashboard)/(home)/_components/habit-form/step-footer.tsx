@@ -2,7 +2,7 @@ import React from "react";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import { StepConfig } from "@/app/(dashboard)/_components/service";
+import { StepConfig } from "@/app/(dashboard)/(home)/_components/service";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

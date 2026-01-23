@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
-import { AnchorStepForm } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-step-form";
-import { BehaviorStepForm } from "@/app/(dashboard)/_components/habit-form/behavior-step/behavior-step-form";
-import { CelebrationStepForm } from "@/app/(dashboard)/_components/habit-form/celebration-step/celebration-step-form";
-import { RehearsalStepForm } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-step-form";
-import { StepHeader } from "@/app/(dashboard)/_components/habit-form/step-header";
-import { Step, steps } from "@/app/(dashboard)/_components/service";
+import { AnchorStepForm } from "@/app/(dashboard)/(home)/_components/habit-form/anchor-step/anchor-step-form";
+import { BehaviorStepForm } from "@/app/(dashboard)/(home)/_components/habit-form/behavior-step/behavior-step-form";
+import { CelebrationStepForm } from "@/app/(dashboard)/(home)/_components/habit-form/celebration-step/celebration-step-form";
+import { RehearsalStepForm } from "@/app/(dashboard)/(home)/_components/habit-form/rehearsal-step/rehearsal-step-form";
+import { StepHeader } from "@/app/(dashboard)/(home)/_components/habit-form/step-header";
+import { Step, steps } from "@/app/(dashboard)/(home)/_components/service";
 import { DrawerDialog } from "@/components/drawer-dialog";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { createHabitAction, updateHabitAction } from "@/lib/habits/actions";

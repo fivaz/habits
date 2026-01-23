@@ -2,10 +2,10 @@ import React, { Dispatch, SetStateAction } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import { AnchorSuggestions } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-suggestions";
-import { StepTextArea, StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
-import { NextButton } from "@/app/(dashboard)/_components/habit-form/step-footer";
-import { Step, steps } from "@/app/(dashboard)/_components/service";
+import { AnchorSuggestions } from "@/app/(dashboard)/(home)/_components/habit-form/anchor-step/anchor-suggestions";
+import { StepTextArea, StepTip } from "@/app/(dashboard)/(home)/_components/habit-form/step-body";
+import { NextButton } from "@/app/(dashboard)/(home)/_components/habit-form/step-footer";
+import { Step, steps } from "@/app/(dashboard)/(home)/_components/service";
 import { TodayHabitUI } from "@/lib/habits/type";
 
 type AnchorStepFormProps = {

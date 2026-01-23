@@ -5,9 +5,9 @@ import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 
-import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";
-import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
-import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
+import { HabitCard } from "@/app/(dashboard)/(home)/_components/habit-card/habit-card";
+import { HabitForm } from "@/app/(dashboard)/(home)/_components/habit-form/habit-form";
+import { Onboarding } from "@/app/(dashboard)/(home)/_components/onboarding";
 import { HeaderPortal } from "@/components/header-portal";
 import { Button } from "@/components/ui/button";
 import { useHabitsStore } from "@/hooks/habits-store";

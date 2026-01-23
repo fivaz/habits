@@ -5,12 +5,12 @@ import { Repeat } from "lucide-react";
 import { Activity, Circle, Cpu, Share2, Spline, Zap } from "lucide-react";
 import { toast } from "sonner";
 
-import { RehearsalPanel } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-panel";
-import { StepTip } from "@/app/(dashboard)/_components/habit-form/step-body";
-import { REHEARSAL_TARGET, Step, steps } from "@/app/(dashboard)/_components/service";
+import { RehearsalPanel } from "@/app/(dashboard)/(home)/_components/habit-form/rehearsal-step/rehearsal-panel";
+import { StepTip } from "@/app/(dashboard)/(home)/_components/habit-form/step-body";
+import { Step, steps } from "@/app/(dashboard)/(home)/_components/service";
 import { Button } from "@/components/ui/button";
 import { rehearsalHabitAction } from "@/lib/habits/actions";
-import { TodayHabitUI } from "@/lib/habits/type";
+import { REHEARSAL_TARGET, TodayHabitUI } from "@/lib/habits/type";
 import { logError } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 

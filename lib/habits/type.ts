@@ -36,3 +36,5 @@ export const HabitPrefix = {
 	tinyBehavior: "I will",
 	celebration: "Then I will",
 };
+
+export const REHEARSAL_TARGET = 5;
