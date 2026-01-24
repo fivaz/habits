@@ -6,8 +6,6 @@ import { usePathname } from "next/navigation";
 
 import { HomeIcon, Settings2Icon, TrendingUpIcon } from "lucide-react";
 
-import { GreetingsPanel } from "@/app/(dashboard)/greetings-panel";
-import { Logo } from "@/components/logo";
 import { ROUTES } from "@/lib/consts";
 import { cn } from "@/lib/utils";
 
@@ -26,24 +24,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 
 	return (
 		<>
-			<header className="bg-card border-border sticky top-0 right-0 left-0 z-20 border-b">
-				<div className="px-4 py-4">
-					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-3">
-							<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-green-600 shadow-lg shadow-emerald-200">
-								<Logo className="size-6" />
-							</div>
-							<div>
-								<GreetingsPanel />
-								<h1 className="text-foreground text-lg font-bold">Tiny Habits</h1>
-							</div>
-						</div>
-						<div id="header-actions" />
-					</div>
-				</div>
-			</header>
-
-			<main className="relative flex flex-1 flex-col overflow-auto">{children}</main>
+			{children}
 
 			{/* Persistent Bottom Navigation */}
 			<nav className="bg-card border-border sticky right-0 bottom-0 left-0 z-20 border-t px-2 py-2 pb-5">
