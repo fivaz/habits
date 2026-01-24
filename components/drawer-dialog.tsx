@@ -28,7 +28,7 @@ export function DrawerDialog({ children, open, setOpen }: DrawerDialogProps) {
 							exit={{ y: "100%", opacity: 0 }}
 							transition={{ type: "spring", damping: 25, stiffness: 300 }}
 							onClick={(e) => e.stopPropagation()}
-							className="bg-background z-30 flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl shadow-2xl sm:rounded-3xl"
+							className="bg-card z-30 flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl border shadow-2xl sm:rounded-3xl"
 						>
 							{children}
 						</motion.div>

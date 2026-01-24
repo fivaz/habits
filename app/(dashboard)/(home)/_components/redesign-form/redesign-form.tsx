@@ -26,7 +26,9 @@ export function RedesignForm({ habit, onClose }: RedesignFormProps) {
 
 	const onResetFlow = () => setView("menu");
 
-	function updateHabit(optimisticHabit: TodayHabitUI) {
+	function updateHabit(habit: TodayHabitUI) {
+		const optimisticHabit = { ...habit, rehearsalCount: 0 };
+
 		updateItem(optimisticHabit, {
 			persist: () => updateHabitAction(optimisticHabit),
 			onError: () => toast.error("Failed to update habit. Please try again."),
