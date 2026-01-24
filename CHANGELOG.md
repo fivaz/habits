@@ -1,3 +1,25 @@
+## [1.9.0](https://github.com/fivaz/habits/compare/v1.8.0...v1.9.0) (2026-01-24)
+
+### ✨ Features
+
+* add dark mode to habit form ([eb189c5](https://github.com/fivaz/habits/commit/eb189c58733099901df936e4bebbc62358a8645f))
+* add dark mode to habit page ([ecf4e5a](https://github.com/fivaz/habits/commit/ecf4e5a376b7ade5a36493d0d3e6540afc2bd783))
+* add dark mode to onboarding ([14c45cb](https://github.com/fivaz/habits/commit/14c45cb4eccfbe709ab820f0f63dfd29b5324714))
+* change light background to gray-100 ([acc0e5a](https://github.com/fivaz/habits/commit/acc0e5a18e2598d24c40140eba5741f5091c1ae9))
+* improve design of anchor library ([d176638](https://github.com/fivaz/habits/commit/d1766385c780f3d9285a8ed835cc38e0ccead617))
+* redesign rehearsal form ([3a276d8](https://github.com/fivaz/habits/commit/3a276d86de506ed31cefb1f42ffc4059e8578fc5))
+
+### 🐛 Bug Fixes
+
+* fix bug of drawer of habit form becoming smaller and smaller in each step ([339d97b](https://github.com/fivaz/habits/commit/339d97bd05fc85abb96b441fef677680bc30310e))
+* fix dialog scroll ([915afa5](https://github.com/fivaz/habits/commit/915afa5f72150dcea740f66829e69fc606739c58))
+* fix rehearsal form not updating ([283b43a](https://github.com/fivaz/habits/commit/283b43a7e06b7de4d9212e1c1bec1cea3e135f2e))
+
+### 🧹 Chores
+
+* add lint-staged to format files before commit ([f4bcff5](https://github.com/fivaz/habits/commit/f4bcff5789a3d7b83e0b33a1d0e161514d83bd29))
+* wip - fix bug of drawer of habit form becoming smaller and smaller in each step ([27c0549](https://github.com/fivaz/habits/commit/27c0549f04a97ae723d28ad5bf0b25eff1f88d9d))
+
 ## [1.8.0](https://github.com/fivaz/habits/compare/v1.7.0...v1.8.0) (2026-01-20)
 
 ### ✨ Features
