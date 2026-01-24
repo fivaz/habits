@@ -89,13 +89,15 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<div className="border-border mx-auto flex min-h-svh max-w-md flex-col border">
+					<div className="mx-auto min-h-svh max-w-md">
 						<ConfirmProvider>
 							{/* Main Content Area */}
 							<div className="fixed right-0 p-5">
 								<ModeToggle />
 							</div>
-							<div className="bg-background">{children}</div>
+							<div className="border-border bg-background flex min-h-svh flex-col border">
+								{children}
+							</div>
 						</ConfirmProvider>
 					</div>
 					<Toaster />
