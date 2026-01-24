@@ -100,6 +100,7 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 					<RedesignFormButton
 						habit={habit}
 						variant="outline"
+						aria-label="Redesign Habit"
 						className="text-muted-foreground rounded-xl border-stone-200 px-4 py-3 hover:bg-stone-50"
 					>
 						<RefreshCw className="h-4 w-4" />
