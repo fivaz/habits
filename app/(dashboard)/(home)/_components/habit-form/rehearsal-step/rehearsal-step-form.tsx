@@ -56,17 +56,13 @@ type RehearsalStepFormProps = {
 export function RehearsalStepForm({ setHabitIn, onClose, habitIn }: RehearsalStepFormProps) {
 	const step = steps[Step.REHEARSAL];
 
-	const incrementRehearsal = (habit: TodayHabitUI) => ({
-		...habit,
-		rehearsalCount: habit.rehearsalCount + 1,
-	});
-
 	const onRehearse = async () => {
-		setHabitIn(incrementRehearsal);
-
-		if (habitIn.rehearsalCount === REHEARSAL_TARGET) {
+		const newCount = habitIn.rehearsalCount + 1;
+		if (newCount === REHEARSAL_TARGET) {
 			setTimeout(() => onClose(), 2000);
 		}
+
+		setHabitIn({ ...habitIn, rehearsalCount: newCount });
 
 		try {
 			await rehearsalHabitAction(habitIn.id);

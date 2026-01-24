@@ -60,15 +60,16 @@ export function HabitForm({
 		} else {
 			addItem(optimisticHabit, {
 				persist: () => createHabitAction(optimisticHabit),
-				onSuccess: () => toast.success("Habit created successfully."),
+				onSuccess: () => {
+					toast.success("Habit created successfully.");
+					setHabitIn((prev) => ({ ...prev, id: optimisticHabit.id }));
+				},
 				onError: () =>
 					toast.error("Failed to create habit.", {
 						description: "Your changes have been reverted, please try again",
 					}),
 			});
 		}
-
-		setHabitIn((prev) => ({ ...prev, id: optimisticHabit.id }));
 	};
 
 	const renderStep = (step: number) => {

@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
 	env: {
 		NEXT_PUBLIC_APP_VERSION: pkg.version,
 	},
-	allowedDevOrigins: ["http://localhost:3000", "*.sfivaz.com"],
+	allowedDevOrigins: ["*.sfivaz.com"],
 };
 
 const sentryOptions = {
