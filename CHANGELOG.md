@@ -1,3 +1,33 @@
+## [1.10.0](https://github.com/fivaz/habits/compare/v1.9.0...v1.10.0) (2026-01-24)
+
+### ✨ Features
+
+* add aria attributes and close on escape to drawer dialog ([59ecbe2](https://github.com/fivaz/habits/commit/59ecbe2bd7580016ed7e04f49711dfa49916a8e6))
+* add progress bar ([ec30816](https://github.com/fivaz/habits/commit/ec30816feecaccf876191460d9d122470b025731))
+* add redesign habit form ([678fbf4](https://github.com/fivaz/habits/commit/678fbf448eefc62acbd6f648754c568555782dd6))
+* after redesign a habit, make the user rehearsal it ([1989811](https://github.com/fivaz/habits/commit/19898119c89268b0037d67f6fa54fd5ad96a287f))
+
+### 🐛 Bug Fixes
+
+* broken animations in forms because of repeated ids ([9fd0a15](https://github.com/fivaz/habits/commit/9fd0a15fab3db50f40a415012b5caf4315ad04a4))
+* fix issue with layout not being full screen ([bbd3b0c](https://github.com/fivaz/habits/commit/bbd3b0c6d9ef8b28231c710467bbed32eaf1e11e))
+* fix rehearsal form wasn't closing ([455b0dc](https://github.com/fivaz/habits/commit/455b0dcb9f3b138fdc68523c1ccd682a8aa7853b))
+
+### 🧹 Chores
+
+* add aria attribute to icon button ([c5e9792](https://github.com/fivaz/habits/commit/c5e9792ac8d1535aff7909319cf91dc14be0bbe5))
+* improve lintstage speed ([b1bf2c3](https://github.com/fivaz/habits/commit/b1bf2c33d64292b9548b6e4bb382f33836dd5801))
+
+### 💄 Styles
+
+* move files from home page to a (home) directory ([50873c4](https://github.com/fivaz/habits/commit/50873c47e146dd302a6e17b2419a575911358a57))
+
+### 🔨 Code Refactoring
+
+* remove side effect of set state ([bed407d](https://github.com/fivaz/habits/commit/bed407d1963136b0dd204c35510118764e3dcd10))
+* use card/background instead of background/muted for color contrast ([133c4e3](https://github.com/fivaz/habits/commit/133c4e301ac4a19e02eed9992124c8d892dfeaf2))
+* use tailwind vars to create my custom shadcn vars ([75aa7a2](https://github.com/fivaz/habits/commit/75aa7a2062f8ce87bb1a73f2f463006ba1e6409e))
+
 ## [1.9.0](https://github.com/fivaz/habits/compare/v1.8.0...v1.9.0) (2026-01-24)
 
 ### ✨ Features
