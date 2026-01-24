@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 import CelebrationOverlay from "@/app/(dashboard)/(home)/_components/habit-card/celebration-overlay";
 import { HabitForm } from "@/app/(dashboard)/(home)/_components/habit-form/habit-form";
+import { RedesignFormButton } from "@/app/(dashboard)/(home)/_components/redesign-form/redesign-form-button";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -45,10 +46,6 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 					description: "Your changes have been reverted, please try again",
 				}),
 		});
-	};
-
-	const onRedesign = () => {
-		console.log("onRedesign");
 	};
 
 	const onEdit = () => setOpenEditForm(true);
@@ -100,13 +97,13 @@ export function HabitActionButtons({ habit }: HabitActionButtonsProps) {
 						</span>
 					</motion.button>
 
-					<Button
+					<RedesignFormButton
+						habit={habit}
 						variant="outline"
-						onClick={onRedesign}
 						className="text-muted-foreground rounded-xl border-stone-200 px-4 py-3 hover:bg-stone-50"
 					>
 						<RefreshCw className="h-4 w-4" />
-					</Button>
+					</RedesignFormButton>
 				</>
 			)}
 

@@ -14,4 +14,5 @@ export const categoryColors = {
 	work: "from-blue-100 to-indigo-100 text-blue-700",
 	evening: "from-violet-100 to-purple-100 text-violet-700",
 	other: "from-stone-100 to-stone-200 text-stone-600",
+	x: "from-violet-100 to-violet-200 text-violet-600",
 };

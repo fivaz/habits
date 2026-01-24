@@ -90,7 +90,7 @@ export function RehearsalStepForm({ setHabitIn, onClose, habitIn }: RehearsalSte
 					exit={{ opacity: 0, x: -20 }}
 					className="space-y-4"
 				>
-					<div className="text-foreground">{step.subtitle}</div>
+					<div className="text-primary">{step.subtitle}</div>
 
 					<RehearsalPanel habit={habitIn} />
 

@@ -31,7 +31,7 @@ export function AnchorStepForm({ setHabitIn, value, onNext }: AnchorStepFormProp
 						exit={{ opacity: 0, x: -20 }}
 						className="space-y-4"
 					>
-						<div className="text-foreground">{step.subtitle}</div>
+						<div className="text-primary">{step.subtitle}</div>
 						<AnchorSuggestions value={value} setAnchorValue={setAnchorValue} />
 						<StepTextArea step={step} value={value} setValue={setAnchorValue} />
 						<StepTip step={step} />

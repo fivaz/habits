@@ -20,9 +20,7 @@ export function HabitCard({ habit }: HabitCardProps) {
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			exit={{ opacity: 0, y: -20 }}
-			className={cn(
-				"bg-card relative overflow-hidden rounded-2xl border border-gray-200 shadow-md dark:border-gray-600",
-			)}
+			className={cn("bg-card border-border relative overflow-hidden rounded-2xl border shadow-md")}
 		>
 			<div className="p-5">
 				<HabitSummary habit={habit} />

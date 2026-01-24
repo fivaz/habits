@@ -42,7 +42,7 @@ export function CelebrationStepForm({
 						exit={{ opacity: 0, x: -20 }}
 						className="space-y-4"
 					>
-						<div className="text-foreground">{step.subtitle}</div>
+						<div className="text-primary">{step.subtitle}</div>
 
 						<StepTextArea step={step} value={value} setValue={setCelebrationValue} />
 

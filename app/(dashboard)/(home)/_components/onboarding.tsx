@@ -53,14 +53,14 @@ export function Onboarding() {
 				</Button>
 
 				{/* Restored Learn More Section */}
-				<div className="bg-background border-border mt-12 rounded-2xl border p-6 text-left">
+				<div className="bg-card border-border mt-12 rounded-2xl border p-6 text-left">
 					<div className="mb-4 flex items-center gap-3">
 						<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100">
 							<BookOpen className="h-5 w-5 text-amber-600" />
 						</div>
 						<h3 className="text-foreground font-bold">What is B=MAP?</h3>
 					</div>
-					<p className="mb-4 text-sm text-stone-600 dark:text-stone-400">
+					<p className="text-muted-foreground mb-4 text-sm">
 						BJ Fogg's Behavior Model: <strong>Behavior = Motivation + Ability + Prompt</strong>
 					</p>
 
@@ -68,7 +68,7 @@ export function Onboarding() {
 						{ABC_ITEMS.map((item) => (
 							<div
 								key={item.letter}
-								className="border-border flex items-start gap-3 rounded-xl border bg-stone-50 p-3 dark:bg-gray-700"
+								className="border-border bg-background/70 flex items-start gap-3 rounded-xl border p-3"
 							>
 								<span
 									className={cn(

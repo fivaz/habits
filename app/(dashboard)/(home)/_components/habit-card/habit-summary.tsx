@@ -43,16 +43,30 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 	];
 
 	return (
-		<>
+		<div className="flex gap-2">
+			{/* ABC Recipe */}
+			<div className="mb-5 flex-1 space-y-3">
+				{abcItems.map((item) => (
+					<div key={item.letter} className="flex items-start gap-2">
+						<span
+							className={cn(
+								"flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+								item.bgColor,
+								item.textColor,
+							)}
+						>
+							{item.letter}
+						</span>
+						<div>
+							<p className="text-muted-foreground text-xs tracking-wide uppercase">{item.label}</p>
+							<p className={item.valueClass}>{item.value}</p>
+						</div>
+					</div>
+				))}
+			</div>
+
 			{/* Category Badge */}
-			<div
-				className={
-					"absolute top-4 right-4 flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1"
-				}
-			>
-				{habit.rehearsalCount < REHEARSAL_TARGET && (
-					<MissingRehearsalBadge onStartRehearsal={() => setOpenEditForm(true)} />
-				)}
+			<div className="flex flex-col items-end gap-2">
 				<div
 					className={cn(
 						categoryColors[habit.anchorCategory],
@@ -62,36 +76,17 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 					<CategoryIcon className="h-3 w-3" />
 					<span className="text-xs font-medium capitalize">{habit.anchorCategory}</span>
 				</div>
+				{habit.rehearsalCount < REHEARSAL_TARGET && (
+					<MissingRehearsalBadge onStartRehearsal={() => setOpenEditForm(true)} />
+				)}
 			</div>
 
-			{/* ABC Recipe */}
-			<div className="mb-5 space-y-3 pr-20">
-				<div className="mb-5 space-y-3 pr-20">
-					{abcItems.map((item) => (
-						<div key={item.letter} className="flex items-start gap-2">
-							<span
-								className={cn(
-									"flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold",
-									item.bgColor,
-									item.textColor,
-								)}
-							>
-								{item.letter}
-							</span>
-							<div>
-								<p className="text-xs tracking-wide text-stone-400 uppercase">{item.label}</p>
-								<p className={item.valueClass}>{item.value}</p>
-							</div>
-						</div>
-					))}
-				</div>
-			</div>
 			<HabitForm
 				habit={habit}
 				startStep={Step.REHEARSAL}
 				open={openEditForm}
 				setOpen={setOpenEditForm}
 			/>
-		</>
+		</div>
 	);
 }
