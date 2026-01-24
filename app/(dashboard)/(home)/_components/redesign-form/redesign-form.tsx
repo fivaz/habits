@@ -71,7 +71,7 @@ export function RedesignForm({ habit, onClose }: RedesignFormProps) {
 			<div className="p-6">
 				<AnimatePresence mode="wait">
 					<motion.div
-						key="step1"
+						key={view}
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: -20 }}
@@ -111,6 +111,7 @@ function MenuView({ setView }: MenuViewProps) {
 						<button
 							onClick={() => setView(reason.id)}
 							key={reason.id}
+							type="button"
 							className={cn(
 								"w-full rounded-2xl border bg-linear-to-br p-4 text-left transition-all hover:scale-[1.02] hover:shadow-md active:scale-[0.98]",
 								reason.color,

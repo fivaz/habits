@@ -28,7 +28,7 @@ export function BehaviorStepForm({ setHabitIn, value, onNext, onPrevious }: Beha
 			<div className="flex-1 overflow-y-auto p-6">
 				<AnimatePresence mode="wait">
 					<motion.div
-						key={Step.ANCHOR}
+						key={Step.BEHAVIOR}
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: -20 }}
