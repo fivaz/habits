@@ -62,15 +62,11 @@ export function RehearsalStepForm({ setHabitIn, onClose, habitIn }: RehearsalSte
 	});
 
 	const onRehearse = async () => {
-		setHabitIn((prev) => {
-			const optimisticHabit = incrementRehearsal(prev);
+		setHabitIn(incrementRehearsal);
 
-			if (optimisticHabit.rehearsalCount === REHEARSAL_TARGET) {
-				setTimeout(() => onClose(), 2000);
-			}
-
-			return optimisticHabit;
-		});
+		if (habitIn.rehearsalCount === REHEARSAL_TARGET) {
+			setTimeout(() => onClose(), 2000);
+		}
 
 		try {
 			await rehearsalHabitAction(habitIn.id);

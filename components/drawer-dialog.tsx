@@ -2,9 +2,8 @@ import { ReactNode } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import { ButtonProps } from "@/components/ui/button";
 
-type DrawerDialogProps = ButtonProps & {
+type DrawerDialogProps = {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 	children: ReactNode;
