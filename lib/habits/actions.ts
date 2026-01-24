@@ -97,6 +97,7 @@ export async function updateHabitAction({
 				tinyBehavior,
 				celebration,
 				anchorCategory,
+				rehearsalCount: 0,
 			},
 		});
 

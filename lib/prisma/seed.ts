@@ -1,5 +1,5 @@
-import { REHEARSAL_TARGET } from "@/app/(dashboard)/_components/service";
 import { AnchorCategory, Prisma } from "@/lib/generated/prisma/client";
+import { REHEARSAL_TARGET } from "@/lib/habits/type";
 import { prisma } from "@/lib/prisma";
 
 async function safeDelete(modelDelete: () => Promise<unknown>) {
