@@ -1,55 +1,33 @@
 "use client";
 
+import { useState } from "react";
+
 import { AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 
-import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
 import { HabitCard } from "@/app/(dashboard)/_components/habit-card/habit-card";
-import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
+import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
 import { Onboarding } from "@/app/(dashboard)/_components/onboarding";
-import { Logo } from "@/components/logo";
-import { HabitsProvider, useHabitsStore } from "@/hooks/habits-store";
-import { TodayHabitUI } from "@/lib/habits/type";
+import { HeaderPortal } from "@/components/header-portal";
+import { Button } from "@/components/ui/button";
+import { useHabitsStore } from "@/hooks/habits-store";
 
-type HabitTrackerProps = {
-	habits: TodayHabitUI[];
-};
-
-export function HabitTracker({ habits }: HabitTrackerProps) {
-	return (
-		<HabitsProvider initialItems={habits}>
-			<InternalHabitTracker />
-		</HabitsProvider>
-	);
-}
-
-export function InternalHabitTracker() {
+export function HabitTracker() {
 	const { items: habits } = useHabitsStore();
+	const [openForm, setOpenForm] = useState(false);
 	return (
-		<div className="min-h-screen bg-linear-to-br from-stone-50 via-white to-emerald-50">
-			{/* Header */}
-			<div className="sticky top-0 z-40 border-b border-stone-200 bg-white/80 backdrop-blur-md">
-				<div className="mx-auto max-w-lg px-4 py-4">
-					<div className="mb-4 flex items-center justify-between">
-						<div className="flex items-center gap-3">
-							<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-green-600 shadow-lg shadow-emerald-200">
-								<Logo className="size-6" />
-							</div>
-							<div>
-								<GreetingsPanel />
-								<h1 className="text-lg font-bold text-stone-800">Tiny Habits</h1>
-							</div>
-						</div>
-						<HabitFormButton className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white">
-							<Plus className="mr-1 h-4 w-4" />
-							New Recipe
-						</HabitFormButton>
-					</div>
-				</div>
-			</div>
+		<>
+			<HeaderPortal>
+				<Button
+					onClick={() => setOpenForm(true)}
+					className="rounded-xl bg-linear-to-r from-emerald-500 to-green-600 text-white"
+				>
+					<Plus className="mr-1 h-4 w-4" />
+					New Recipe
+				</Button>
+			</HeaderPortal>
 
-			{/* Content */}
-			<div className="mx-auto max-w-lg px-4 py-6">
+			<div className="p-4">
 				{habits.length === 0 ? (
 					<Onboarding />
 				) : (
@@ -62,6 +40,8 @@ export function InternalHabitTracker() {
 					</div>
 				)}
 			</div>
-		</div>
+
+			<HabitForm open={openForm} setOpen={setOpenForm} />
+		</>
 	);
 }

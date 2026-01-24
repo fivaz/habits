@@ -5,6 +5,7 @@ export const ROUTES = {
 	LOGIN: "/login",
 	REGISTER: "/register",
 	SETTINGS: "/settings",
+	PROGRESS: "/progress",
 };
 
 export const PAGE_SIZE = 20;

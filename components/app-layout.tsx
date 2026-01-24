@@ -4,37 +4,48 @@ import React, { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { HomeIcon, Settings2Icon } from "lucide-react";
+import { HomeIcon, Settings2Icon, TrendingUpIcon } from "lucide-react";
 
+import { GreetingsPanel } from "@/app/(dashboard)/_components/greetings-panel";
+import { Logo } from "@/components/logo";
 import { ROUTES } from "@/lib/consts";
-import { cn } from "@/lib/utils";
 
 type AppLayoutProps = {
 	children: ReactNode;
-	className?: string;
 };
 
-export function AppLayout({ children, className }: AppLayoutProps) {
+export function AppLayout({ children }: AppLayoutProps) {
 	const pathname = usePathname();
 
 	const navItems = [
 		{ icon: HomeIcon, label: "Home", href: ROUTES.HOME },
+		{ icon: TrendingUpIcon, label: "Progress", href: ROUTES.PROGRESS },
 		{ icon: Settings2Icon, label: "Settings", href: ROUTES.SETTINGS },
 	];
 
 	return (
 		<>
-			<main
-				className={cn(
-					className,
-					"min-h-svh bg-linear-to-br from-stone-50 via-white to-emerald-50 transition-colors duration-300",
-				)}
-			>
-				{children}
-			</main>
+			<header className="bg-background border-border sticky top-0 right-0 left-0 z-20 border-b">
+				<div className="px-4 py-4">
+					<div className="flex items-center justify-between">
+						<div className="flex items-center gap-3">
+							<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-green-600 shadow-lg shadow-emerald-200">
+								<Logo className="size-6" />
+							</div>
+							<div>
+								<GreetingsPanel />
+								<h1 className="text-lg font-bold text-stone-800 dark:text-gray-200">Tiny Habits</h1>
+							</div>
+						</div>
+						<div id="header-actions" />
+					</div>
+				</div>
+			</header>
+
+			<main className="relative flex flex-1 flex-col overflow-auto">{children}</main>
 
 			{/* Persistent Bottom Navigation */}
-			<nav className="fixed right-0 bottom-0 left-0 z-50 border-t border-gray-200 bg-white px-2 py-2 pb-5 transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800">
+			<nav className="bg-background border-border sticky right-0 bottom-0 left-0 z-20 border-t px-2 py-2 pb-5">
 				<div className="mx-auto flex max-w-md items-center justify-around">
 					{navItems.map((item) => {
 						const isActive = pathname === item.href;

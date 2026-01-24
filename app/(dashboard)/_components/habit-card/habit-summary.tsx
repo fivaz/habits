@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { MissingRehearsalBadge } from "@/app/(dashboard)/_components/habit-card/missing-rehearsal-badge";
-import { HabitFormButton } from "@/app/(dashboard)/_components/habit-form/habit-form-button";
+import { HabitForm } from "@/app/(dashboard)/_components/habit-form/habit-form";
 import { REHEARSAL_TARGET, Step } from "@/app/(dashboard)/_components/service";
 import { categoryColors, categoryIcons } from "@/lib/category/type";
 import { HabitPrefix, TodayHabitUI } from "@/lib/habits/type";
@@ -14,6 +14,33 @@ type HabitSummaryProps = {
 export function HabitSummary({ habit }: HabitSummaryProps) {
 	const CategoryIcon = categoryIcons[habit.anchorCategory];
 	const [openEditForm, setOpenEditForm] = useState(false);
+
+	const abcItems = [
+		{
+			label: "Anchor",
+			letter: "A",
+			bgColor: "bg-stone-100",
+			textColor: "text-stone-500",
+			value: `${HabitPrefix.anchor} ${habit.anchor}`,
+			valueClass: "font-medium text-stone-700 dark:text-gray-200",
+		},
+		{
+			label: "Tiny Behavior",
+			letter: "B",
+			bgColor: "bg-emerald-100",
+			textColor: "text-emerald-600",
+			value: `${HabitPrefix.tinyBehavior} ${habit.tinyBehavior}`,
+			valueClass: "font-semibold text-emerald-600",
+		},
+		{
+			label: "Celebration",
+			letter: "C",
+			bgColor: "bg-amber-100",
+			textColor: "text-amber-600",
+			value: `${HabitPrefix.celebration} ${habit.celebration}`,
+			valueClass: "text-amber-700 dark:text-amber-300",
+		},
+	];
 
 	return (
 		<>
@@ -39,50 +66,31 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 
 			{/* ABC Recipe */}
 			<div className="mb-5 space-y-3 pr-20">
-				{/* Anchor */}
-				<div className="flex items-start gap-2">
-					<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-stone-100 text-xs font-bold text-stone-500">
-						A
-					</span>
-					<div>
-						<p className="text-xs tracking-wide text-stone-400 uppercase">Anchor</p>
-						<p className="font-medium text-stone-700">
-							{HabitPrefix.anchor} {habit.anchor}
-						</p>
-					</div>
-				</div>
-
-				{/* Behavior */}
-				<div className="flex items-start gap-2">
-					<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-600">
-						B
-					</span>
-					<div>
-						<p className="text-xs tracking-wide text-stone-400 uppercase">Tiny Behavior</p>
-						<p className="font-semibold text-stone-800">
-							{HabitPrefix.tinyBehavior} {habit.tinyBehavior}
-						</p>
-					</div>
-				</div>
-
-				{/* Celebration */}
-				<div className="flex items-start gap-2">
-					<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-100 text-xs font-bold text-amber-600">
-						C
-					</span>
-					<div>
-						<p className="text-xs tracking-wide text-stone-400 uppercase">Celebration</p>
-						<p className="text-amber-700">
-							{HabitPrefix.celebration} {habit.celebration}
-						</p>
-					</div>
+				<div className="mb-5 space-y-3 pr-20">
+					{abcItems.map((item) => (
+						<div key={item.letter} className="flex items-start gap-2">
+							<span
+								className={cn(
+									"flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+									item.bgColor,
+									item.textColor,
+								)}
+							>
+								{item.letter}
+							</span>
+							<div>
+								<p className="text-xs tracking-wide text-stone-400 uppercase">{item.label}</p>
+								<p className={item.valueClass}>{item.value}</p>
+							</div>
+						</div>
+					))}
 				</div>
 			</div>
-			<HabitFormButton
+			<HabitForm
 				habit={habit}
 				startStep={Step.REHEARSAL}
 				open={openEditForm}
-				onOpenChange={setOpenEditForm}
+				setOpen={setOpenEditForm}
 			/>
 		</>
 	);

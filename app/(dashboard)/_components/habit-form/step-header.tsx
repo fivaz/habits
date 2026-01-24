@@ -5,7 +5,6 @@ import { XIcon } from "lucide-react";
 
 import { RehearsalProgressBar } from "@/app/(dashboard)/_components/habit-form/rehearsal-step/rehearsal-progress-bar";
 import { steps } from "@/app/(dashboard)/_components/service";
-import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 type HeaderProps = {
@@ -18,7 +17,12 @@ export function StepHeader({ rehearsalCount, currentStepIndex, onClose }: Header
 	const step = steps[currentStepIndex];
 	const StepIcon = step.icon;
 	return (
-		<DialogHeader className={cn(step.bgColor, "relative border-b bg-linear-to-br p-6")}>
+		<div
+			className={cn(
+				step.bgColor,
+				"relative border-b border-gray-300 bg-linear-to-br p-6 dark:border-gray-400",
+			)}
+		>
 			<button
 				onClick={onClose}
 				className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/50 text-stone-500 transition-colors hover:bg-white hover:text-stone-700"
@@ -56,9 +60,9 @@ export function StepHeader({ rehearsalCount, currentStepIndex, onClose }: Header
 					<p className="mb-1 text-xs tracking-wide text-stone-500 uppercase">
 						Step {currentStepIndex + 1} of {steps.length}
 					</p>
-					<DialogTitle className="text-xl font-bold text-stone-800">{step.title}</DialogTitle>
+					<div className="text-xl font-bold text-stone-800">{step.title}</div>
 				</div>
 			</div>
-		</DialogHeader>
+		</div>
 	);
 }

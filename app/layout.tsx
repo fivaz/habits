@@ -81,22 +81,22 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+			<body className={`${geistSans.variable} ${geistMono.variable} bg-muted antialiased`}>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange
 				>
-					<ConfirmProvider>
-						<div className="mx-auto min-h-svh max-w-md border bg-gray-50 dark:bg-gray-900">
+					<div className="border-border mx-auto flex min-h-svh max-w-md flex-col border">
+						<ConfirmProvider>
 							{/* Main Content Area */}
-							<div className="absolute right-0 p-5">
+							<div className="fixed right-0 p-5">
 								<ModeToggle />
 							</div>
 							{children}
-						</div>
-					</ConfirmProvider>
+						</ConfirmProvider>
+					</div>
 					<Toaster />
 				</ThemeProvider>
 			</body>

@@ -12,9 +12,9 @@ type StepTipProps = {
 
 export function StepTip({ step }: StepTipProps) {
 	return (
-		<div className="flex items-start gap-2 rounded-xl border border-stone-200 bg-stone-50 p-3">
+		<div className="bg-muted border-border flex items-start gap-2 rounded-xl border p-3">
 			<Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-			<p className="text-sm text-stone-600">{step.tip}</p>
+			<p className="text-muted-foreground text-sm">{step.tip}</p>
 		</div>
 	);
 }
@@ -41,7 +41,7 @@ export function StepTextArea({ step, value, setValue }: StepTextAreaProps) {
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
 				placeholder={step.placeholder}
-				className="min-h-30 rounded-2xl border-stone-200 pt-10 text-lg focus:border-emerald-400 focus:ring-emerald-400"
+				className="min-h-30 rounded-2xl pt-10 text-lg focus:border-emerald-400 focus:ring-emerald-400"
 			/>
 		</div>
 	);

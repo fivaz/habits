@@ -1,17 +1,40 @@
 import React from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Briefcase, Coffee, LucideIcon, Moon, Sun } from "lucide-react";
+import { Briefcase, ChevronDownIcon, Coffee, LucideIcon, Moon, Sun } from "lucide-react";
 
 import { Category } from "@/app/(dashboard)/_components/habit-form/anchor-step/anchor-library";
 import { HabitPrefix } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
-const CATEGORY_CONFIG: Record<Category, { icon: LucideIcon; colors: string }> = {
-	morning: { icon: Sun, colors: "from-amber-50 to-orange-50 border-amber-200" },
-	meals: { icon: Coffee, colors: "from-emerald-50 to-teal-50 border-emerald-200" },
-	work: { icon: Briefcase, colors: "from-blue-50 to-indigo-50 border-blue-200" },
-	evening: { icon: Moon, colors: "from-violet-50 to-purple-50 border-violet-200" },
+const CATEGORY_CONFIG: Record<
+	Category,
+	{ icon: LucideIcon; iconColor: string; containerColor: string }
+> = {
+	morning: {
+		icon: Sun,
+		iconColor: "bg-amber-200 text-amber-500 dark:bg-amber-300 dark:text-amber-600",
+		containerColor:
+			"from-amber-50 to-orange-50 border-amber-200 dark:from-amber-100 dark:to-orange-100 dark:border-amber-300",
+	},
+	meals: {
+		icon: Coffee,
+		iconColor: "bg-emerald-200 text-emerald-500 dark:bg-emerald-300 dark:text-emerald-600",
+		containerColor:
+			"from-emerald-50 to-teal-50 border-emerald-200 dark:from-emerald-100 dark:to-teal-100 dark:border-emerald-300",
+	},
+	work: {
+		icon: Briefcase,
+		iconColor: "bg-indigo-200 text-indigo-500 dark:bg-indigo-300 dark:text-indigo-600",
+		containerColor:
+			"from-blue-50 to-indigo-50 border-blue-200 dark:from-blue-100 dark:to-indigo-100 dark:border-blue-300",
+	},
+	evening: {
+		icon: Moon,
+		iconColor: "bg-violet-200 text-violet-500 dark:bg-violet-300 dark:text-violet-600",
+		containerColor:
+			"from-violet-50 to-purple-50 border-violet-200 dark:from-violet-100 dark:to-purple-100 dark:border-violet-300",
+	},
 };
 
 type CategorySectionProps = {
@@ -31,17 +54,20 @@ export function AnchorCategorySection({
 	onToggle,
 	onSelect,
 }: CategorySectionProps) {
-	const { icon: Icon, colors } = CATEGORY_CONFIG[category];
+	const { icon: Icon, containerColor, iconColor } = CATEGORY_CONFIG[category];
 
 	return (
-		<motion.div layout className={cn("overflow-hidden rounded-2xl border bg-linear-to-br", colors)}>
+		<motion.div
+			layout
+			className={cn("overflow-hidden rounded-2xl border bg-linear-to-br", containerColor)}
+		>
 			<button
 				onClick={onToggle}
 				className="flex w-full items-center justify-between p-4 outline-none"
 			>
 				<div className="flex items-center gap-3">
-					<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/60">
-						<Icon className="h-5 w-5 text-stone-600" />
+					<div className={cn("flex size-10 items-center justify-center rounded-xl", iconColor)}>
+						<Icon className="size-5" />
 					</div>
 					<div className="text-left">
 						<p className="font-medium text-stone-800 capitalize">{category}</p>
@@ -50,16 +76,9 @@ export function AnchorCategorySection({
 				</div>
 				<motion.div
 					animate={{ rotate: isExpanded ? 180 : 0 }}
-					className="flex h-6 w-6 items-center justify-center rounded-full bg-white/60"
+					className={cn("flex items-center justify-center rounded-full p-1", iconColor)}
 				>
-					<svg
-						className="h-4 w-4 text-stone-500"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-					</svg>
+					<ChevronDownIcon className="size-4" />
 				</motion.div>
 			</button>
 
@@ -71,7 +90,7 @@ export function AnchorCategorySection({
 						exit={{ height: 0, opacity: 0 }}
 						className="overflow-hidden"
 					>
-						<div className="space-y-2 px-4 pb-4">
+						<div className="space-y-2 p-4">
 							{items.map((anchor, index) => (
 								<motion.button
 									key={index}
@@ -83,7 +102,7 @@ export function AnchorCategorySection({
 										"w-full rounded-xl p-3 text-left text-sm transition-all",
 										selectedValue === anchor
 											? "bg-white text-stone-900 shadow-md ring-2 ring-emerald-400"
-											: "bg-white/50 text-stone-700 hover:bg-white hover:shadow-sm",
+											: "bg-white/70 text-stone-700 hover:bg-white hover:shadow-sm",
 									)}
 								>
 									<span className="font-medium text-emerald-600">{HabitPrefix.anchor} </span>
