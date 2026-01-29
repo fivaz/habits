@@ -47,6 +47,49 @@ export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 	}
 }
 
+export async function upsertHabitAction({
+	id,
+	anchor,
+	anchorCategory,
+	tinyBehavior,
+	celebration,
+}: HabitUI) {
+	try {
+		const userId = await getUserId();
+
+		if (!id) {
+			throw new Error("Missing habit ID");
+		}
+
+		await prisma.habitRecipe.upsert({
+			where: { id },
+			create: {
+				id,
+				anchor,
+				tinyBehavior,
+				celebration,
+				userId,
+				anchorCategory,
+				rehearsalCount: 0,
+			},
+			update: {
+				anchor,
+				tinyBehavior,
+				celebration,
+				anchorCategory,
+				rehearsalCount: 0,
+			},
+		});
+
+		revalidatePath(ROUTES.HOME);
+	} catch (error) {
+		logError(error, "upsertHabit", {
+			extra: { id, anchor, tinyBehavior, celebration, anchorCategory },
+		});
+		throw new Error("Could not save habit. Please try again later.");
+	}
+}
+
 export async function createHabitAction({
 	id,
 	anchor,
