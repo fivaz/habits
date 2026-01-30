@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MissingRehearsalBadge } from "@/app/(dashboard)/(home)/_components/habit-card/missing-rehearsal-badge";
 import { HabitForm } from "@/app/(dashboard)/(home)/_components/habit-form/habit-form";
 import { Step } from "@/app/(dashboard)/(home)/_components/service";
-import { AnchorCategoryUI, ICONS } from "@/lib/category/type";
+import { defaultAnchorCategory, ICONS } from "@/lib/category/type";
 import { HabitPrefix, REHEARSAL_TARGET, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
@@ -12,15 +12,6 @@ type HabitSummaryProps = {
 };
 
 export function HabitSummary({ habit }: HabitSummaryProps) {
-	const defaultAnchorCategory: AnchorCategoryUI = {
-		id: "default",
-		name: "other",
-		icon: "Sun",
-		order: 2,
-		color: "from-stone-100 to-stone-200 text-stone-600",
-		isActive: true,
-	};
-
 	const category = habit.anchorCategory || defaultAnchorCategory;
 
 	const CategoryIcon = ICONS[category.icon] || ICONS.Sun;

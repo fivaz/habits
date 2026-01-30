@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 
+import { FilterHabits } from "@/app/(dashboard)/(home)/_components/filter-habits";
 import { HabitCard } from "@/app/(dashboard)/(home)/_components/habit-card/habit-card";
 import { HabitForm } from "@/app/(dashboard)/(home)/_components/habit-form/habit-form";
 import { Onboarding } from "@/app/(dashboard)/(home)/_components/onboarding";
@@ -18,16 +19,7 @@ import { TodayHabitUI } from "@/lib/habits/type";
 export function HabitTracker() {
 	const { items: habits } = useHabitsStore();
 	const [openForm, setOpenForm] = useState(false);
-
-	function sortHabitsByCategoryOrder(habits: TodayHabitUI[]): TodayHabitUI[] {
-		return [...habits].sort((a, b) => {
-			const orderA = a.anchorCategory?.order ?? 2;
-			const orderB = b.anchorCategory?.order ?? 2;
-			return orderA - orderB;
-		});
-	}
-
-	const sortedHabits = sortHabitsByCategoryOrder(habits);
+	const [filteredHabits, setFilteredHabits] = useState<TodayHabitUI[]>(habits);
 
 	return (
 		<>
@@ -51,18 +43,19 @@ export function HabitTracker() {
 							New Recipe
 						</Button>
 					</div>
-					<ProgressBar habits={sortedHabits} />
+					<ProgressBar habits={filteredHabits} />
+					<FilterHabits habits={habits} onFilter={setFilteredHabits} />
 				</div>
 			</header>
 
 			<main className="relative flex flex-1 flex-col overflow-auto">
 				<div className="p-4">
-					{sortedHabits.length === 0 ? (
+					{filteredHabits.length === 0 ? (
 						<Onboarding />
 					) : (
 						<div className="space-y-4">
 							<AnimatePresence>
-								{sortedHabits.map((habit) => (
+								{filteredHabits.map((habit) => (
 									<HabitCard key={habit.id} habit={habit} />
 								))}
 							</AnimatePresence>
