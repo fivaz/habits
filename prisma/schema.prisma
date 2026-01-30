@@ -42,8 +42,9 @@ model HabitRecipe {
   rehearsalCount Int
 
   // Categorization & Status
-  anchorCategory AnchorCategory @default(other) @map("anchor_category")
-  isActive       Boolean        @default(true) @map("is_active")
+  anchorCategoryId String?         @map("anchor_category_id")
+  anchorCategory   AnchorCategory? @relation(fields: [anchorCategoryId], references: [id])
+  isActive         Boolean         @default(true) @map("is_active")
 
   // Stats
   streak            Int     @default(0)
@@ -58,6 +59,34 @@ model HabitRecipe {
 
   @@index([userId])
   @@map("habit_recipe")
+}
+
+model AnchorCategory {
+  id       String  @id @default(cuid())
+  name     String  @unique
+  isActive Boolean @default(true) @map("is_active")
+
+  // UI metadata
+  color String
+  icon  String
+
+  // Habits in this category
+  habits HabitRecipe[]
+
+  // Anchor suggestions
+  suggestions AnchorSuggestion[]
+
+  @@map("anchor_category")
+}
+
+model AnchorSuggestion {
+  id               String         @id @default(cuid())
+  text             String
+  isActive         Boolean        @default(true) @map("is_active")
+  anchorCategoryId String         @map("anchor_category_id")
+  anchorCategory   AnchorCategory @relation(fields: [anchorCategoryId], references: [id])
+
+  @@map("anchor_suggestion")
 }
 
 model DailyLog {
@@ -78,14 +107,6 @@ model DailyLog {
   @@index([date])
   @@index([habitId])
   @@map("daily_log")
-}
-
-enum AnchorCategory {
-  morning
-  meals
-  work
-  evening
-  other
 }
 
 enum LogStatus {
