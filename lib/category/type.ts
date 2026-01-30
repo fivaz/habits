@@ -73,3 +73,7 @@ export const COLOR_MAP = {
 } as const;
 
 export type ColorName = keyof typeof COLOR_MAP;
+
+export function getColorClass(color: string) {
+	return COLOR_MAP[color as ColorName] ?? COLOR_MAP.stone;
+}

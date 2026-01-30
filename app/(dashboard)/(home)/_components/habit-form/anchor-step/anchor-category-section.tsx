@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon } from "lucide-react";
 
 import { AnchorCategoryWithSuggestionsUI } from "@/lib/anchor-suggestions/type";
-import { ICONS } from "@/lib/category/type";
+import { getColorClass, ICONS } from "@/lib/category/type";
 import { HabitPrefix } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
@@ -24,19 +24,27 @@ export function AnchorCategorySection({
 	onSelect,
 }: CategorySectionProps) {
 	const Icon = ICONS[category.icon] ?? ICONS.Sun;
+	const classes = getColorClass(category.color);
 
 	return (
 		<>
 			<motion.div
 				layout
-				className={cn("overflow-hidden rounded-2xl border bg-linear-to-br", category.color)}
+				className={cn(
+					"overflow-hidden rounded-2xl border bg-linear-to-br",
+					classes.background,
+					classes.text,
+					classes.border,
+				)}
 			>
 				<button
 					onClick={onToggle}
 					className="flex w-full items-center justify-between p-4 outline-none"
 				>
 					<div className="flex items-center gap-3">
-						<div className="flex size-10 items-center justify-center rounded-xl">
+						<div
+							className={cn("flex size-10 items-center justify-center rounded-xl", classes.accent)}
+						>
 							<Icon className="size-5" />
 						</div>
 						<div className="text-left">
@@ -46,7 +54,7 @@ export function AnchorCategorySection({
 					</div>
 					<motion.div
 						animate={{ rotate: isExpanded ? 180 : 0 }}
-						className="flex items-center justify-center rounded-full p-1"
+						className={cn("flex items-center justify-center rounded-full p-1", classes.accent)}
 					>
 						<ChevronDownIcon className="size-4" />
 					</motion.div>

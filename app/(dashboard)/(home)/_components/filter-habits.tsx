@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 
-import { AnchorCategoryUI, COLOR_MAP, ColorName, ICONS } from "@/lib/category/type";
+import { AnchorCategoryUI, getColorClass, ICONS } from "@/lib/category/type";
 import { TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
@@ -20,7 +20,7 @@ export function FilterHabits({ habits, onFilter }: FilterHabitsProps) {
 			map[cat.name] = cat;
 		});
 		const arr = [
-			{ name: "all", order: -1, color: "bg-gray-200 text-gray-700", icon: "FunnelX" },
+			{ name: "all", order: -1, color: "stone", icon: "FunnelX" },
 			...Object.values(map),
 		];
 		return arr.sort((a, b) => a.order - b.order);
@@ -43,7 +43,7 @@ export function FilterHabits({ habits, onFilter }: FilterHabitsProps) {
 		<div className="flex gap-2 overflow-x-auto">
 			{categories.map((cat) => {
 				const CategoryIcon = ICONS[cat.icon] || ICONS.Sun;
-				const classes = COLOR_MAP[cat.color as ColorName] || COLOR_MAP.stone;
+				const classes = getColorClass(cat.color);
 
 				return (
 					<div

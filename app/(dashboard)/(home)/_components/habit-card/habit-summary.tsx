@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MissingRehearsalBadge } from "@/app/(dashboard)/(home)/_components/habit-card/missing-rehearsal-badge";
 import { HabitForm } from "@/app/(dashboard)/(home)/_components/habit-form/habit-form";
 import { Step } from "@/app/(dashboard)/(home)/_components/service";
-import { ICONS } from "@/lib/category/type";
+import { getColorClass, ICONS } from "@/lib/category/type";
 import { HabitPrefix, REHEARSAL_TARGET, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +13,7 @@ type HabitSummaryProps = {
 
 export function HabitSummary({ habit }: HabitSummaryProps) {
 	const CategoryIcon = ICONS[habit.anchorCategory.icon] || ICONS.Sun;
+	const classes = getColorClass(habit.anchorCategory.color);
 
 	const [openEditForm, setOpenEditForm] = useState(false);
 
@@ -70,7 +71,8 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 			<div className="flex flex-col items-end gap-2">
 				<div
 					className={cn(
-						habit.anchorCategory.color,
+						classes.background,
+						classes.text,
 						"flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1",
 					)}
 				>
