@@ -12,7 +12,7 @@ import { AnchorCategoryWithSuggestionsUI } from "@/lib/anchor-suggestions/type";
 import { AnchorCategoryUI } from "@/lib/category/type";
 
 interface AnchorLibraryProps {
-	setAnchor: (anchor: string, category?: AnchorCategoryUI) => void;
+	setAnchor: (anchor: string, category: AnchorCategoryUI) => void;
 	value: string;
 }
 

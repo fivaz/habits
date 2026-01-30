@@ -6,7 +6,7 @@ import { AnchorSuggestions } from "@/app/(dashboard)/(home)/_components/habit-fo
 import { StepTextArea, StepTip } from "@/app/(dashboard)/(home)/_components/habit-form/step-body";
 import { NextButton } from "@/app/(dashboard)/(home)/_components/habit-form/step-footer";
 import { Step, steps } from "@/app/(dashboard)/(home)/_components/service";
-import { AnchorCategoryUI } from "@/lib/category/type";
+import { AnchorCategoryUI, defaultAnchorCategory } from "@/lib/category/type";
 import { TodayHabitUI } from "@/lib/habits/type";
 
 type AnchorStepFormProps = {
@@ -18,7 +18,7 @@ type AnchorStepFormProps = {
 export function AnchorStepForm({ setHabitIn, value, onNext }: AnchorStepFormProps) {
 	const step = steps[Step.ANCHOR];
 
-	const setAnchorValue = (anchor: string, category: AnchorCategoryUI | null = null) =>
+	const setAnchorValue = (anchor: string, category: AnchorCategoryUI) =>
 		setHabitIn((prev) => ({
 			...prev,
 			anchor,
@@ -38,7 +38,11 @@ export function AnchorStepForm({ setHabitIn, value, onNext }: AnchorStepFormProp
 					>
 						<div className="text-primary">{step.subtitle}</div>
 						<AnchorSuggestions value={value} setAnchorValue={setAnchorValue} />
-						<StepTextArea step={step} value={value} setValue={setAnchorValue} />
+						<StepTextArea
+							step={step}
+							value={value}
+							setValue={(anchor) => setAnchorValue(anchor, defaultAnchorCategory)}
+						/>
 						<StepTip step={step} />
 					</motion.div>
 				</AnimatePresence>

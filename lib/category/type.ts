@@ -31,7 +31,7 @@ export const ICONS: Record<string, LucideIcon> = {
 };
 
 export const defaultAnchorCategory: AnchorCategoryUI = {
-	id: "default",
+	id: "",
 	name: "other",
 	icon: "Sun",
 	order: 2,

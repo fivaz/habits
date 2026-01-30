@@ -1,12 +1,6 @@
 import React, { useMemo, useState } from "react";
 
-import {
-	AnchorCategoryUI,
-	COLOR_MAP,
-	ColorName,
-	defaultAnchorCategory,
-	ICONS,
-} from "@/lib/category/type";
+import { AnchorCategoryUI, COLOR_MAP, ColorName, ICONS } from "@/lib/category/type";
 import { TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +16,7 @@ export function FilterHabits({ habits, onFilter }: FilterHabitsProps) {
 	const categories = useMemo(() => {
 		const map: Record<string, AnchorCategoryUI> = {};
 		habits.forEach((h) => {
-			const cat = h.anchorCategory ?? defaultAnchorCategory;
+			const cat = h.anchorCategory;
 			map[cat.name] = cat;
 		});
 		const arr = [
@@ -35,15 +29,9 @@ export function FilterHabits({ habits, onFilter }: FilterHabitsProps) {
 	// Filter & sort habits based on selected category
 	const filterAndSort = (category: string) => {
 		const filtered =
-			category === "all"
-				? habits
-				: habits.filter((h) => (h.anchorCategory ?? defaultAnchorCategory).name === category);
+			category === "all" ? habits : habits.filter((h) => h.anchorCategory.name === category);
 
-		return filtered.sort(
-			(a, b) =>
-				(a.anchorCategory ?? defaultAnchorCategory).order -
-				(b.anchorCategory ?? defaultAnchorCategory).order,
-		);
+		return filtered.sort((a, b) => a.anchorCategory.order - b.anchorCategory.order);
 	};
 
 	const handleClickCategory = (category: string) => {

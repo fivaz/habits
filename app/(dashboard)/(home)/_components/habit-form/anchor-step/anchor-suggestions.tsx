@@ -8,13 +8,13 @@ import { AnchorCategoryUI } from "@/lib/category/type";
 
 type AnchorSuggestionsProps = {
 	value: string;
-	setAnchorValue: (anchor: string, category?: AnchorCategoryUI) => void;
+	setAnchorValue: (anchor: string, category: AnchorCategoryUI) => void;
 };
 
 export function AnchorSuggestions({ value, setAnchorValue }: AnchorSuggestionsProps) {
 	const [showAnchorLibrary, setShowAnchorLibrary] = useState<boolean>(false);
 
-	const handleSelectSuggestion = (anchor: string, category?: AnchorCategoryUI) => {
+	const handleSelectSuggestion = (anchor: string, category: AnchorCategoryUI) => {
 		setAnchorValue(anchor, category);
 		setShowAnchorLibrary(false);
 	};

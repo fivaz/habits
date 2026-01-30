@@ -1,4 +1,4 @@
-import { anchorCategoryUIArgs } from "@/lib/category/type";
+import { AnchorCategoryUI, anchorCategoryUIArgs, defaultAnchorCategory } from "@/lib/category/type";
 import { Prisma } from "@/lib/generated/prisma/client";
 
 export const habitUIArgs = {
@@ -19,7 +19,10 @@ export const habitUIArgs = {
 
 export type HabitUI = Prisma.HabitRecipeGetPayload<typeof habitUIArgs>;
 
-export type TodayHabitUI = HabitUI & { isCompletedToday: boolean };
+export type TodayHabitUI = HabitUI & {
+	anchorCategory: AnchorCategoryUI;
+	isCompletedToday: boolean;
+};
 
 export function getEmptyHabit(): TodayHabitUI {
 	return {
@@ -27,7 +30,7 @@ export function getEmptyHabit(): TodayHabitUI {
 		anchor: "",
 		tinyBehavior: "",
 		celebration: "",
-		anchorCategory: null,
+		anchorCategory: defaultAnchorCategory,
 		streak: 0,
 		totalCompletions: 0,
 		isCompletedToday: false,
