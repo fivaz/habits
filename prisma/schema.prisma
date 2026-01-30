@@ -69,6 +69,7 @@ model AnchorCategory {
   // UI metadata
   color String
   icon  String
+  order Int
 
   // Habits in this category
   habits HabitRecipe[]

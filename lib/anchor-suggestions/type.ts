@@ -1,12 +1,9 @@
+import { anchorCategoryUIArgs } from "@/lib/category/type";
 import { Prisma } from "@/lib/generated/prisma/client";
 
-export const anchorCategoryUIArgs = {
+export const anchorCategoryUIWithSuggestionsArgs = {
 	select: {
-		id: true,
-		name: true,
-		icon: true,
-		color: true,
-		isActive: true,
+		...anchorCategoryUIArgs.select,
 		suggestions: {
 			select: {
 				id: true,
@@ -20,5 +17,5 @@ export const anchorCategoryUIArgs = {
 } satisfies Prisma.AnchorCategoryDefaultArgs;
 
 export type AnchorCategoryWithSuggestionsUI = Prisma.AnchorCategoryGetPayload<
-	typeof anchorCategoryUIArgs
+	typeof anchorCategoryUIWithSuggestionsArgs
 >;

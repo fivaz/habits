@@ -16,6 +16,7 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 		id: "default",
 		name: "other",
 		icon: "Sun",
+		order: 2,
 		color: "from-stone-100 to-stone-200 text-stone-600",
 		isActive: true,
 	};

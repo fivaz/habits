@@ -8,6 +8,7 @@ export const anchorCategoryUIArgs = {
 		name: true,
 		icon: true,
 		color: true,
+		order: true,
 		isActive: true,
 	},
 } satisfies Prisma.AnchorCategoryDefaultArgs;

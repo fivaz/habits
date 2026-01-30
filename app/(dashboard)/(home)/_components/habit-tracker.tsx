@@ -13,10 +13,22 @@ import { GreetingsPanel } from "@/app/(dashboard)/greetings-panel";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { useHabitsStore } from "@/hooks/habits-store";
+import { TodayHabitUI } from "@/lib/habits/type";
 
 export function HabitTracker() {
 	const { items: habits } = useHabitsStore();
 	const [openForm, setOpenForm] = useState(false);
+
+	function sortHabitsByCategoryOrder(habits: TodayHabitUI[]): TodayHabitUI[] {
+		return [...habits].sort((a, b) => {
+			const orderA = a.anchorCategory?.order ?? 2;
+			const orderB = b.anchorCategory?.order ?? 2;
+			return orderA - orderB;
+		});
+	}
+
+	const sortedHabits = sortHabitsByCategoryOrder(habits);
+
 	return (
 		<>
 			<header className="bg-card border-border sticky top-0 right-0 left-0 z-20 border-b">
@@ -39,18 +51,18 @@ export function HabitTracker() {
 							New Recipe
 						</Button>
 					</div>
-					<ProgressBar habits={habits} />
+					<ProgressBar habits={sortedHabits} />
 				</div>
 			</header>
 
 			<main className="relative flex flex-1 flex-col overflow-auto">
 				<div className="p-4">
-					{habits.length === 0 ? (
+					{sortedHabits.length === 0 ? (
 						<Onboarding />
 					) : (
 						<div className="space-y-4">
 							<AnimatePresence>
-								{habits.map((habit) => (
+								{sortedHabits.map((habit) => (
 									<HabitCard key={habit.id} habit={habit} />
 								))}
 							</AnimatePresence>
