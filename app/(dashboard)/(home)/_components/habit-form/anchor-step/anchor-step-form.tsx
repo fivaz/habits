@@ -6,6 +6,7 @@ import { AnchorSuggestions } from "@/app/(dashboard)/(home)/_components/habit-fo
 import { StepTextArea, StepTip } from "@/app/(dashboard)/(home)/_components/habit-form/step-body";
 import { NextButton } from "@/app/(dashboard)/(home)/_components/habit-form/step-footer";
 import { Step, steps } from "@/app/(dashboard)/(home)/_components/service";
+import { AnchorCategoryUI } from "@/lib/category/type";
 import { TodayHabitUI } from "@/lib/habits/type";
 
 type AnchorStepFormProps = {
@@ -17,8 +18,12 @@ type AnchorStepFormProps = {
 export function AnchorStepForm({ setHabitIn, value, onNext }: AnchorStepFormProps) {
 	const step = steps[Step.ANCHOR];
 
-	const setAnchorValue = (value: string) => setHabitIn((prev) => ({ ...prev, anchor: value }));
-
+	const setAnchorValue = (anchor: string, category: AnchorCategoryUI | null = null) =>
+		setHabitIn((prev) => ({
+			...prev,
+			anchor,
+			anchorCategory: category,
+		}));
 	return (
 		<>
 			{/* Scrollable content */}

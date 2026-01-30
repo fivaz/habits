@@ -6,6 +6,7 @@ export const anchorCategoryUIArgs = {
 		name: true,
 		icon: true,
 		color: true,
+		isActive: true,
 		suggestions: {
 			select: {
 				id: true,

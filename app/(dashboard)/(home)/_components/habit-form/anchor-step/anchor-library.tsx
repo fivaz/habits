@@ -9,15 +9,16 @@ import { AnchorCategorySection } from "@/app/(dashboard)/(home)/_components/habi
 import { Input } from "@/components/ui/input";
 import { getAnchorSuggestions } from "@/lib/anchor-suggestions/actions";
 import { AnchorCategoryWithSuggestionsUI } from "@/lib/anchor-suggestions/type";
+import { AnchorCategoryUI } from "@/lib/category/type";
 
 interface AnchorLibraryProps {
-	setValue: (value: string, category?: string) => void;
+	setAnchor: (anchor: string, category?: AnchorCategoryUI) => void;
 	value: string;
 }
 
 const fetcher = () => getAnchorSuggestions();
 
-export function AnchorLibrary({ setValue, value }: AnchorLibraryProps) {
+export function AnchorLibrary({ setAnchor, value }: AnchorLibraryProps) {
 	const [search, setSearch] = useState("");
 	const [expanded, setExpanded] = useState<string | null>(null);
 
@@ -57,7 +58,7 @@ export function AnchorLibrary({ setValue, value }: AnchorLibraryProps) {
 							selectedValue={value}
 							isExpanded={!!search || expanded === category.id}
 							onToggle={() => setExpanded(expanded === category.id ? null : category.id)}
-							onSelect={(anchor) => setValue(anchor, category.name)}
+							onSelect={(anchor) => setAnchor(anchor, category)}
 						/>
 					);
 				})}
