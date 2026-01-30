@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MissingRehearsalBadge } from "@/app/(dashboard)/(home)/_components/habit-card/missing-rehearsal-badge";
 import { HabitForm } from "@/app/(dashboard)/(home)/_components/habit-form/habit-form";
 import { Step } from "@/app/(dashboard)/(home)/_components/service";
-import { categoryColors, categoryIcons } from "@/lib/category/type";
+import { AnchorCategoryUI, ICONS } from "@/lib/category/type";
 import { HabitPrefix, REHEARSAL_TARGET, TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
@@ -12,7 +12,18 @@ type HabitSummaryProps = {
 };
 
 export function HabitSummary({ habit }: HabitSummaryProps) {
-	const CategoryIcon = categoryIcons[habit.anchorCategory];
+	const defaultAnchorCategory: AnchorCategoryUI = {
+		id: "default",
+		name: "other",
+		icon: "Sun",
+		color: "from-stone-100 to-stone-200 text-stone-600",
+		isActive: true,
+	};
+
+	const category = habit.anchorCategory || defaultAnchorCategory;
+
+	const CategoryIcon = ICONS[category.icon] || ICONS.Sun;
+
 	const [openEditForm, setOpenEditForm] = useState(false);
 
 	const abcItems = [
@@ -69,12 +80,12 @@ export function HabitSummary({ habit }: HabitSummaryProps) {
 			<div className="flex flex-col items-end gap-2">
 				<div
 					className={cn(
-						categoryColors[habit.anchorCategory],
+						category.color,
 						"flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1",
 					)}
 				>
 					<CategoryIcon className="h-3 w-3" />
-					<span className="text-xs font-medium capitalize">{habit.anchorCategory}</span>
+					<span className="text-xs font-medium capitalize">{category.name}</span>
 				</div>
 				{habit.rehearsalCount < REHEARSAL_TARGET && (
 					<MissingRehearsalBadge onStartRehearsal={() => setOpenEditForm(true)} />

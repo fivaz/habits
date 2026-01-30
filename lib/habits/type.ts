@@ -1,3 +1,4 @@
+import { anchorCategoryUIArgs } from "@/lib/category/type";
 import { Prisma } from "@/lib/generated/prisma/client";
 
 export const habitUIArgs = {
@@ -6,10 +7,13 @@ export const habitUIArgs = {
 		celebration: true,
 		tinyBehavior: true,
 		anchor: true,
-		anchorCategory: true,
 		streak: true,
 		totalCompletions: true,
 		rehearsalCount: true,
+
+		anchorCategory: {
+			...anchorCategoryUIArgs,
+		},
 	},
 } satisfies Prisma.HabitRecipeDefaultArgs;
 
@@ -23,7 +27,7 @@ export function getEmptyHabit(): TodayHabitUI {
 		anchor: "",
 		tinyBehavior: "",
 		celebration: "",
-		anchorCategory: "other",
+		anchorCategory: null,
 		streak: 0,
 		totalCompletions: 0,
 		isCompletedToday: false,

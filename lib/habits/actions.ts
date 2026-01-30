@@ -69,15 +69,15 @@ export async function upsertHabitAction({
 				tinyBehavior,
 				celebration,
 				userId,
-				anchorCategory,
 				rehearsalCount: 0,
+				anchorCategoryId: anchorCategory?.id,
 			},
 			update: {
 				anchor,
 				tinyBehavior,
 				celebration,
-				anchorCategory,
 				rehearsalCount: 0,
+				anchorCategoryId: anchorCategory?.id ?? null,
 			},
 		});
 
@@ -107,7 +107,7 @@ export async function createHabitAction({
 				tinyBehavior,
 				celebration,
 				userId,
-				anchorCategory,
+				anchorCategoryId: anchorCategory?.id,
 				rehearsalCount: 0,
 			},
 		});
@@ -139,7 +139,7 @@ export async function updateHabitAction({
 				anchor,
 				tinyBehavior,
 				celebration,
-				anchorCategory,
+				anchorCategoryId: anchorCategory?.id,
 				rehearsalCount: 0,
 			},
 		});
