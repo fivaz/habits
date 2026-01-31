@@ -10,7 +10,7 @@ import { StepHeader } from "@/app/(dashboard)/(home)/_components/habit-form/step
 import { Step, steps } from "@/app/(dashboard)/(home)/_components/service";
 import { DrawerDialog } from "@/components/drawer-dialog";
 import { useHabitMutations } from "@/hooks/habits-store";
-import { createHabitAction, updateHabitAction } from "@/lib/habits/actions";
+import { upsertHabitAction } from "@/lib/habits/actions";
 import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
 
 type HabitFormProps = {
@@ -26,7 +26,7 @@ export function HabitForm({
 	startStep = Step.ANCHOR,
 	habit = getEmptyHabit(),
 }: HabitFormProps) {
-	const { addItem, updateItem } = useHabitMutations();
+	const { upsertItem } = useHabitMutations();
 	const [currentStepIndex, setCurrentStepIndex] = useState(startStep);
 	const onNext = () => setCurrentStepIndex((s) => Math.min(s + 1, steps.length - 1));
 	const onPrevious = () => setCurrentStepIndex((s) => Math.max(s - 1, 0));
@@ -48,28 +48,17 @@ export function HabitForm({
 			id: habitIn.id || crypto.randomUUID(),
 		};
 
-		if (habitIn.id) {
-			updateItem(optimisticHabit, {
-				persist: () => updateHabitAction(optimisticHabit),
-				onSuccess: () => toast.success("Habit updated successfully."),
-				onError: () =>
-					toast.error("Failed to update habit.", {
-						description: "Your changes have been reverted, please try again",
-					}),
-			});
-		} else {
-			addItem(optimisticHabit, {
-				persist: () => createHabitAction(optimisticHabit),
-				onSuccess: () => {
-					toast.success("Habit created successfully.");
-					setHabitIn((prev) => ({ ...prev, id: optimisticHabit.id }));
-				},
-				onError: () =>
-					toast.error("Failed to create habit.", {
-						description: "Your changes have been reverted, please try again",
-					}),
-			});
-		}
+		upsertItem(optimisticHabit, {
+			persist: () => upsertHabitAction(optimisticHabit),
+			onSuccess: () => {
+				toast.success(habitIn.id ? "Habit updated successfully." : "Habit created successfully.");
+				setHabitIn((prev) => ({ ...prev, id: optimisticHabit.id }));
+			},
+			onError: () =>
+				toast.error("Failed to save habit.", {
+					description: "Your changes have been reverted, please try again",
+				}),
+		});
 	};
 
 	const renderStep = (step: number) => {

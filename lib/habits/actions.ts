@@ -5,8 +5,9 @@ import { revalidatePath } from "next/cache";
 import { format } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 
+import { defaultAnchorCategory } from "@/lib/category/type";
 import { DATE, ROUTES } from "@/lib/consts";
-import { HabitUI, habitUIArgs, TodayHabitUI } from "@/lib/habits/type";
+import { habitUIArgs, TodayHabitUI } from "@/lib/habits/type";
 import { logError } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 import { getUserId } from "@/lib/utils-server";
@@ -36,10 +37,10 @@ export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 			},
 		});
 
-		return habits.map(({ logs, ...habit }) => ({
+		return habits.map(({ logs, anchorCategory, ...habit }) => ({
 			...habit,
-			// If the array has an item, it was completed today
-			isCompletedToday: logs.length > 0,
+			anchorCategory: anchorCategory || defaultAnchorCategory, // fallback here
+			isCompletedToday: logs.length > 0, // If the array has an item, it was completed today
 		}));
 	} catch (error) {
 		logError(error, "getHabitsAction");
@@ -47,42 +48,13 @@ export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 	}
 }
 
-export async function createHabitAction({
+export async function upsertHabitAction({
 	id,
 	anchor,
 	anchorCategory,
 	tinyBehavior,
 	celebration,
-}: HabitUI) {
-	try {
-		const userId = await getUserId();
-
-		await prisma.habitRecipe.create({
-			data: {
-				id,
-				anchor,
-				tinyBehavior,
-				celebration,
-				userId,
-				anchorCategory,
-				rehearsalCount: 0,
-			},
-		});
-
-		revalidatePath(ROUTES.HOME);
-	} catch (error) {
-		logError(error, "createHabit", { extra: { id, anchor, tinyBehavior, celebration } });
-		throw new Error("Could not create habit. Please try again later.");
-	}
-}
-
-export async function updateHabitAction({
-	id,
-	anchor,
-	tinyBehavior,
-	celebration,
-	anchorCategory,
-}: HabitUI) {
+}: TodayHabitUI) {
 	try {
 		const userId = await getUserId();
 
@@ -90,23 +62,35 @@ export async function updateHabitAction({
 			throw new Error("Missing habit ID");
 		}
 
-		await prisma.habitRecipe.update({
-			where: { id, userId },
-			data: {
+		const anchorCategoryId =
+			anchorCategory.id === defaultAnchorCategory.id ? null : anchorCategory.id;
+
+		await prisma.habitRecipe.upsert({
+			where: { id },
+			create: {
+				id,
 				anchor,
 				tinyBehavior,
 				celebration,
-				anchorCategory,
+				userId,
 				rehearsalCount: 0,
+				anchorCategoryId,
+			},
+			update: {
+				anchor,
+				tinyBehavior,
+				celebration,
+				rehearsalCount: 0, // force user to rehearsal again on edit
+				anchorCategoryId,
 			},
 		});
 
 		revalidatePath(ROUTES.HOME);
 	} catch (error) {
-		logError(error, "updateHabit", {
-			extra: { anchor, tinyBehavior, celebration, anchorCategory, id },
+		logError(error, "upsertHabit", {
+			extra: { id, anchor, tinyBehavior, celebration, anchorCategory },
 		});
-		throw new Error("Could not update habit. Please try again later.");
+		throw new Error("Could not save habit. Please try again later.");
 	}
 }
 

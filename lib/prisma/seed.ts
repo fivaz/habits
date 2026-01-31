@@ -1,6 +1,8 @@
-import { AnchorCategory, Prisma } from "@/lib/generated/prisma/client";
+import { Prisma } from "@/lib/generated/prisma/client";
 import { REHEARSAL_TARGET } from "@/lib/habits/type";
 import { prisma } from "@/lib/prisma";
+
+import { seedAnchorCategories } from "./anchor-categories-seed";
 
 async function safeDelete(modelDelete: () => Promise<unknown>) {
 	try {
@@ -22,10 +24,11 @@ async function main() {
 	console.log("🚀 Starting seed...");
 
 	// --- 1️⃣ Cleanup ---
-	console.log("清理 Cleaning up existing data...");
-	// Order matters due to Foreign Key constraints
+	console.log("🧹 Cleaning up existing data...");
 	await safeDelete(() => prisma.dailyLog.deleteMany());
 	await safeDelete(() => prisma.habitRecipe.deleteMany());
+	await safeDelete(() => prisma.anchorSuggestion.deleteMany());
+	await safeDelete(() => prisma.anchorCategory.deleteMany());
 
 	// --- 2️⃣ Create or upsert user ---
 	const user = await prisma.user.upsert({
@@ -53,7 +56,10 @@ async function main() {
 		},
 	});
 
-	// --- 4️⃣ Seed Habit Recipes ---
+	// --- 4️⃣ Anchor Categories & Suggestions ---
+	const categoryRecords = await seedAnchorCategories();
+
+	// --- 5️⃣ Seed Habit Recipes ---
 	console.log("🌱 Seeding habits...");
 
 	const habits = [
@@ -61,30 +67,34 @@ async function main() {
 			anchor: "pour my first cup of coffee",
 			tinyBehavior: "write down my top 3 priorities for the day",
 			celebration: "say 'Today is going to be great!'",
-			anchorCategory: AnchorCategory.morning,
+			category: "morning",
 			rehearsalCount: REHEARSAL_TARGET - 1,
 		},
 		{
 			anchor: "close my laptop to finish work",
 			tinyBehavior: "clear one item off my physical desk",
 			celebration: "a quick fist pump",
-			anchorCategory: AnchorCategory.work,
+			category: "work",
 			rehearsalCount: REHEARSAL_TARGET - 2,
 		},
 		{
 			anchor: "brush my teeth at night",
 			tinyBehavior: "do one push-up",
 			celebration: "smile in the mirror",
-			anchorCategory: AnchorCategory.evening,
+			category: "evening",
 			rehearsalCount: REHEARSAL_TARGET,
 		},
-	];
+	] as const;
 
 	for (const habit of habits) {
 		await prisma.habitRecipe.create({
 			data: {
-				...habit,
+				anchor: habit.anchor,
+				tinyBehavior: habit.tinyBehavior,
+				celebration: habit.celebration,
+				rehearsalCount: habit.rehearsalCount,
 				userId: user.id,
+				anchorCategoryId: categoryRecords[habit.category].id,
 			},
 		});
 	}

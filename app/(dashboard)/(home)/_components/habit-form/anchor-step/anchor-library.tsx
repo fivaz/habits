@@ -1,62 +1,39 @@
-import React, { useState } from "react";
+"use client";
+
+import { useState } from "react";
 
 import { Search, Sparkles } from "lucide-react";
+import useSWR from "swr";
 
-import { AnchorCategorySection } from "@/app/(dashboard)/(home)/_components/habit-form/anchor-step/anchor-category-section"; // Adjusted import path
+import { AnchorCategorySection } from "@/app/(dashboard)/(home)/_components/habit-form/anchor-step/anchor-category-section";
 import { Input } from "@/components/ui/input";
-
-export type Category = "morning" | "meals" | "work" | "evening";
+import { getAnchorSuggestions } from "@/lib/anchor-suggestions/actions";
+import { AnchorCategoryWithSuggestionsUI } from "@/lib/anchor-suggestions/type";
+import { AnchorCategoryUI } from "@/lib/category/type";
 
 interface AnchorLibraryProps {
-	setValue: (value: string, category?: string) => void;
+	setAnchor: (anchor: string, category: AnchorCategoryUI) => void;
 	value: string;
 }
 
-const ANCHORS: Record<Category, string[]> = {
-	morning: [
-		"place my feet on the floor",
-		"turn off my alarm",
-		"use the bathroom",
-		"brush my teeth",
-		"pour my morning coffee",
-		"open my eyes",
-		"stretch in bed",
-		"look at myself in the mirror",
-	],
-	meals: [
-		"start the coffee maker",
-		"sit down to eat",
-		"finish eating",
-		"put my plate in the sink",
-		"open the fridge",
-		"take my first sip",
-		"clear the table",
-	],
-	work: [
-		"sit at my desk",
-		"open my laptop",
-		"close my laptop",
-		"end a meeting",
-		"send an email",
-		"take a break",
-		"check my calendar",
-	],
-	evening: [
-		"close the front door",
-		"change into comfortable clothes",
-		"start the dishwasher",
-		"turn off the TV",
-		"set my alarm",
-		"lay down in bed",
-		"plug in my phone",
-	],
-};
+const fetcher = () => getAnchorSuggestions();
 
-export function AnchorLibrary({ setValue, value }: AnchorLibraryProps) {
+export function AnchorLibrary({ setAnchor, value }: AnchorLibraryProps) {
 	const [search, setSearch] = useState("");
-	const [expanded, setExpanded] = useState<Category | null>(null);
+	const [expanded, setExpanded] = useState<string | null>(null);
 
-	const categoryKeys = Object.keys(ANCHORS) as Category[];
+	const { data, isLoading, error } = useSWR<AnchorCategoryWithSuggestionsUI[]>(
+		"anchor-suggestions",
+		fetcher,
+	);
+
+	if (isLoading) {
+		return <p className="text-muted-foreground text-sm">Loading anchors…</p>;
+	}
+
+	if (error) {
+		return <p className="text-destructive text-sm">Failed to load anchors. Please try again.</p>;
+	}
 
 	return (
 		<div className="space-y-4">
@@ -71,23 +48,22 @@ export function AnchorLibrary({ setValue, value }: AnchorLibraryProps) {
 			</div>
 
 			<div className="space-y-3">
-				{categoryKeys.map((cat) => {
-					// Inline filtering logic
-					const filteredItems = ANCHORS[cat].filter((i) =>
-						i.toLowerCase().includes(search.toLowerCase()),
+				{data?.map((category) => {
+					const filteredSuggestions = category.suggestions.filter((suggestion) =>
+						suggestion.text.toLowerCase().includes(search.toLowerCase()),
 					);
 
-					if (filteredItems.length === 0) return null;
+					if (filteredSuggestions.length === 0) return null;
 
 					return (
 						<AnchorCategorySection
-							key={cat}
-							category={cat}
-							items={filteredItems}
+							key={category.id}
+							category={category}
+							suggestions={filteredSuggestions}
 							selectedValue={value}
-							isExpanded={!!search || expanded === cat}
-							onToggle={() => setExpanded(expanded === cat ? null : cat)}
-							onSelect={setValue}
+							isExpanded={!!search || expanded === category.id}
+							onToggle={() => setExpanded(expanded === category.id ? null : category.id)}
+							onSelect={(anchor) => setAnchor(anchor, category)}
 						/>
 					);
 				})}

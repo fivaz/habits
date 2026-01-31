@@ -9,7 +9,7 @@ import { ForgotView } from "@/app/(dashboard)/(home)/_components/redesign-form/f
 import { ReasonId, reasons } from "@/app/(dashboard)/(home)/_components/redesign-form/service";
 import { TooHardView } from "@/app/(dashboard)/(home)/_components/redesign-form/too-hard-view";
 import { useHabitMutations } from "@/hooks/habits-store";
-import { updateHabitAction } from "@/lib/habits/actions";
+import { upsertHabitAction } from "@/lib/habits/actions";
 import { TodayHabitUI } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +30,7 @@ export function RedesignForm({ habit, onClose }: RedesignFormProps) {
 		const optimisticHabit = { ...habit, rehearsalCount: 0 };
 
 		updateItem(optimisticHabit, {
-			persist: () => updateHabitAction(optimisticHabit),
+			persist: () => upsertHabitAction(optimisticHabit),
 			onError: () => toast.error("Failed to update habit. Please try again."),
 			onSuccess: () => toast.success("Habit updated successfully."),
 		});
