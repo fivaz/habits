@@ -41,6 +41,7 @@ export function AnchorCategorySection({
 			>
 				<button
 					onClick={onToggle}
+					type="button"
 					className="flex w-full items-center justify-between p-4 outline-none"
 				>
 					<div className="flex items-center gap-3">
@@ -81,11 +82,11 @@ export function AnchorCategorySection({
 										className={cn(
 											"w-full rounded-xl p-3 text-left text-sm transition-all",
 											selectedValue === anchor.text
-												? "bg-white text-stone-900 shadow-md ring-2 ring-emerald-400"
+												? `border-2 border-dashed bg-white text-stone-900 shadow-md ${classes.border}`
 												: "bg-white/70 text-stone-700 hover:bg-white hover:shadow-sm",
 										)}
 									>
-										<span className="font-medium text-emerald-600">{HabitPrefix.anchor} </span>
+										<span className={cn("font-medium", classes.text)}>{HabitPrefix.anchor} </span>
 										{anchor.text}
 									</motion.button>
 								))}

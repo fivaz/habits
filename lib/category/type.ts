@@ -48,9 +48,9 @@ export const COLOR_MAP = {
 	},
 	indigo: {
 		text: "text-indigo-500 dark:text-indigo-600",
-		border: "border-blue-200 dark:border-indigo-300",
-		background: "bg-blue-50 dark:bg-blue-100",
-		accent: "bg-blue-200 dark:bg-indigo-200",
+		border: "border-indigo-200 dark:border-indigo-300",
+		background: "bg-indigo-50 dark:bg-indigo-100",
+		accent: "bg-indigo-200 dark:bg-indigo-200",
 	},
 	emerald: {
 		text: "text-emerald-500 dark:text-emerald-600",
