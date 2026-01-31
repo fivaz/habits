@@ -29,6 +29,8 @@ export function FilterHabits({ habits, selectedCategory, onSelectCategory }: Fil
 		];
 	}, [habits]);
 
+	if (!habits.length) return null;
+
 	return (
 		<div className="flex gap-2 overflow-x-auto">
 			{categories.map((cat) => {
