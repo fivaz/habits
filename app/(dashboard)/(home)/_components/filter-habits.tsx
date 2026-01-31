@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import { AnchorCategoryUI, getColorClass, ICONS } from "@/lib/category/type";
 import { TodayHabitUI } from "@/lib/habits/type";
@@ -6,38 +6,28 @@ import { cn } from "@/lib/utils";
 
 type FilterHabitsProps = {
 	habits: TodayHabitUI[];
-	onFilter: (filtered: TodayHabitUI[]) => void;
+	selectedCategory: string;
+	onSelectCategory: (category: string) => void;
 };
 
-export function FilterHabits({ habits, onFilter }: FilterHabitsProps) {
-	const [selectedCategory, setSelectedCategory] = useState<string>("all");
-
-	// Compute unique categories from habits + defaultAnchorCategory fallback
-	const categories = useMemo(() => {
+export function FilterHabits({ habits, selectedCategory, onSelectCategory }: FilterHabitsProps) {
+	const categories = useMemo<AnchorCategoryUI[]>(() => {
 		const map: Record<string, AnchorCategoryUI> = {};
-		habits.forEach((h) => {
-			const cat = h.anchorCategory;
-			map[cat.name] = cat;
-		});
-		const arr = [
-			{ name: "all", order: -1, color: "stone", icon: "FunnelX" },
-			...Object.values(map),
+
+		habits.forEach((h) => (map[h.anchorCategory.name] = h.anchorCategory));
+
+		return [
+			{
+				id: "all",
+				name: "all",
+				order: -1,
+				color: "stone",
+				icon: "FunnelX",
+				isActive: true,
+			},
+			...Object.values(map).toSorted((a, b) => a.order - b.order),
 		];
-		return arr.sort((a, b) => a.order - b.order);
 	}, [habits]);
-
-	// Filter & sort habits based on selected category
-	const filterAndSort = (category: string) => {
-		const filtered =
-			category === "all" ? habits : habits.filter((h) => h.anchorCategory.name === category);
-
-		return filtered.sort((a, b) => a.anchorCategory.order - b.anchorCategory.order);
-	};
-
-	const handleClickCategory = (category: string) => {
-		setSelectedCategory(category);
-		onFilter(filterAndSort(category));
-	};
 
 	return (
 		<div className="flex gap-2 overflow-x-auto">
@@ -45,20 +35,23 @@ export function FilterHabits({ habits, onFilter }: FilterHabitsProps) {
 				const CategoryIcon = ICONS[cat.icon] || ICONS.Sun;
 				const classes = getColorClass(cat.color);
 
+				const isSelected = selectedCategory === cat.name;
+
 				return (
-					<div
+					<button
 						key={cat.name}
-						onClick={() => handleClickCategory(cat.name)}
+						type="button"
+						onClick={() => onSelectCategory(cat.name)}
 						className={cn(
-							"flex cursor-pointer items-center gap-1 rounded-full px-3 py-1 text-xs font-medium whitespace-nowrap transition-colors",
-							selectedCategory === cat.name ? classes.accent : classes.background,
+							"flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium whitespace-nowrap transition-colors",
+							isSelected ? classes.accent : classes.background,
 							classes.text,
 							classes.border,
 						)}
 					>
 						<CategoryIcon className="h-3 w-3" />
 						{cat.name}
-					</div>
+					</button>
 				);
 			})}
 		</div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
@@ -19,11 +19,20 @@ import { TodayHabitUI } from "@/lib/habits/type";
 export function HabitTracker() {
 	const { items: habits } = useHabitsStore();
 	const [openForm, setOpenForm] = useState(false);
-	const [filteredHabits, setFilteredHabits] = useState<TodayHabitUI[]>(habits);
+	const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
+	const filteredHabits = useMemo<TodayHabitUI[]>(() => {
+		const filtered =
+			selectedCategory === "all"
+				? habits
+				: habits.filter((h) => h.anchorCategory.name === selectedCategory);
+
+		return filtered.toSorted((a, b) => a.anchorCategory.order - b.anchorCategory.order);
+	}, [habits, selectedCategory]);
 
 	return (
 		<>
-			<header className="bg-card border-border sticky top-0 right-0 left-0 z-20 border-b">
+			<header className="bg-card border-border sticky top-0 z-20 border-b">
 				<div className="space-y-4 px-4 py-4">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center gap-3">
@@ -43,14 +52,20 @@ export function HabitTracker() {
 							New Recipe
 						</Button>
 					</div>
+
 					<ProgressBar habits={filteredHabits} />
-					<FilterHabits habits={habits} onFilter={setFilteredHabits} />
+
+					<FilterHabits
+						habits={habits}
+						selectedCategory={selectedCategory}
+						onSelectCategory={setSelectedCategory}
+					/>
 				</div>
 			</header>
 
-			<main className="relative flex flex-1 flex-col overflow-auto">
+			<main className="flex flex-1 flex-col overflow-auto">
 				<div className="p-4">
-					{filteredHabits.length === 0 ? (
+					{habits.length === 0 ? (
 						<Onboarding />
 					) : (
 						<div className="space-y-4">
