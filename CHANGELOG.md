@@ -1,3 +1,31 @@
+## [1.11.0](https://github.com/fivaz/habits/compare/v1.10.0...v1.11.0) (2026-01-31)
+
+### ✨ Features
+
+* add colors back to habit-summary and anchor-category ([3aa7c68](https://github.com/fivaz/habits/commit/3aa7c682b209fbaa2dd373ab5314c9a7a9075510))
+* add error handling to anchor-library ([bf17d91](https://github.com/fivaz/habits/commit/bf17d916a0788a1d53a19eef759ea614203fd4aa))
+* add filter for habits ([b428937](https://github.com/fivaz/habits/commit/b4289370643fa31c949851eb5e76cb9b647f5c48))
+* change indigo anchor category color from blue to indigo for consistency ([4afc6b4](https://github.com/fivaz/habits/commit/4afc6b409dcace6be10c89319c90a79295665963))
+* modify anchor's category based on the category selected in the suggestions ([e4792e7](https://github.com/fivaz/habits/commit/e4792e7b11edc30d1f3231786bf9ffe2bfdec5a7))
+* sort habits by anchor category ([2d14c52](https://github.com/fivaz/habits/commit/2d14c52a4c1b4a0cb355b3bcdf704d4a68cb461c))
+
+### 🐛 Bug Fixes
+
+* fix bug in anchor-category-section not filtering the suggestions based on the search ([d3981f5](https://github.com/fivaz/habits/commit/d3981f58225e71f96113b6b54d8778ff7563aef7))
+
+### 🧹 Chores
+
+* add anchor suggestion and categories table ([fda7c27](https://github.com/fivaz/habits/commit/fda7c277dac067143a42208246be4b696077d489))
+* add upsert to optimistic hook ([e091e9a](https://github.com/fivaz/habits/commit/e091e9af25d18d6f091bc7dea5249db8f3838197))
+* use anchor category's color and icon from db instead of hardcoded ones ([48ba455](https://github.com/fivaz/habits/commit/48ba455e273908a326ceb12ba661c30ea06340d5))
+* use anchor suggestions from db instead of hardcoded ones ([079d3cf](https://github.com/fivaz/habits/commit/079d3cf609fdca434fab1619aaa44457b90dce3d))
+
+### 🔨 Code Refactoring
+
+* simplify filter-habits logic ([d530976](https://github.com/fivaz/habits/commit/d530976324360b62c72a3443dfd75fff56b1f685))
+* simplify providing a default anchor category directly from the backend ([6d3bffd](https://github.com/fivaz/habits/commit/6d3bffd5a1c11c35848fcb6fc5d0fe9590f97f82))
+* use upsert to simplify habit form ([d9f726f](https://github.com/fivaz/habits/commit/d9f726f6d1547d1dc4c813f38f1c271424c7fb2b))
+
 ## [1.10.0](https://github.com/fivaz/habits/compare/v1.9.0...v1.10.0) (2026-01-24)
 
 ### ✨ Features
