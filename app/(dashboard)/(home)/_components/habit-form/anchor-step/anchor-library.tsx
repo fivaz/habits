@@ -49,16 +49,17 @@ export function AnchorLibrary({ setAnchor, value }: AnchorLibraryProps) {
 
 			<div className="space-y-3">
 				{data?.map((category) => {
-					const filteredItems = category.suggestions
-						.map((s) => s.text)
-						.filter((text) => text.toLowerCase().includes(search.toLowerCase()));
+					const filteredSuggestions = category.suggestions.filter((suggestion) =>
+						suggestion.text.toLowerCase().includes(search.toLowerCase()),
+					);
 
-					if (filteredItems.length === 0) return null;
+					if (filteredSuggestions.length === 0) return null;
 
 					return (
 						<AnchorCategorySection
 							key={category.id}
 							category={category}
+							suggestions={filteredSuggestions}
 							selectedValue={value}
 							isExpanded={!!search || expanded === category.id}
 							onToggle={() => setExpanded(expanded === category.id ? null : category.id)}

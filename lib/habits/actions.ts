@@ -80,7 +80,7 @@ export async function upsertHabitAction({
 				anchor,
 				tinyBehavior,
 				celebration,
-				rehearsalCount: 0,
+				rehearsalCount: 0, // force user to rehearsal again on edit
 				anchorCategoryId,
 			},
 		});

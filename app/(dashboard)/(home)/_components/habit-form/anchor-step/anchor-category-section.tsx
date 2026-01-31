@@ -4,12 +4,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon } from "lucide-react";
 
 import { AnchorCategoryWithSuggestionsUI } from "@/lib/anchor-suggestions/type";
-import { getColorClass, ICONS } from "@/lib/category/type";
+import { AnchorCategoryUI, getColorClass, ICONS } from "@/lib/category/type";
 import { HabitPrefix } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
 type CategorySectionProps = {
-	category: AnchorCategoryWithSuggestionsUI;
+	category: AnchorCategoryUI;
+	suggestions: AnchorCategoryWithSuggestionsUI["suggestions"];
 	selectedValue: string;
 	isExpanded: boolean;
 	onToggle: () => void;
@@ -18,6 +19,7 @@ type CategorySectionProps = {
 
 export function AnchorCategorySection({
 	category,
+	suggestions,
 	selectedValue,
 	isExpanded,
 	onToggle,
@@ -49,7 +51,7 @@ export function AnchorCategorySection({
 						</div>
 						<div className="text-left">
 							<p className="font-medium text-stone-800 capitalize">{category.name}</p>
-							<p className="text-xs text-stone-500">{category.suggestions.length} anchors</p>
+							<p className="text-xs text-stone-500">{suggestions.length} anchors</p>
 						</div>
 					</div>
 					<motion.div
@@ -69,7 +71,7 @@ export function AnchorCategorySection({
 							className="overflow-hidden"
 						>
 							<div className="space-y-2 p-4">
-								{category.suggestions.map((anchor, index) => (
+								{suggestions.map((anchor, index) => (
 									<motion.button
 										key={anchor.id}
 										initial={{ opacity: 0, x: -10 }}
