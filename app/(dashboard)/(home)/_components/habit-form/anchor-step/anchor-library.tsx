@@ -22,13 +22,17 @@ export function AnchorLibrary({ setAnchor, value }: AnchorLibraryProps) {
 	const [search, setSearch] = useState("");
 	const [expanded, setExpanded] = useState<string | null>(null);
 
-	const { data, isLoading } = useSWR<AnchorCategoryWithSuggestionsUI[]>(
+	const { data, isLoading, error } = useSWR<AnchorCategoryWithSuggestionsUI[]>(
 		"anchor-suggestions",
 		fetcher,
 	);
 
 	if (isLoading) {
 		return <p className="text-muted-foreground text-sm">Loading anchors…</p>;
+	}
+
+	if (error) {
+		return <p className="text-destructive text-sm">Failed to load anchors. Please try again.</p>;
 	}
 
 	return (
