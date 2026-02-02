@@ -1,4 +1,4 @@
-import { AnchorCategoryUI, anchorCategoryUIArgs, defaultAnchorCategory } from "@/lib/category/type";
+import { AnchorCategoryUI, anchorCategoryUIArgs } from "@/lib/category/type";
 import { Prisma } from "@/lib/generated/prisma/client";
 
 export const habitUIArgs = {
@@ -23,20 +23,6 @@ export type TodayHabitUI = HabitUI & {
 	anchorCategory: AnchorCategoryUI;
 	isCompletedToday: boolean;
 };
-
-export function getEmptyHabit(): TodayHabitUI {
-	return {
-		id: "",
-		anchor: "",
-		tinyBehavior: "",
-		celebration: "",
-		anchorCategory: defaultAnchorCategory,
-		streak: 0,
-		totalCompletions: 0,
-		isCompletedToday: false,
-		rehearsalCount: 0,
-	};
-}
 
 export const HabitPrefix = {
 	anchor: "After I",
