@@ -40,14 +40,14 @@ type StreakRowProps = {
 function StreakRow({ habit }: StreakRowProps) {
 	return (
 		habit.streak > 0 && (
-			<div className="mb-4 flex items-center gap-4 rounded-xl border border-stone-100 p-3">
+			<div className="border-border mb-4 flex items-center gap-4 rounded-xl border p-3">
 				<div className="flex items-center gap-1.5">
 					<Flame className="h-4 w-4 text-orange-500" />
-					<span className="text-sm font-semibold text-stone-700">{habit.streak}</span>
-					<span className="text-xs text-stone-500">day streak</span>
+					<span className="text-sm font-semibold">{habit.streak}</span>
+					<span className="text-muted-foreground text-xs">day streak</span>
 				</div>
-				<div className="h-4 w-px bg-stone-200" />
-				<div className="text-xs text-stone-500">{habit.totalCompletions} total</div>
+				<div className="border-border h-4 w-px border-r" />
+				<div className="text-xs">{habit.totalCompletions} total</div>
 			</div>
 		)
 	);

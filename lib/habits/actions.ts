@@ -2,12 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 
-import { format } from "date-fns";
+import { addDays } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 
 import { defaultAnchorCategory } from "@/lib/category/type";
 import { DATE, ROUTES } from "@/lib/consts";
 import { habitUIArgs, TodayHabitUI } from "@/lib/habits/type";
+import { getUpdatedStreak } from "@/lib/habits/utils";
 import { logError } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 import { getUserId } from "@/lib/utils-server";
@@ -17,30 +18,32 @@ import { getUserId } from "@/lib/utils-server";
  */
 export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 	const userId = await getUserId();
-	const today = format(new Date(), DATE);
 
 	try {
-		const habits = await prisma.habitRecipe.findMany({
-			where: {
-				userId,
-				isActive: true,
-			},
-			select: {
-				...habitUIArgs.select,
-				logs: {
-					where: { date: today, status: "completed" },
-					take: 1,
+		const [user, habits] = await Promise.all([
+			prisma.user.findUnique({
+				where: { id: userId },
+				select: { timezone: true },
+			}),
+			prisma.habitRecipe.findMany({
+				where: { userId, isActive: true },
+				select: {
+					...habitUIArgs.select,
+					lastCompletedDate: true,
 				},
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-		});
+				orderBy: { createdAt: "desc" },
+			}),
+		]);
 
-		return habits.map(({ logs, anchorCategory, ...habit }) => ({
+		if (!user) throw new Error("User not found");
+
+		// Calculate "today" based on user's local time
+		const today = formatInTimeZone(new Date(), user.timezone, DATE);
+
+		return habits.map(({ anchorCategory, lastCompletedDate, ...habit }) => ({
 			...habit,
-			anchorCategory: anchorCategory || defaultAnchorCategory, // fallback here
-			isCompletedToday: logs.length > 0, // If the array has an item, it was completed today
+			anchorCategory: anchorCategory || defaultAnchorCategory,
+			isCompletedToday: lastCompletedDate === today,
 		}));
 	} catch (error) {
 		logError(error, "getHabitsAction");
@@ -65,24 +68,22 @@ export async function upsertHabitAction({
 		const anchorCategoryId =
 			anchorCategory.id === defaultAnchorCategory.id ? null : anchorCategory.id;
 
+		const data = {
+			anchor,
+			tinyBehavior,
+			celebration,
+			rehearsalCount: 0, // force user to rehearsal again on edit
+			anchorCategoryId,
+		};
+
 		await prisma.habitRecipe.upsert({
-			where: { id },
+			where: { id, userId },
 			create: {
-				id,
-				anchor,
-				tinyBehavior,
-				celebration,
+				...data,
 				userId,
-				rehearsalCount: 0,
-				anchorCategoryId,
+				id, // use the provided id for creation, so rehearsal updates the right habit
 			},
-			update: {
-				anchor,
-				tinyBehavior,
-				celebration,
-				rehearsalCount: 0, // force user to rehearsal again on edit
-				anchorCategoryId,
-			},
+			update: data,
 		});
 
 		revalidatePath(ROUTES.HOME);
@@ -145,7 +146,7 @@ export async function logHabitCompletionAction(habitId: string) {
 	try {
 		const userId = await getUserId();
 
-		// 1. Get the user's timezone for the "Calendar Date"
+		// 1. Get User Timezone
 		const user = await prisma.user.findUnique({
 			where: { id: userId },
 			select: { timezone: true },
@@ -153,36 +154,45 @@ export async function logHabitCompletionAction(habitId: string) {
 
 		if (!user) throw new Error("User not found");
 
-		const today = formatInTimeZone(new Date(), user.timezone, DATE);
+		// 2. Setup Dates
+		const now = new Date();
+		const today = formatInTimeZone(now, user.timezone, DATE);
+		const yesterday = formatInTimeZone(addDays(now, -1), user.timezone, DATE);
 
-		// 2. Atomic Transaction: Create log and increment counter
+		// 3. Database Operation
 		await prisma.$transaction(async (tx) => {
-			// Safety check: Ensure we don't duplicate if the UI guard fails
-			const existing = await tx.dailyLog.findUnique({
-				where: {
-					habitId_date: { habitId, date: today },
+			const habit = await tx.habitRecipe.findUnique({
+				where: { id: habitId, userId },
+				select: {
+					streak: true,
+					lastCompletedDate: true,
+					logs: { where: { date: today } }, // Check if logged today
 				},
 			});
 
-			if (existing) return;
+			// Exit if habit doesn't exist or is already completed today
+			if (!habit || habit.logs.length > 0) return;
 
+			const newStreak = getUpdatedStreak(habit.streak, habit.lastCompletedDate, today, yesterday);
+
+			// Create log and update stats simultaneously
 			await tx.dailyLog.create({
-				data: {
-					habitId,
-					date: today,
-					status: "completed",
-				},
+				data: { habitId, date: today, status: "completed" },
 			});
 
 			await tx.habitRecipe.update({
-				where: { id: habitId, userId }, // userId check for security
-				data: { totalCompletions: { increment: 1 } },
+				where: { id: habitId, userId },
+				data: {
+					streak: newStreak,
+					totalCompletions: { increment: 1 },
+					lastCompletedDate: today,
+				},
 			});
 		});
 
 		revalidatePath(ROUTES.HOME);
 	} catch (error) {
-		logError(error, "logHabitCompletion");
+		logError(error, "logHabitCompletion", { extra: { habitId } });
 		throw new Error("Failed to log completion.");
 	}
 }

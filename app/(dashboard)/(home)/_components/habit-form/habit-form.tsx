@@ -11,7 +11,8 @@ import { Step, steps } from "@/app/(dashboard)/(home)/_components/service";
 import { DrawerDialog } from "@/components/drawer-dialog";
 import { useHabitMutations } from "@/hooks/habits-store";
 import { upsertHabitAction } from "@/lib/habits/actions";
-import { getEmptyHabit, TodayHabitUI } from "@/lib/habits/type";
+import { TodayHabitUI } from "@/lib/habits/type";
+import { getEmptyHabit } from "@/lib/habits/utils";
 
 type HabitFormProps = {
 	habit?: TodayHabitUI;
