@@ -1,3 +1,22 @@
+## [1.12.0](https://github.com/fivaz/habits/compare/v1.11.0...v1.12.0) (2026-02-02)
+
+### ✨ Features
+
+* add streak stats ([e759b5b](https://github.com/fivaz/habits/commit/e759b5be8a906f0487746956c9e0aa95abd56ceb))
+* fetch habits with isCompletedToday attribute timezone aware ([64ff4a9](https://github.com/fivaz/habits/commit/64ff4a905ed8795c348a0f3f9226330875361889))
+* hide filter when there are no habits ([2085a78](https://github.com/fivaz/habits/commit/2085a78bd9ad2e2be5bd496c02222593cc472f98))
+* improve design of steak dark mode ([4e71225](https://github.com/fivaz/habits/commit/4e712250178fb0972b5163b164fea7ad6c742eb7))
+
+### 🐛 Bug Fixes
+
+* resolve promise inside try catch block ([98c1d5a](https://github.com/fivaz/habits/commit/98c1d5a2b83cc4192fc499e023e0d681e0632457))
+
+### 🧹 Chores
+
+* add a unique index to the habit table ([4fce2eb](https://github.com/fivaz/habits/commit/4fce2eb23c70901de533a93c8f84672c9f77b0cb))
+* remove ancient template ([fd4378e](https://github.com/fivaz/habits/commit/fd4378ee3813e6bf9c27a854692e7948f6e24d7a))
+* remove reset from migrate script ([b48582b](https://github.com/fivaz/habits/commit/b48582bb4e1b6b9154096ee3531a1bc8b7e9f778))
+
 ## [1.11.0](https://github.com/fivaz/habits/compare/v1.10.0...v1.11.0) (2026-01-31)
 
 ### ✨ Features
