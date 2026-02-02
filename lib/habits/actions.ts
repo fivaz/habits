@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { addDays, format } from "date-fns";
+import { addDays } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 
 import { defaultAnchorCategory } from "@/lib/category/type";
@@ -18,30 +18,32 @@ import { getUserId } from "@/lib/utils-server";
  */
 export async function getHabitsAction(): Promise<TodayHabitUI[]> {
 	const userId = await getUserId();
-	const today = format(new Date(), DATE);
 
 	try {
-		const habits = await prisma.habitRecipe.findMany({
-			where: {
-				userId,
-				isActive: true,
-			},
-			select: {
-				...habitUIArgs.select,
-				logs: {
-					where: { date: today, status: "completed" },
-					take: 1,
+		const [user, habits] = await Promise.all([
+			prisma.user.findUnique({
+				where: { id: userId },
+				select: { timezone: true },
+			}),
+			prisma.habitRecipe.findMany({
+				where: { userId, isActive: true },
+				select: {
+					...habitUIArgs.select,
+					lastCompletedDate: true,
 				},
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-		});
+				orderBy: { createdAt: "desc" },
+			}),
+		]);
 
-		return habits.map(({ logs, anchorCategory, ...habit }) => ({
+		if (!user) throw new Error("User not found");
+
+		// Calculate "today" based on user's local time
+		const today = formatInTimeZone(new Date(), user.timezone, DATE);
+
+		return habits.map(({ anchorCategory, lastCompletedDate, ...habit }) => ({
 			...habit,
-			anchorCategory: anchorCategory || defaultAnchorCategory, // fallback here
-			isCompletedToday: logs.length > 0, // If the array has an item, it was completed today
+			anchorCategory: anchorCategory || defaultAnchorCategory,
+			isCompletedToday: lastCompletedDate === today,
 		}));
 	} catch (error) {
 		logError(error, "getHabitsAction");
