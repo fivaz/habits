@@ -77,7 +77,7 @@ export async function upsertHabitAction({
 		};
 
 		await prisma.habitRecipe.upsert({
-			where: { id },
+			where: { id, userId },
 			create: {
 				...data,
 				userId,
@@ -181,7 +181,7 @@ export async function logHabitCompletionAction(habitId: string) {
 			});
 
 			await tx.habitRecipe.update({
-				where: { id: habitId },
+				where: { id: habitId, userId },
 				data: {
 					streak: newStreak,
 					totalCompletions: { increment: 1 },

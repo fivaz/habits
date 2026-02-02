@@ -7,7 +7,7 @@ export function getEmptyHabit(): TodayHabitUI {
 		anchor: "",
 		tinyBehavior: "",
 		celebration: "",
-		anchorCategory: defaultAnchorCategory,
+		anchorCategory: { ...defaultAnchorCategory },
 		streak: 0,
 		totalCompletions: 0,
 		isCompletedToday: false,

@@ -57,6 +57,7 @@ model HabitRecipe {
   userId String     @map("user_id")
   user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([id, userId])
   @@index([userId])
   @@map("habit_recipe")
 }
