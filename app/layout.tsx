@@ -11,7 +11,7 @@ import { ConfirmProvider } from "@/hooks/confirm/confirm-provider";
 import { APP_NAME } from "@/lib/consts";
 import { cn } from "@/lib/utils";
 
-const APP_DEFAULT_TITLE = "Habits";
+const APP_DEFAULT_TITLE = APP_NAME;
 const APP_TITLE_TEMPLATE = "%s - Habits";
 const APP_DESCRIPTION = "Track your workouts and monitor your progress.";
 

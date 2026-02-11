@@ -41,11 +41,11 @@ export function AppLayout({ children }: AppLayoutProps) {
 								className={cn(
 									"flex flex-col items-center justify-center rounded-xl px-3 py-1.5 transition-all duration-200",
 									isActive
-										? "bg-green-50 text-green-500 dark:bg-green-500/10"
+										? "bg-primary-foreground text-primary dark:bg-primary/10"
 										: "text-muted-foreground hover:text-gray-600 dark:hover:text-gray-300",
 								)}
 							>
-								<Icon className={cn("h-5 w-5", { "stroke-[2.5]": isActive })} />
+								<Icon className={cn("size-5", { "stroke-[2.5]": isActive })} />
 								<span className="mt-0.5 text-[10px] font-medium">{item.label}</span>
 							</Link>
 						);

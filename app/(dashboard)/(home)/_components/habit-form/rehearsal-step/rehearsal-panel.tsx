@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ZapIcon } from "lucide-react";
 
-import { RehearsalBrainIcon } from "@/components/file";
+import { RehearsalBrainIcon } from "@/components/rehearsal-brain-icon";
 import { HabitPrefix, HabitUI, REHEARSAL_TARGET } from "@/lib/habits/type";
 import { cn } from "@/lib/utils";
 
