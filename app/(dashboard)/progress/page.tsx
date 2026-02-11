@@ -1,8 +1,8 @@
 export default function ProgressPage() {
 	return (
-		<div className="p-5">
-			<h1>Progress Page</h1>
+		<main className="flex-1 p-5">
+			<h1 className="text-2xl">Progress Page</h1>
 			<small className="text-destructive">not implemented yet</small>
-		</div>
+		</main>
 	);
 }
